@@ -61,3 +61,5 @@ group :development, :test do
   gem 'faker', '~> 2.11'
   gem 'pry-rails', '~> 0.3.9'
 end
+
+gem 'kaminari'
