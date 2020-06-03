@@ -19,3 +19,5 @@ import 'bootstrap/dist/css/bootstrap'
 // const imagePath = (name) => images(name, true)
 
 import "controllers"
+import '@fortawesome/fontawesome-free/js/all'
+import '@fortawesome/fontawesome-free/css/all.css'
