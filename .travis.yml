@@ -1,0 +1,19 @@
+language: ruby
+rvm:
+  - 2.6.3
+services:
+  - postgresql
+  - redis-server
+env:
+  - DB=pgsql
+install:
+  - bundle install
+  - nvm install node
+  - node -v
+  - npm i -g yarn
+  - yarn
+before_script:
+  - bundle exec rake db:create db:migrate RAILS_ENV=test
+script:
+  - bundle exec rails webpacker:compile
+  - bundle exec rails spec

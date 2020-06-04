@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   # 廠商
   resources :vendors, except: [:show]
 
+  # 產品名單
+  resources :product_lists, except: [:show]
 end
