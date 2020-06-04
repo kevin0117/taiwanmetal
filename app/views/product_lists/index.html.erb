@@ -1,0 +1,26 @@
+<h1>商品基本資料</h1>
+
+<%= link_to "新增商品", new_product_list_path, class:"btn btn-success mb-3" %>
+
+<table class='table'>
+  <thead>
+    <tr>
+      <th>名稱</th>
+      <th>描述</th>
+      <th></th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    <% @productLists.each do |productList| %>
+    <tr>
+      <td><%= link_to productList.name, edit_product_list_path(productList) %></td>
+      <td><%= strip_tags(productList.description).truncate(100) %></td>
+      <td>
+        <%= link_to "編輯", edit_product_list_path(productList) %>
+        <%= link_to "刪除", product_list_path(productList), method: :delete, data: { confirm: "確認刪除嗎？"} %>
+      </td>
+    </tr>    
+    <% end %>
+  </tbody>
+</table>
