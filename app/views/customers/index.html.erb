@@ -1,0 +1,27 @@
+<h1>客戶基本資料</h1>
+
+<%= link_to "新增客戶", new_customer_path, class:"btn btn-success mb-3" %>
+
+<table class='table'>
+  <thead>
+    <tr>
+      <th>名稱</th>
+      <th>描述</th>
+      <th></th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    <% @customers.each do |customer| %>
+    <tr>
+      <td><%= link_to customer.name, edit_customer_path(customer) %></td>
+      <td><%= strip_tags(customer.description).truncate(100) %></td>
+      <td>
+        <%= link_to "編輯", edit_customer_path(customer) %>
+        <%= link_to "刪除", customer_path(customer), method: :delete, data: { confirm: "確認刪除嗎？"} %>
+      </td>
+    </tr>    
+    <% end %>
+  </tbody>
+</table>
+
