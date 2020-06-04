@@ -8,4 +8,7 @@ Rails.application.routes.draw do
 
   # 產品名單
   resources :product_lists, except: [:show]
+  
+  # 客戶
+  resources :customers, except: [:show]
 end

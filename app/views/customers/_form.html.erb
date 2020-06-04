@@ -1,0 +1,9 @@
+<div class="form-group">
+  <%= simple_form_for(customer) do |f| %>
+    <%= f.input :name, label: '名稱', class:"form-control"  %>
+    <%= f.input :description, label: '描述', class:"form-control"  %>
+    <%= f.input :online, label: '正常營運中', class:"form-control"  %>
+
+    <%= f.button :submit, class:'btn btn-info'%>  
+  <% end %>
+</div>
