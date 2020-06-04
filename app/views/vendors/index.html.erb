@@ -1,0 +1,26 @@
+<h1>廠商基本資料</h1>
+
+<%= link_to "新增廠商", new_vendor_path, class:"btn btn-info mb-3" %>
+
+<table class='table'>
+  <thead>
+    <tr>
+      <th>名稱</th>
+      <th>描述</th>
+      <th></th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    <% @vendors.each do |vendor| %>
+    <tr>
+      <td><%= link_to vendor.name, edit_vendor_path(vendor) %></td>
+      <td><%= strip_tags(vendor.description).truncate(100) %></td>
+      <td>
+        <%= link_to "編輯", edit_vendor_path(vendor) %>
+        <%= link_to "刪除", vendor_path(vendor), method: :delete, data: { confirm: "確認刪除嗎？"} %>
+      </td>
+    </tr>    
+    <% end %>
+  </tbody>
+</table>
