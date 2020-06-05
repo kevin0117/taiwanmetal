@@ -14,4 +14,7 @@ Rails.application.routes.draw do
 
   # 金價設定
   resources :price_boards
+
+  # 產品
+  resources :products
 end
