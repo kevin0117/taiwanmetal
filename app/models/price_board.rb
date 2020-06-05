@@ -1,0 +1,2 @@
+class PriceBoard < ApplicationRecord
+end
