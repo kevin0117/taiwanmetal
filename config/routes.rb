@@ -11,4 +11,7 @@ Rails.application.routes.draw do
   
   # 客戶
   resources :customers, except: [:show]
+
+  # 金價設定
+  resources :price_boards
 end
