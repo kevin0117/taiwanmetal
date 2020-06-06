@@ -21,3 +21,6 @@ import 'bootstrap/dist/css/bootstrap'
 import "controllers"
 import '@fortawesome/fontawesome-free/js/all'
 import '@fortawesome/fontawesome-free/css/all.css'
+
+require("trix")
+require("@rails/actiontext")

@@ -1,0 +1,13 @@
+<h1>商品資訊</h1>
+
+<ul>
+  <li>ＩＤ：<%= @product.id %></li>
+  <li>名稱：<%= @product.product_list.name %></li>
+  <li>重量：<%= @product.weight %></li>
+  <li>工錢：<%= @product.service_fee %></li>
+  <li>狀態：<%= @product.on_sell %></li>
+  <li>廠商：<%= @product.vendor.name %></li>
+  <li>成本：<%= @product.cost %></li>
+  <li>條碼：<%= image_tag ("/barcode-#{@product.id}.png"), class: "img-responsive" %></li>
+  <li>描述：<%= @product.description %></li>
+</ul>
