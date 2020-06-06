@@ -24,6 +24,10 @@
       <%= form.check_box :on_sell, class:"form-check-input" %>
       <%= form.label :on_sell, "是否上架" %>
     </div> 
+    <div>  
+      <%= form.label :description, "描述" %>
+      <%= form.rich_text_area :description, class:"form-control" %>
+    </div> 
     <div>
       <%= form.submit class:"btn btn-primary mt-3" %>
       <%= link_to "回商品列表頁", products_path, class:'btn btn-info mt-3' %>

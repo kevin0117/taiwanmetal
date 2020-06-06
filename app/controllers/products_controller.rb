@@ -53,6 +53,7 @@ class ProductsController < ApplicationController
                                     :on_sell, 
                                     :code,
                                     :vendor_id,
-                                    :product_list_id)
+                                    :product_list_id,
+                                    :description)
   end
 end
