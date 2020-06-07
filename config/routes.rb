@@ -17,4 +17,7 @@ Rails.application.routes.draw do
 
   # 產品
   resources :products
+
+  # 回收金屬
+  resources :scraps
 end

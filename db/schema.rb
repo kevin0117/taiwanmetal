@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_06_062605) do
+ActiveRecord::Schema.define(version: 2020_06_06_154426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,17 +112,22 @@ ActiveRecord::Schema.define(version: 2020_06_06_062605) do
   end
 
   create_table "scraps", force: :cascade do |t|
+    t.datetime "collected_date", default: -> { "CURRENT_TIMESTAMP" }
     t.string "title"
-    t.float "purchase_price"
-    t.datetime "purchase_date"
-    t.float "weight"
-    t.integer "category", default: 1
-    t.float "purity", default: 0.95
-    t.float "true_weight"
-    t.float "exchange_weight"
-    t.float "cost"
+    t.decimal "gross_weight"
+    t.decimal "wastage_rate", default: "0.95"
+    t.decimal "net_weight"
+    t.decimal "gold_buying"
+    t.decimal "total_price"
+    t.boolean "in_stock", default: true
+    t.string "code"
+    t.datetime "deleted_at"
+    t.bigint "customer_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["customer_id"], name: "index_scraps_on_customer_id"
+    t.index ["user_id"], name: "index_scraps_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -156,4 +161,6 @@ ActiveRecord::Schema.define(version: 2020_06_06_062605) do
   add_foreign_key "products", "product_lists"
   add_foreign_key "products", "users"
   add_foreign_key "products", "vendors"
+  add_foreign_key "scraps", "customers"
+  add_foreign_key "scraps", "users"
 end
