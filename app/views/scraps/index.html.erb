@@ -1,0 +1,50 @@
+<h1>收金列表</h1>
+
+<%= link_to "新增舊金", new_scrap_path, class:"btn btn-success mb-3" %>
+
+<table class='table'>
+  <thead>
+    <tr>
+      <th>代號</th>
+      <th>日期</th>
+      <th>名稱</th>
+      <th>重量</th>
+      <th>成色</th>
+      <th>實重</th>
+      <th>金價</th>
+      <th>金額</th>
+      <th></th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    <% @scraps.each do |scrap| %>
+    <tr>
+      <td><%= scrap.code %></td>
+      <td><%= scrap.collected_date.to_formatted_s(:short) %></td>
+      <td><%= link_to scrap.title, scrap_path(scrap) %></td>
+      <td><%= scrap.gross_weight %></td>
+      <td><%= scrap.wastage_rate %></td>
+      <td><%= scrap.net_weight %></td>
+      <td><%= scrap.gold_buying %></td>
+      <td><%= scrap.total_price %></td>
+      <td>
+        <%= link_to "編輯", edit_scrap_path(scrap), class:"btn btn-info btn-sm"  %>
+        <%= link_to "刪除", scrap_path(scrap), method: 'delete', data:{ confirm: "確認刪除嗎？"}, class:"btn btn-info btn-sm" %>
+      </td>
+
+    </tr>    
+    <% end %>  
+  </tbody>
+</table>
+<hr>
+
+<% if current_user.scraps.exists? %>
+  <h5>
+    合計重量: <%= current_user.scraps.sum(:gross_weight)%> | 
+    合計實重: <%= current_user.scraps.sum(:net_weight) %> | 
+    平均成色: <%= current_user.scraps.average(:wastage_rate).round(4) %> | 
+    支出總和: $<%= current_user.scraps.sum(:total_price).round %> | 
+    平均金價: $<%= (current_user.scraps.sum(:total_price).round / current_user.scraps.sum(:net_weight)).round %>
+  </h5>
+<% end %>
