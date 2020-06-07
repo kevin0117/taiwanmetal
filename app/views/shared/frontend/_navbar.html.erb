@@ -27,6 +27,16 @@
         </div>  
       </li>
       <li class="nav-item">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            進貨入庫
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <%= link_to "黃金商品", new_product_path, class: "dropdown-item" %>
+          </div>
+        </div> 
+      </li> 
+      <li class="nav-item">
         <%= link_to current_user.name, edit_user_registration_path, class: 'nav-link' %>
       </li>
       <li class="nav-item">
