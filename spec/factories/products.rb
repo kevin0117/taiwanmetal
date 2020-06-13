@@ -10,6 +10,7 @@ FactoryBot.define do
     deleted_at { "2020-06-05 13:16:54" }
 
     vendor
+    price_board
     product_list
     user
   end
