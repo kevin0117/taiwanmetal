@@ -2,6 +2,7 @@ class Product < ApplicationRecord
   include CodeGenerator
   has_rich_text :description
 
+  belongs_to :price_board
   belongs_to :product_list
   belongs_to :vendor
   belongs_to :user
