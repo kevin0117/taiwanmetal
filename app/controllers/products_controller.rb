@@ -1,8 +1,8 @@
 class ProductsController < ApplicationController
-  before_action :find_product, only: %i[edit update show destroy add_to_cart delete_to_cart]
+  before_action :find_product, only: %i[edit update show destroy add_to_cart delete_to_cart decrease_to_cart]
   
   def index
-    @products = Product.all.includes(:vendor, :product_list)
+    @products = Product.all.includes(:vendor, :product_list).order(:id)
   end
 
   def new
@@ -40,6 +40,60 @@ class ProductsController < ApplicationController
     end
   end
 
+  def add_to_cart
+    cart_product = current_cart.items.find{|item| item.product_id == @product.id}
+    if @product.quantity != 0
+      if !cart_product || @product.quantity > 0
+        current_cart.add_product(@product)
+        @product.quantity -= 1
+        @product.save
+        session[:cart0117] = current_cart.serialize
+        flash[:notice] = "加入出貨單"
+      else
+        flash[:notice] = "超過庫存數量"
+      end
+      if params[:sale_id] == nil
+        redirect_to :controller => 'sales', :action => 'new'
+      else
+        redirect_to :controller => 'sales', :action => 'edit', :id => params[:sale_id]
+      end
+    end
+  end
+
+  def delete_to_cart
+    quantity_in_cart = current_cart.items.find(@product.id).first.quantity
+    if current_cart.destroy_product(@product)
+      @product.quantity += quantity_in_cart
+      session[:cart0117] = current_cart.serialize      
+      @product.save 
+      flash[:notice] = "刪除品項成功"
+    else
+      flash[:notice] = "刪除品項失敗"
+    end
+    if params[:sale_id] == nil
+      redirect_to :controller => 'sales', :action => 'new'
+    else
+      redirect_to :controller => 'sales', :action => 'edit', :id => params[:sale_id]
+    end
+  end
+
+  def decrease_to_cart
+    if current_cart.remove_product(@product)
+      @product.quantity += 1
+      @product.save  
+      flash[:notice] = "減少品項成功"
+    else
+      flash[:notice] = "不能為負數"
+    end
+
+    session[:cart0117] = current_cart.serialize
+    if params[:sale_id] == nil
+      redirect_to :controller => 'sales', :action => 'new'
+    else
+      redirect_to :controller => 'sales', :action => 'edit', :id => params[:sale_id]
+    end
+  end
+
   def edit; end
   def show; end
   
@@ -57,8 +111,10 @@ class ProductsController < ApplicationController
                                     :barcode,
                                     :on_sell, 
                                     :code,
+                                    :quantity,
                                     :vendor_id,
                                     :product_list_id,
+                                    :customer_id,
                                     :description)
   end
 end
