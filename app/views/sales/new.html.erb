@@ -1,0 +1,4 @@
+<h1>新增銷售</h1>
+<%= render 'table', sale: @sale %>
+<%= render 'cart', sale: @sale if !current_cart.empty? %>
+

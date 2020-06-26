@@ -1,0 +1,86 @@
+<div class="form-group" data-controller="sale">  
+  <%= simple_form_for(sale) do |form| %>  
+    <div class='form-row'>  
+      <div class='form-group col-md-3'>  
+        <%= form.label :sale_date, "銷售日期" %>
+        <%= form.datetime_field :sale_date, class:"form-control" %>
+      </div>       
+      <div class='form-group col-md-3'>  
+        <%= form.label :customer_id, "客戶" %>
+        <%= form.collection_select :customer_id, Customer.available, :id, :name, {}, class:"form-control" %>
+      </div> 
+      <div class='form-group col-md-3'>  
+        <%= form.label :gold_selling, "金價(賣出)" %>
+        <%# PriceBoard.find_gold_selling(DateTime.now) %>
+        <%# PriceBoard.last.gold_selling %>
+        <%# PriceBoard.find_gold_selling(Date.today) %>
+        <%= form.number_field :gold_selling, value: PriceBoard.last.gold_selling, data: { target: "sale.gold_selling" }, class:"form-control" %>
+      </div> 
+      <div class='form-group col-md-3'>  
+        <%= form.label :gold_buying, "金價(買入)" %>
+        <%# PriceBoard.find_gold_buying(DateTime.now) %>
+        <%= form.number_field :gold_buying, value: PriceBoard.last.gold_buying, data: { target: "sale.gold_buying" }, class:"form-control" %>
+      </div>     
+    </div>
+    <div class='form-row'>  
+      <div class='form-group col-md-4'>  
+        <%= form.label :exchange_weight, "換金重量" %>
+        <%= form.text_field :exchange_weight, placeholder: "輸入換金重量", data: { target: "sale.exchange_weight" }, class:"form-control" %>
+      </div> 
+      <div class='form-group col-md-4'>  
+        <%= form.label :wastage_rate, "換金成色" %>
+        <%= form.text_field :wastage_rate, data: { target: "sale.wastage_rate" }, class:"form-control" %>
+      </div>  
+      <div class='form-group col-md-4'> 
+        <%= form.label :net_weight, "實重" %>
+        <%= link_to "計算", "#", data: { action: "click->sale#cal_weight" }, class:"btn btn-info btn-sm" %> 
+        <%= form.text_field :net_weight, data: { target: "sale.net_weight" }, class:"form-control" %>
+      </div>     
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>名稱</th>
+          <th>商品ID</th>
+          <th>重量</th>
+          <th>工錢</th>
+          <th>銷售狀態</th>
+          <th>數量</th>
+        </tr>
+      </thead>
+     
+      <tbody>
+        <% current_cart.product_list.each do |product| %>
+        <tr>
+          <td><%= link_to product.title, product_path(product) %></td>
+          <td><%= form.text_field :product_id, value: product.id, readonly:"readonly" %></td>
+          <td><%= product.weight %></td>
+          <td><%= product.service_fee %></td>
+          <td><%= product.on_sell %></td>
+          <td><%= find_quantity(product) %></td>
+          <td><%= link_to " - ", decrease_to_cart_product_path(product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-danger" %></td>
+          <td><%= link_to "移除", delete_to_cart_product_path(product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-danger" %></td>
+        </tr>    
+        <% end %>      
+      </tbody>
+    </table> 
+    <% if current_cart.product_list.present? %>
+      <h6>
+      <label for="weight">合計重量</label>
+      <input type="text", class="form-control", value="<%= current_cart.total_weight %>",  readonly="readonly", data-target= "sale.weight" >
+      <label for="service_fee">合計工錢</label>
+      <input type="text", class="form-control", value="<%= current_cart.total_service_fee %>",  readonly="readonly", data-target= "sale.service_fee" >
+      </h6>
+    <% end %>
+ 
+    <div> 
+      <%= link_to "計算金額", "#", data: { action: "click->sale#calculate" }, class:"btn btn-info btn-sm mb-2" %> 
+      <%= form.text_field :total_price, data: { target: "sale.total_price" }, class:"form-control"   %>
+    </div> 
+    <div>  
+      <%= form.input :payment_method, as: :select, collection: [['cash', '現金'], ['credit_card', '信用卡'], ['line_pay', 'LinePay']], label_method: :second, value_method: :first, label: "付款方式",  class:"form-control"%>
+    </div> 
+
+    <%= form.submit %>  
+  <% end %>
+</div>
