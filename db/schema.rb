@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_17_053415) do
+ActiveRecord::Schema.define(version: 2020_06_23_130553) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,8 +65,18 @@ ActiveRecord::Schema.define(version: 2020_06_17_053415) do
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
   end
 
+  create_table "manifests", force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.bigint "sale_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "quantity", default: 1
+    t.index ["product_id"], name: "index_manifests_on_product_id"
+    t.index ["sale_id"], name: "index_manifests_on_sale_id"
+  end
+
   create_table "price_boards", force: :cascade do |t|
-    t.datetime "price_date", default: -> { "CURRENT_TIMESTAMP" }
+    t.date "price_date", default: -> { "CURRENT_TIMESTAMP" }
     t.decimal "gold_selling"
     t.decimal "gold_buying"
     t.decimal "platinum_selling"
@@ -104,13 +114,35 @@ ActiveRecord::Schema.define(version: 2020_06_17_053415) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "price_board_id", null: false
+    t.bigint "price_board_id"
+    t.integer "quantity", default: 1
     t.index ["code"], name: "index_products_on_code", unique: true
     t.index ["deleted_at"], name: "index_products_on_deleted_at"
     t.index ["price_board_id"], name: "index_products_on_price_board_id"
     t.index ["product_list_id"], name: "index_products_on_product_list_id"
     t.index ["user_id"], name: "index_products_on_user_id"
     t.index ["vendor_id"], name: "index_products_on_vendor_id"
+  end
+
+  create_table "sales", force: :cascade do |t|
+    t.datetime "sale_date", default: -> { "CURRENT_TIMESTAMP" }
+    t.decimal "gold_selling"
+    t.decimal "gold_buying"
+    t.decimal "exchange_weight"
+    t.decimal "wastage_rate", default: "0.95"
+    t.decimal "net_weight", default: "0.0"
+    t.integer "payment_method", default: 0
+    t.decimal "service_fee"
+    t.decimal "weight"
+    t.decimal "total_price"
+    t.bigint "product_id", null: false
+    t.bigint "customer_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["customer_id"], name: "index_sales_on_customer_id"
+    t.index ["product_id"], name: "index_sales_on_product_id"
+    t.index ["user_id"], name: "index_sales_on_user_id"
   end
 
   create_table "scraps", force: :cascade do |t|
@@ -160,10 +192,15 @@ ActiveRecord::Schema.define(version: 2020_06_17_053415) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "manifests", "products"
+  add_foreign_key "manifests", "sales"
   add_foreign_key "products", "price_boards"
   add_foreign_key "products", "product_lists"
   add_foreign_key "products", "users"
   add_foreign_key "products", "vendors"
+  add_foreign_key "sales", "customers"
+  add_foreign_key "sales", "products"
+  add_foreign_key "sales", "users"
   add_foreign_key "scraps", "customers"
   add_foreign_key "scraps", "users"
 end
