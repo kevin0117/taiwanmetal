@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Product, type: :model do
+RSpec.describe Product, type: :model, product: true do
   context '當商品成功建立時..' do
     it '全部欄位正確填寫完成' do
       p1 = FactoryBot.create(:product)
