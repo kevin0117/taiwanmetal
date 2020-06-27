@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :find_product, only: %i[edit update show destroy add_to_cart delete_to_cart decrease_to_cart]
+  before_action :find_price_board_id, only: %i[create edit update add_to_cart delete_to_cart decrease_to_cart]
   
   def index
     @products = Product.all.includes(:vendor, :product_list).order(:id)
@@ -13,7 +14,7 @@ class ProductsController < ApplicationController
     @product = Product.new(product_params)
     @product.title = ProductList.find(params[:product][:product_list_id]).name
     @product.user_id = current_user.id
-    # byebug
+
     if @product.save
       @product.barcode = generate_barcode(@product.code.to_s, @product.id)    
       @product.save
@@ -26,7 +27,7 @@ class ProductsController < ApplicationController
   def update
     @product.title = ProductList.find(params[:product][:product_list_id]).name
     @product.barcode = generate_barcode(@product.code.to_s, @product.id) 
-
+    
     if @product.update(product_params)
       redirect_to products_path, notice: "更新成功" 
     else
@@ -103,6 +104,14 @@ class ProductsController < ApplicationController
     @product = Product.friendly.find(params[:id])
   end
 
+  def find_price_board_id
+    if PriceBoard.find_by(price_date: Date.today)
+      @product.price_board_id = PriceBoard.find_by(price_date: Date.today).id
+    else
+      @product.price_board_id = PriceBoard.last.id
+    end
+  end
+
   def product_params
     params.require(:product).permit(:title, 
                                     :weight, 
@@ -115,6 +124,7 @@ class ProductsController < ApplicationController
                                     :vendor_id,
                                     :product_list_id,
                                     :customer_id,
+                                    :price_board_id,
                                     :description)
   end
 end
