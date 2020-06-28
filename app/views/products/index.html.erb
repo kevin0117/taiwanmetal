@@ -11,6 +11,7 @@
       <th>重量</th>
       <th>工錢</th>
       <th>廠商</th>
+      <th>庫存量</th>
       <th>銷售狀態</th>
       <th></th>
     </tr>
@@ -25,6 +26,7 @@
     <td><%= product.weight %></td>
     <td><%= product.service_fee %></td>
     <td><%= product.vendor.name %></td>
+    <td><%= product.quantity %></td>
     <td><%= product.on_sell %></td>
     <td>
       <%= link_to "編輯", edit_product_path(product), class:"btn btn-info btn-sm" %>

@@ -22,4 +22,12 @@ class CartItem
     (product.price_board.gold_selling * product.weight + product.service_fee) * quantity
   end
 
+  def weight
+    product.weight * quantity
+  end
+
+  def service_fee
+    product.service_fee * quantity
+  end
+
 end

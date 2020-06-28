@@ -8,6 +8,7 @@ FactoryBot.define do
     on_sell { false }
     code { Faker::Code.nric }
     deleted_at { "2020-06-05 13:16:54" }
+    quantity { Faker::Number.between(from: 0, to: 100) }
 
     vendor
     price_board

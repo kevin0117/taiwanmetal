@@ -18,7 +18,7 @@ class Cart
   def remove_product(product)
     current_item = items.find{|item| item.product_id == product.id}
     
-    if current_item
+    if current_item.quantity > 0
       current_item.decrement
     end
   end
@@ -39,6 +39,14 @@ class Cart
     @items.reduce(0) {|sum, item| sum + item.total_price }
   end
 
+  def total_weight
+    items.reduce(0) { |sum, item| sum + item.weight }
+  end
+
+  def total_service_fee
+    items.reduce(0) { |sum, item| sum + item.service_fee }
+  end
+
   def serialize
     all_items = @items.map {|item|
       { "product_id" => item.product_id, "quantity" => item.quantity }
@@ -57,4 +65,10 @@ class Cart
       Cart.new
     end
   end
+
+  def product_list
+    id_list = @items.map { |item| Product.find(item.product_id) }  
+  end
+
+
 end

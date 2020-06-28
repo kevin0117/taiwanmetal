@@ -1,0 +1,32 @@
+<h1>銷售列表</h1>
+
+<%= link_to "新增銷售", new_sale_path, class:"btn btn-success mb-3" %>
+
+<table class='table'>
+  <thead>
+    <tr>
+      <th>日期</th>
+      <th>銷售ID</th>
+      <th>銷售金額</th>
+      <th>付款方式</th>
+      <th>會員</th>
+      <th></th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    <% @sales.each do |sale| %>
+    <tr>
+      <td><%= link_to sale.sale_date.to_formatted_s(:short), edit_sale_path(sale) %></td>
+      <td><%= sale.id %></td>
+      <td><%= sale.total_price %></td>
+      <td><%= sale.payment_method %></td>
+      <td><%= sale.user.name %></td>
+      <td>
+        <%= link_to "編輯", edit_sale_path(sale) %>
+        <%= link_to "刪除", sale_path(sale), method: :delete, data: { confirm: "確認刪除嗎？"} %>
+      </td>
+    </tr>    
+    <% end %>
+  </tbody>
+</table>

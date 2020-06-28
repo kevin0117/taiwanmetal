@@ -38,6 +38,28 @@
         </div> 
       </li> 
       <li class="nav-item">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            銷貨出庫
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <%= link_to "商品銷售", new_sale_path, class: "dropdown-item" %>
+          </div>
+        </div> 
+      </li> 
+      <li class="nav-item">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            庫存管理
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <%= link_to "商品列表", products_path, class: "dropdown-item" %>
+            <%= link_to "收金列表", scraps_path, class: "dropdown-item" %>
+            <%= link_to "銷售列表", sales_path, class: "dropdown-item" %>
+          </div>
+        </div> 
+      </li> 
+      <li class="nav-item">
         <%= link_to current_user.name, edit_user_registration_path, class: 'nav-link' %>
       </li>
       <li class="nav-item">

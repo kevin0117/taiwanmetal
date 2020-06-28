@@ -16,8 +16,24 @@ Rails.application.routes.draw do
   resources :price_boards
 
   # 產品
-  resources :products
+  resources :products do
+    member do
+      put :add_to_cart
+      put :decrease_to_cart
+      put :delete_to_cart
+    end
+  end
 
   # 回收金屬
   resources :scraps
+
+  # 銷售
+  resources :sales do
+    member do
+      post 'add', to: 'sales#add'
+      post 'decrease', to: 'sales#decrease'
+      post 'remove', to: 'sales#remove'
+    end
+  end
+
 end

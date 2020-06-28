@@ -1,0 +1,28 @@
+<table class="table" data-controller='table'>
+  <thead>
+    <tr>
+      <th></th>
+      <th>名稱</th>
+      <th>商品ID</th>
+      <th>重量</th>
+      <th>工錢</th>
+      <th>數量</th>
+      <th>銷售狀態</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @products.each do |product| %>
+    <tr>
+      <td><%= link_to "加入", add_sale_path(product, sale_id: sale.id), method: :post %></td>
+      <td><%= product.title %></td>
+      <td><%= product.id %></td>
+      <td><%= product.weight %>
+      <td><%= product.service_fee %></td>
+      <td><%= product.quantity %>
+      <td><%= product.on_sell %></td>
+    </tr>    
+    <% end %>      
+  </tbody>
+</table> 
