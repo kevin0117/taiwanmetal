@@ -1,4 +1,5 @@
 require 'rails_helper'
+
 # 參考自 "為你自己學 Ruby on Rails"
 RSpec.describe CartItem, type: :model, tag_item: true do
   describe "CartItem 基本功能" do

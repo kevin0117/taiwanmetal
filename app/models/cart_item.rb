@@ -29,5 +29,4 @@ class CartItem
   def service_fee
     product.service_fee * quantity
   end
-
 end
