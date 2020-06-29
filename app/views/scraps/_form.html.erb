@@ -27,7 +27,7 @@
       </div> 
       <div>  
       <%= form.label :gold_buying, "金價(錢)" %>
-      <%= form.number_field :gold_buying, value: PriceBoard.last.gold_buying ,  data: { target: "form.gold_buying" }, class:"form-control mb-1" %>
+      <%= form.number_field :gold_buying, value: PriceBoard.find_gold_buying(scrap.collected_date) ,  data: { target: "form.gold_buying" }, class:"form-control mb-1" %>
       </div> 
       <div>  
       <%= form.label :total_price, "金額" %> <%= link_to "計算金額", "#", data: { action: "click->form#cal_amount"}, class:"btn btn-info btn-sm" %>
@@ -40,3 +40,4 @@
       </div>
   <% end %>
 </div>
+ 

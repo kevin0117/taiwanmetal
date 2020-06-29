@@ -6,7 +6,7 @@ class PriceBoard < ApplicationRecord
     if target_date
       target_date.gold_selling 
     else
-      PriceBoard.last.gold_selling
+      PriceBoard.last.gold_selling if PriceBoard.last.present?
     end
   end
 
@@ -16,7 +16,7 @@ class PriceBoard < ApplicationRecord
     if target_date
       target_date.gold_buying
     else
-      PriceBoard.last.gold_buying
+      PriceBoard.last.gold_buying if PriceBoard.last.present?
     end
   end
   

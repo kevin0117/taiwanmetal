@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :find_product, only: %i[edit update show destroy add_to_cart delete_to_cart decrease_to_cart]
-  before_action :find_price_board_id, only: %i[create edit update add_to_cart delete_to_cart decrease_to_cart]
+  before_action :find_price_board_id, only: %i[edit update add_to_cart delete_to_cart decrease_to_cart]
   
   def index
     @products = Product.all.includes(:vendor, :product_list).order(:id)
@@ -14,6 +14,16 @@ class ProductsController < ApplicationController
     @product = Product.new(product_params)
     @product.title = ProductList.find(params[:product][:product_list_id]).name
     @product.user_id = current_user.id
+
+    today_price_board = PriceBoard.find_by(price_date: Date.today)
+
+    @product.price_board_id = if today_price_board
+                          today_price_board.id
+                        elsif PriceBoard.last.present? 
+                          PriceBoard.last.id
+                        else
+                          redirect_to new_price_board_path, notice: "請先設定今日價格"
+                        end
 
     if @product.save
       @product.barcode = generate_barcode(@product.code.to_s, @product.id)    
@@ -105,11 +115,15 @@ class ProductsController < ApplicationController
   end
 
   def find_price_board_id
-    if PriceBoard.find_by(price_date: Date.today)
-      @product.price_board_id = PriceBoard.find_by(price_date: Date.today).id
-    else
-      @product.price_board_id = PriceBoard.last.id
-    end
+    today_price_board = PriceBoard.find_by(price_date: Date.today)
+
+    @product.price_board_id = if today_price_board
+                          today_price_board.id
+                        elsif PriceBoard.last.present? 
+                          PriceBoard.last.id
+                        else
+                          redirect_to new_price_board_path, notice: "請先設定今日價格"
+                        end
   end
 
   def product_params
