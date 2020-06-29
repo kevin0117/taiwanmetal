@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th>ID</th>
+      <th>會員</th>
       <th>代號</th>
       <th>名稱</th>
       <th>重量</th>
@@ -21,6 +22,7 @@
     <% @products.each do |product| %>
     <tr>
     <td><%= product.id %></td>
+    <td><%= product.user.name %></td>
     <td><%= product.code %></td>
     <td><%= link_to product.title, product_path(product) %></td> 
     <td><%= product.weight %></td>

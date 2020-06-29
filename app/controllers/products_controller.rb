@@ -18,12 +18,12 @@ class ProductsController < ApplicationController
     today_price_board = PriceBoard.find_by(price_date: Date.today)
 
     @product.price_board_id = if today_price_board
-                          today_price_board.id
-                        elsif PriceBoard.last.present? 
-                          PriceBoard.last.id
-                        else
-                          redirect_to new_price_board_path, notice: "請先設定今日價格"
-                        end
+                                today_price_board.id
+                              elsif PriceBoard.last.present? 
+                                PriceBoard.last.id
+                              else
+                                redirect_to new_price_board_path, notice: "請先設定今日價格"
+                              end
 
     if @product.save
       @product.barcode = generate_barcode(@product.code.to_s, @product.id)    

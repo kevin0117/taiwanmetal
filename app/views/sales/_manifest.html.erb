@@ -7,11 +7,11 @@
       </div>       
       <div class='form-group col-md-4'>  
         <%= form.label :gold_selling, "金價(賣出)" %>
-        <%= form.number_field :gold_selling, value: PriceBoard.find_gold_selling(sale.sale_date), data: { target: "sale.gold_selling" }, class:"form-control" %>
+        <%= form.number_field :gold_selling, value: PriceBoard.find_gold_selling(current_user.id), data: { target: "sale.gold_selling" }, class:"form-control" %>
       </div> 
       <div class='form-group col-md-4'>  
         <%= form.label :gold_buying, "金價(買入)" %>
-        <%= form.number_field :gold_buying, value: PriceBoard.find_gold_buying(sale.sale_date), data: { target: "sale.gold_buying" }, class:"form-control" %>
+        <%= form.number_field :gold_buying, value: PriceBoard.find_gold_buying(current_user.id), data: { target: "sale.gold_buying" }, class:"form-control" %>
       </div>     
     </div>
     <div class='form-row'>  
@@ -39,7 +39,7 @@
           <th>數量</th>
           <th>銷售狀態</th>
           <th>貨單ID</th>
-          <th>測試</th>
+          <th>小計</th>
         </tr>
       </thead>
     
