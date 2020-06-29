@@ -1,13 +1,14 @@
 require 'rails_helper'
 # 參考自 "為你自己學 Ruby on Rails"
 RSpec.describe Cart, type: :model, cart: true do
-  let(:product1) { FactoryBot.create(:product) } 
+
+  let(:product1) { FactoryBot.create(:product) }
   let(:product2) { FactoryBot.create(:product) }
   let(:product3) { FactoryBot.create(:product) }
   let(:cart) { Cart.new }
 
-  describe "出貨單基本功能" do
-    it "可以把商品丟到到出貨單裡，然後出貨單裡就有東西了" do
+  describe "出貨單功能" do
+    it '將商品放在出貨單裡，然後出貨單裡會有該商品' do
       cart.add_product(product1)
 
       expect(cart).not_to be_empty
@@ -39,6 +40,7 @@ RSpec.describe Cart, type: :model, cart: true do
       expect(cart).to be_empty
     end
 
+
     it "商品可以放到出貨單裡，也可以再拿出來" do
       3.times { cart.add_product(product1)}
       5.times { cart.add_product(product2)}
@@ -60,8 +62,8 @@ RSpec.describe Cart, type: :model, cart: true do
       expect(cart.total_price).to eq 37800
     end
   end
-  describe "出貨單進階功能" do
 
+  describe "出貨單進階功能" do
     it "可以將出貨單內容轉換成 Hash，存到 Session 裡" do
       3.times { cart.add_product(product1) } 
       5.times { cart.add_product(product2) } 
@@ -90,4 +92,3 @@ RSpec.describe Cart, type: :model, cart: true do
     end
   end
 end
-
