@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_23_130553) do
+ActiveRecord::Schema.define(version: 2020_06_29_064531) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,8 @@ ActiveRecord::Schema.define(version: 2020_06_23_130553) do
     t.boolean "online", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_customers_on_user_id"
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -89,6 +91,8 @@ ActiveRecord::Schema.define(version: 2020_06_23_130553) do
     t.boolean "online"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_price_boards_on_user_id"
   end
 
   create_table "product_lists", force: :cascade do |t|
@@ -98,6 +102,8 @@ ActiveRecord::Schema.define(version: 2020_06_23_130553) do
     t.boolean "online", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_product_lists_on_user_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -189,11 +195,16 @@ ActiveRecord::Schema.define(version: 2020_06_23_130553) do
     t.boolean "online", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_vendors_on_user_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "customers", "users"
   add_foreign_key "manifests", "products"
   add_foreign_key "manifests", "sales"
+  add_foreign_key "price_boards", "users"
+  add_foreign_key "product_lists", "users"
   add_foreign_key "products", "price_boards"
   add_foreign_key "products", "product_lists"
   add_foreign_key "products", "users"
@@ -203,4 +214,5 @@ ActiveRecord::Schema.define(version: 2020_06_23_130553) do
   add_foreign_key "sales", "users"
   add_foreign_key "scraps", "customers"
   add_foreign_key "scraps", "users"
+  add_foreign_key "vendors", "users"
 end

@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
   before_action :find_price_board_id, only: %i[edit update add_to_cart delete_to_cart decrease_to_cart]
   
   def index
-    @products = Product.all.includes(:vendor, :product_list).order(:id)
+    @products = current_user.products.includes(:vendor, :product_list).order(:id)
   end
 
   def new

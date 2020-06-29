@@ -5,7 +5,7 @@ class SalesController < ApplicationController
   before_action :set_all_products_in_order, only: %i[new create edit]
 
   def index
-    @sales = Sale.all.order(sale_date: :desc)
+    @sales = current_user.sales.order(sale_date: :desc)
   end
 
   def new
@@ -15,7 +15,7 @@ class SalesController < ApplicationController
   def create
     @sale = Sale.new(sale_params)
     @sale.user_id = current_user.id
-    
+    # byebug
     if @sale.save
       @product = Product.find(params[:sale][:product_id])
 

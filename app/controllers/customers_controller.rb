@@ -2,7 +2,7 @@ class CustomersController < ApplicationController
   before_action :find_customer, only: %i[edit update show destroy]
 
   def index
-    @customers = Customer.all
+    @customers = current_user.customers
   end
 
   def new
@@ -11,6 +11,7 @@ class CustomersController < ApplicationController
 
   def create
     @customer = Customer.new(customer_params)
+    @customer.user_id = current_user.id
     if @customer.save
       redirect_to customers_path, notice: "客戶新增成功"
     else

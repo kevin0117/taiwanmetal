@@ -2,11 +2,11 @@
   <%= form_for(product) do |form| %>
     <div>
       <%= form.label :product_lists_id, "商品名稱" %>
-      <%= form.collection_select :product_list_id, ProductList.available, :id, :name, {}, class:"form-control" %>
+      <%= form.collection_select :product_list_id, ProductList.available(current_user.id), :id, :name, {}, class:"form-control" %>
     </div>  
     <div>  
       <%= form.label :vendor_id, "廠商" %>
-      <%= form.collection_select :vendor_id, Vendor.available, :id, :name, {}, class:"form-control" %>
+      <%= form.collection_select :vendor_id, Vendor.available(current_user.id), :id, :name, {}, class:"form-control" %>
     </div> 
     <div>  
       <%= form.label :weight, "重量" %>

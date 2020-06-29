@@ -2,7 +2,7 @@ class VendorsController < ApplicationController
   before_action :find_vendor, only: %i[edit update destroy]
 
   def index
-    @vendors = Vendor.all
+    @vendors = current_user.vendors
   end
 
   def new
@@ -11,6 +11,8 @@ class VendorsController < ApplicationController
 
   def create
     @vendor = Vendor.new(vendor_params)
+    @vendor.user_id = current_user.id
+
     if @vendor.save
       redirect_to vendors_path, notice: "新增成功"
     else

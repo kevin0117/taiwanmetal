@@ -2,7 +2,7 @@ class PriceBoardsController < ApplicationController
   before_action :find_price_board, only: %i[edit update destroy]  
 
   def index
-    @priceBoards = PriceBoard.all.order(price_date: :desc)
+    @priceBoards = current_user.price_boards.order(price_date: :desc)
   end
 
   def new
@@ -11,6 +11,7 @@ class PriceBoardsController < ApplicationController
 
   def create
     @price_board = PriceBoard.new(priceBoard_params)
+    @price_board.user_id = current_user.id
     if @price_board.save
       redirect_to price_boards_path, notice: "新增成功"
     else
