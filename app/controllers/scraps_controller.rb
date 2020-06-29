@@ -2,7 +2,7 @@ class ScrapsController < ApplicationController
   before_action :find_scrap, only: [:edit, :update, :show, :destroy]
 
   def index
-    @scraps = Scrap.all.order(collected_date: :desc)
+    @scraps = current_user.scraps.order(collected_date: :desc)
   end
 
   def new

@@ -1,5 +1,7 @@
 class Vendor < ApplicationRecord
   validates :name, presence: true
 
-  scope :available, -> { where(online: true) }
+  belongs_to :user
+
+  scope :available, ->(id) { where(online: true) && where(user_id: id) }
 end

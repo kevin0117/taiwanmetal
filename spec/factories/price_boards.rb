@@ -11,5 +11,7 @@ FactoryBot.define do
     wholesale_platinum_buying { Faker::Number.between(from: 5600, to: 6280) }
     description { Faker::Lorem.paragraph }
     online { false }
+
+    user
   end
 end

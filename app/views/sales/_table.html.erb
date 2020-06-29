@@ -13,7 +13,7 @@
   </thead>
 
   <tbody>
-    <% @products.each do |product| %>
+    <% current_user.products.each do |product| %>
     <tr>
       <td><%= link_to "加入", add_to_cart_product_path(product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-info" %></td>
       <td><%= product.title %></td>

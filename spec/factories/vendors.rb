@@ -3,6 +3,8 @@ FactoryBot.define do
     name { Faker::Name.unique.name }
     description { Faker::Lorem.paragraph }
     online { false }
+
+    user
   end
 end
 

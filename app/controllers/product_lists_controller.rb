@@ -2,7 +2,7 @@ class ProductListsController < ApplicationController
   before_action :find_product_list, only: %i[edit update destroy]
 
   def index
-    @productLists = ProductList.all
+    @productLists = current_user.product_lists
   end
 
   def new
@@ -11,6 +11,7 @@ class ProductListsController < ApplicationController
 
   def create
     @product_list = ProductList.new(product_list_params)
+    @product_list.user_id = current_user.id
     if @product_list.save
       redirect_to product_lists_path, notice: "新增成功"
     else
