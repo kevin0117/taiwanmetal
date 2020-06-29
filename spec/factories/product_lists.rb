@@ -4,5 +4,7 @@ FactoryBot.define do
     code { Faker::Code.nric }
     description { Faker::Lorem.paragraph }
     online { false }
+
+    user
   end
 end
