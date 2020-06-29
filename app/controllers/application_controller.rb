@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   helper_method :current_cart, :find_quantity
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
   def generate_barcode(text, id)
       barcode = Barby::Code39.new(text, true)
@@ -13,5 +14,12 @@ class ApplicationController < ActionController::Base
 
   def find_quantity(product)
     current_cart.items.find{|item| item.product_id == product.id}.quantity
+  end
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name])
   end
 end
