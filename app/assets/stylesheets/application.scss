@@ -13,4 +13,31 @@
  *= require_tree .
  *= require_self
  */
- @import 'bootstrap/scss/bootstrap'
+ @import 'bootstrap/scss/bootstrap';
+
+//  @media (max-width: 992px){
+//    .navbar-brand{
+//      font-size: 4rem;
+//    }
+//    .navbar-toggler-icon{
+//      height: 5rem;
+//      width: 5rem;
+//    }
+//    .dropdown .btn{
+//      font-size: 4rem;
+//    }
+//    .form-control{
+//      height: calc(1em + 0.5rem + 3px);
+//      font-size: 4.3rem;
+//    }
+//    .dropdown-menu{
+//    font-size: 3.5rem;
+//    }
+ 
+//    form .btn{
+//      font-size: 3rem;
+//    }
+//    .nav-link{
+//      font-size: 3.5rem;
+//    }
+//  }

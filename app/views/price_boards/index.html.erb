@@ -1,8 +1,27 @@
+<style>
+
+@media (max-width: 992px){
+  h1{
+    font-size: 6rem;
+  }
+  h4{
+    font-size: 3rem;
+  }
+  .button-price_board{
+    font-size: 3rem;
+  }
+  /* table{
+        font-size: 1rem;
+
+  } */
+}
+</style>
+
 <h1>金價設定</h1>
 <h4>日期：<%= DateTime.now.to_formatted_s(:short) %></h4>
 
 
-<%= link_to "新增", new_price_board_path, class:"btn btn-success mb-3" %>
+<%= link_to "新增", new_price_board_path, class:"btn btn-success mb-3 button-price_board" %>
 <%#= paginate @priceBoards, theme: 'twitter-bootstrap-4' %>
 
 <table class='table'>

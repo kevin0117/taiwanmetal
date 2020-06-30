@@ -1,37 +1,48 @@
+<style>
+
+@media (max-width: 992px){
+  label{
+    font-size: 3rem;
+  }
+  .invalid-feedback{
+    font-size: 3rem;
+  }
+}
+</style>
+
+
 <div class="form-group">
 
   <%= simple_form_for(price_board) do |form| %>
   <div>  
-    <%#= form.label :price_date, "日期" %>
-    <%#= form.datetime_field :price_date, class:"form-control" %>
     <%= form.input :price_date, label: "日期", class:"form-control" %>
   </div> 
   <div class='row'>
-    <div class='col-6'>  
+    <div class='col-lg-6 col-sm-12'>  
       <%= form.input :wholesale_gold_selling, label: "黃金價格(盤商賣出)", class:"form-control" %>
     </div>
-    <div class='col-6'>  
+    <div class='col-lg-6 col-sm-12'>  
       <%= form.input :wholesale_gold_buying, label: "黃金價格(盤商買入)", class:"form-control"  %>
     </div>
   </div>
   <div class='row'>
-    <div class='col-6'>  
+    <div class='col-lg-6 col-sm-12'>  
       <%= form.input :gold_selling, label: "黃金價格(賣出)", class:"form-control" %>
     </div>
-    <div class='col-6'>  
+    <div class='col-lg-6 col-sm-12'>  
       <%= form.input :gold_buying, label: "黃金價格(買入)", class:"form-control" %>
     </div>
   </div>
   <div class='row'>
-    <div class='col-6'>  
+    <div class='col-lg-6 col-sm-12'>  
     <%= form.input :platinum_selling, label: "鉑金價格(賣出)", class:"form-control"  %>
     </div> 
-    <div class='col-6'>  
+    <div class='col-lg-6 col-sm-12'>  
     <%= form.input :platinum_buying, label: "鉑金價格(買入)", class:"form-control" %>
     </div> 
   </div>
   
-  <%= form.submit class:'mt-3'%>
+  <%= form.submit class:'btn btn-info'%>
   <% end %>
 
 </div>

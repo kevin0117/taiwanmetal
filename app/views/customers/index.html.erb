@@ -1,6 +1,22 @@
+<style>
+
+@media (max-width: 992px){
+  h1{
+    font-size: 6rem;
+  }
+  .button-customer{
+    font-size: 3rem;
+  }
+  table{
+        font-size: 3rem;
+
+  }
+}
+</style>
+
 <h1>客戶基本資料</h1>
 
-<%= link_to "新增客戶", new_customer_path, class:"btn btn-success mb-3" %>
+<%= link_to "新增客戶", new_customer_path, class:"btn btn-success mb-3 button-customer" %>
 
 <table class='table'>
   <thead>

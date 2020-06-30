@@ -1,3 +1,15 @@
+<style>
+
+@media (max-width: 992px){
+  label{
+    font-size: 3rem;
+  }
+  .invalid-feedback{
+    font-size: 3rem;
+  }
+}
+</style>
+
 <div class="form-group">
   <%= simple_form_for(customer) do |f| %>
     <%= f.input :name, label: '名稱', class:"form-control"  %>

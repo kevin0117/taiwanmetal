@@ -1,3 +1,12 @@
+<style>
+
+@media (max-width: 992px){
+  h1{
+    font-size: 6rem;
+  }
+}
+</style>
+
 <h1>新增銷售</h1>
 <%= render 'table', sale: @sale %>
 <%= render 'cart', sale: @sale if !current_cart.empty? %>

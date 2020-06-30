@@ -1,9 +1,20 @@
+<style>
+
+@media (max-width: 992px){
+  label{
+    font-size: 3rem;
+  }
+  .invalid-feedback{
+    font-size: 3rem;
+  }
+}
+</style>
 <div class="form-group">
   <%= simple_form_for(vendor) do |f| %>
     <%= f.input :name, label: '名稱', class:"form-control"  %>
     <%= f.input :description, label: '描述', class:"form-control"  %>
-    <%= f.input :online, label: '正常營運中', class:"form-control"  %>
+    <%= f.input :online, label: '正常營運中', class:"form-check-input", type:"checkbox"  %>
 
-    <%= f.button :submit %>  
+    <%= f.button :submit, class:"btn btn-primary mt-3"%>  
   <% end %>
 </div>

@@ -1,33 +1,45 @@
+<style>
+
+@media (max-width: 992px){
+  label{
+    font-size: 3rem;
+  }
+  .invalid-feedback{
+    font-size: 3rem;
+  }
+}
+</style>
+
 <div class="form-group" data-controller="sale">  
   <%= simple_form_for(sale) do |form| %>  
     <div class='form-row'>  
-      <div class='form-group col-md-3'>  
+      <div class='form-group col-lg-3 col-sm-12'>  
         <%= form.label :sale_date, "銷售日期" %>
         <%= form.datetime_field :sale_date, class:"form-control" %>
       </div>       
-      <div class='form-group col-md-3'>   
+      <div class='form-group col-lg-3 col-sm-12'>   
         <%= form.label :customer_id, "客戶" %>
         <%= form.collection_select :customer_id, Customer.available(current_user.id), :id, :name, {}, class:"form-control" %>
       </div> 
-      <div class='form-group col-md-3'>  
+      <div class='form-group col-lg-3 col-sm-12'>  
         <%= form.label :gold_selling, "金價(賣出)" %>
         <%= form.number_field :gold_selling, value: PriceBoard.find_gold_selling(current_user.id), data: { target: "sale.gold_selling" }, class:"form-control" %>
       </div> 
-      <div class='form-group col-md-3'>  
+      <div class='form-group col-lg-3 col-sm-12'>  
         <%= form.label :gold_buying, "金價(買入)" %>
         <%= form.number_field :gold_buying, value: PriceBoard.find_gold_buying(current_user.id), data: { target: "sale.gold_buying" }, class:"form-control" %>
       </div>     
     </div>
     <div class='form-row'>  
-      <div class='form-group col-md-4'>  
+      <div class='form-group col-lg-4 col-sm-12'>  
         <%= form.label :exchange_weight, "換金重量" %>
         <%= form.text_field :exchange_weight, placeholder: "輸入換金重量", data: { target: "sale.exchange_weight" }, class:"form-control" %>
       </div> 
-      <div class='form-group col-md-4'>  
+      <div class='form-group col-lg-4 col-sm-12'>  
         <%= form.label :wastage_rate, "換金成色" %>
         <%= form.text_field :wastage_rate, data: { target: "sale.wastage_rate" }, class:"form-control" %>
       </div>  
-      <div class='form-group col-md-4'> 
+      <div class='form-group col-lg-4 col-sm-12'> 
         <%= form.label :net_weight, "實重" %>
         <%= link_to "計算", "#", data: { action: "click->sale#cal_weight" }, class:"btn btn-info btn-sm" %> 
         <%= form.text_field :net_weight, data: { target: "sale.net_weight" }, class:"form-control" %>

@@ -1,6 +1,22 @@
+<style>
+
+@media (max-width: 992px){
+  h1{
+    font-size: 6rem;
+  }
+  .button-product{
+    font-size: 3rem;
+  }
+  table{
+        font-size: 3rem;
+
+  }
+}
+</style>
+
 <h1>商品列表</h1>
 
-<%= link_to "新增商品", new_product_path, class:'btn btn-success mb-3' %>
+<%= link_to "新增商品", new_product_path, class:'btn btn-success mb-3 button-product' %>
 
 <table class="table">
   <thead>
