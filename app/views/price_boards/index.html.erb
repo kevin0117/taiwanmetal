@@ -8,12 +8,12 @@
     font-size: 3rem;
   }
   .button-price_board{
-    font-size: 3rem;
+    font-size: 2rem;
   }
-  /* table{
-        font-size: 1rem;
+  table{
+        font-size: 2rem;
 
-  } */
+  }
 }
 </style>
 
@@ -23,7 +23,7 @@
 
 <%= link_to "新增", new_price_board_path, class:"btn btn-success mb-3 button-price_board" %>
 <%#= paginate @priceBoards, theme: 'twitter-bootstrap-4' %>
-
+<div class='table-responsive rwdtable'>
 <table class='table'>
   <thead>
     <tr>
@@ -44,7 +44,7 @@
   <tbody>
     <% @priceBoards.each_with_index do |priceBoard, i| %>
     <tr>
-      <td><%= @priceBoards[i].price_date %></td>
+      <td data-label="price_date"><%= @priceBoards[i].price_date %></td>
       <td><%= @priceBoards[i].wholesale_gold_selling %></td>
       <td><%= @priceBoards[i].wholesale_gold_buying %></td>
       <td><%= @priceBoards[i].wholesale_gold_selling - @priceBoards[i+1].wholesale_gold_selling if @priceBoards[i+1]!=nil  %></td>
@@ -55,13 +55,14 @@
       <td><%= @priceBoards[i].platinum_buying %></td>
       <td><%= @priceBoards[i].platinum_selling - @priceBoards[i+1].platinum_selling if @priceBoards[i+1]!=nil  %></td>
       <td>
-        <%= link_to "編輯", edit_price_board_path(priceBoard), class:"btn btn-info" %>
-        <%= link_to "刪除", price_board_path(priceBoard), method: :delete, class:"btn btn-info" %>
+        <%= link_to "編輯", edit_price_board_path(priceBoard), class:"btn btn-info button-price_board" %>
+        <%#= link_to "刪除", price_board_path(priceBoard), method: :delete, class:"btn btn-danger button-price_board" %>
       </td>
     </tr>    
     <% end %>
   </tbody>
 </table>
+</div>
 
   <%# create_table "price_boards", force: :cascade do |t|
     t.datetime "price_date"
