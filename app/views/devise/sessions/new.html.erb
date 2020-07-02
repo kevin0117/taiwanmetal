@@ -1,9 +1,27 @@
+<style>
+
+@media (max-width: 992px){
+  h2{
+    font-size: 5rem;
+  }
+
+  .button-login{
+    font-size: 2rem;
+  }
+
+  label{
+    font-size: 4rem;
+  }
+}
+
+</style>
+
 <section class='container'>
   <div class='row mt-2'>
-    <div class='col-9'>
+    <div class='col-lg-9 col-sm-12'>
       <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" style="width:100%">
     </div>
-    <div class='col-3'>
+    <div class='col-lg-3 col-sm-12'>
       <h2>登入</h2>
       
       <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
@@ -19,7 +37,7 @@
         </div>
       
         <div class="form-actions">
-          <%= f.button :submit, "登入", class:'btn btn-info' %>
+          <%= f.button :submit, "登入", class:'btn btn-info button-login' %>
         </div>
       <% end %>
       <%= render "devise/shared/links" %>

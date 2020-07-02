@@ -1,3 +1,16 @@
+<style>
+
+@media (max-width: 992px){
+  h2{
+    font-size: 5rem;
+  }
+
+  label{
+    font-size: 4rem;
+  }
+}
+
+</style>
 <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
 <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
@@ -27,7 +40,7 @@
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, "Update" %>
+    <%= f.button :submit, "更新", class:'btn btn-info button-edit' %>
   </div>
 <% end %>
 

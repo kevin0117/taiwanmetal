@@ -1,3 +1,18 @@
+<style>
+
+@media (max-width: 992px){
+  label{
+    font-size: 3rem;
+  }
+  .invalid-feedback{
+    font-size: 3rem;
+  }
+  table{
+    font-size: 2rem;
+  }
+}
+</style>
+
 <div class="form-group" data-controller="sale">
   <%= simple_form_for(sale) do |form| %>  
     <div class='form-row'>  
@@ -29,6 +44,7 @@
         <%= form.text_field :net_weight, data: { target: "sale.net_weight" }, class:"form-control" %>
       </div>     
     </div>
+    <div class='table-responsive'>
     <table class="table">
       <thead>
         <tr>
@@ -65,6 +81,7 @@
         <% end %>      
       </tbody>
     </table> 
+    </div>
     <%# if .product_list.present? %>
       <h6>
       <label for="weight">合計重量</label>

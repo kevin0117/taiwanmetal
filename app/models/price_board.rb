@@ -7,10 +7,10 @@ class PriceBoard < ApplicationRecord
     target_date = PriceBoard.select{ |item| 
       item.price_date.to_s == date && item.user_id == id
     }  
-    if target_date
-      target_date.first.gold_selling
-    else
+    if target_date.empty?
       PriceBoard.last.gold_selling if PriceBoard.last.present?
+    else
+      target_date.first.gold_selling
     end
   end
 
@@ -22,10 +22,10 @@ class PriceBoard < ApplicationRecord
     target_date = PriceBoard.select{ |item| 
       item.price_date.to_s == date && item.user_id == id
     }  
-    if !target_date.empty?
-      target_date.first.gold_buying
-    else
+    if target_date.empty?
       PriceBoard.last.gold_buying if PriceBoard.last.present?
+    else
+      target_date.first.gold_buying
     end
   end
   
