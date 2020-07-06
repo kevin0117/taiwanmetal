@@ -3,9 +3,9 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   def generate_barcode(text, id)
-      barcode = Barby::Code39.new(text, true)
-      outputter = Barby::PngOutputter.new(barcode)
-      File.open("#{Rails.root}/public/barcode-#{id}.png", 'wb'){|f| f.write outputter.to_png }
+    barcode = Barby::Code39.new(text, true)
+    outputter = Barby::PngOutputter.new(barcode)
+    ​File.open("#{Rails.root}/app/assets/images/barcode-#{id}.png", 'wb'){|f| f.write outputter.to_png }
   end
 
   def current_cart
