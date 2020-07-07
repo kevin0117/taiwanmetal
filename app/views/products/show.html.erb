@@ -20,6 +20,6 @@
   <li>狀態：<%= @product.on_sell %></li>
   <li>廠商：<%= @product.vendor.name %></li>
   <li>成本：<%= @product.cost %></li>
-  <li>條碼：<%= image_tag ("#{Rails.root}/app/assets/images/barcode-#{@product.id}.png"), class: "img-responsive" %></li>
+  <li>條碼：<%= image_tag ("/barcode-#{@product.id}.png"), class: "img-responsive" %></li>
   <li>描述：<%= @product.description %></li>
 </ul>
