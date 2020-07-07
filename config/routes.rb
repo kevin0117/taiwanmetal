@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+
+  # POST/api/v1/subscribe
+  namespace :api do
+    namespace :v1 do
+      post 'subscribe', to: 'utils#subscribe'
+    end
+  end
+
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   get 'bootstrap/index'
   root 'pages#home'
