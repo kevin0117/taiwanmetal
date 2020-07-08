@@ -94,3 +94,4 @@ Click the product name which you want to edit. If you are interested in editing 
 
 All products you added can be found in product lists link which is under inventory dropdown
 
+Website demo: https://taiwanmetal.herokuapp.com
