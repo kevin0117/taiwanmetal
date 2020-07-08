@@ -1,8 +1,8 @@
 class PriceBoard < ApplicationRecord
   belongs_to :user
 
-  def self.find_gold_selling(id)
-    date = Date.today.to_s.split(' ').first
+  def self.find_gold_selling(id, date = Date.today)
+    date = date.to_s.split(' ').first
 
     target_date = PriceBoard.select{ |item| 
       item.price_date.to_s == date && item.user_id == id
@@ -16,8 +16,8 @@ class PriceBoard < ApplicationRecord
 
 
 
-  def self.find_gold_buying(id)
-    date = Date.today.to_s.split(' ').first
+  def self.find_gold_buying(id, date = Date.today)
+    date = date.to_s.split(' ').first
 
     target_date = PriceBoard.select{ |item| 
       item.price_date.to_s == date && item.user_id == id
