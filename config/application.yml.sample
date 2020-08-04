@@ -1,2 +1,5 @@
 google_app_id: 'YOUR-OWN-APP-ID'
 google_app_secret: 'YOUR-OWN-APP-SECRET'
+access_key: 'YOUR-OWN-ACCESS-KEY'
+overhead: 'YOUR-OWN-OVERHEAD'
+agio: 'YOUR-OWN-AGIO'

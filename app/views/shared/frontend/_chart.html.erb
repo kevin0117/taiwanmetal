@@ -1,0 +1,45 @@
+<style>
+  @media (max-width: 992px){
+    th{
+      text-align: center;
+      font-size: 3rem;
+    }
+    td{
+      text-align: center;
+      font-size: 3rem;
+    }
+    h5{
+      text-align: center;
+      font-size: 4rem;
+    }
+    #chart_img{
+      width: 880px;
+      height: 500px;
+      text-align: center;
+    }
+  }
+  .content{
+    font-size: 24px;
+  }
+
+</style>
+
+<section class="chart section" data-controller='chart'>
+  <h5>台幣黃金價格</h5>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>賣出</th>
+        <th>買入</th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <tr>
+        <td><%= @XAU_TWD_SELL %></td>
+        <td><%= @XAU_TWD_BUY %></td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="lead">&nbsp;即時更新請&nbsp;<a class="reload" href="javascript:location.reload()">按此</a></p>
+</section>
