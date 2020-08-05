@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.3'
+gem 'aws-sdk-s3', '~> 1.75'
 gem 'dotenv-rails', '~> 2.7', '>= 2.7.6'
 gem 'simple_form', '~> 5.0', '>= 5.0.2'
 gem 'omniauth-google-oauth2', '~> 0.8.0'
