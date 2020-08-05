@@ -12,6 +12,7 @@ FactoryBot.define do
     deleted_at { "2020-06-06 23:44:26" }
     
     customer
+    # user { create(:user, user_id: 3) }
     user
   end
 end
