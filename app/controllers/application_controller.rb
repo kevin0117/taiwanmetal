@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
     barcode = Barby::Code39.new(text, true)
     outputter = Barby::PngOutputter.new(barcode)
     File.open("#{Rails.root}/public/barcode-#{id}.png", 'wb'){|f| f.write outputter.to_png }
+    # @product.barcode.attach(io: File.open('#{Rails.root}/public/barcode-#{id}.png'), filename: 'barcode-#{id}.png')
   end
 
   def current_cart
