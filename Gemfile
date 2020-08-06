@@ -9,6 +9,7 @@ gem 'omniauth-google-oauth2', '~> 0.8.0'
 gem 'friendly_id', '~> 5.3'
 gem 'barby', '~> 0.6.8'
 gem 'chunky_png', '~> 1.3', '>= 1.3.11'
+gem 'ransack', '~> 2.3', '>= 2.3.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.1'
 # Use postgresql as the database for Active Record
