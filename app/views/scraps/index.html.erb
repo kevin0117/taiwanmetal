@@ -2,11 +2,19 @@
 
 <%= link_to "新增舊金", new_scrap_path, class:"btn btn-success mb-3" %>
 
+<%= search_form_for @q, class: 'form-inline' do |f| %>
+  <%= f.date_field :collected_date_gteq, class:"form-control input-sm", placeholder: "Date >= to" %>
+  <%= f.date_field :collected_date_lteq, class:"form-control input-sm", placeholder: "Date <= to" %>
+
+  <%= f.submit class:"btn btn-outline-dark"%>
+<% end %>
+
 <table class='table'>
   <thead>
     <tr>
       <th>代號</th>
       <th>日期</th>
+      <th>所有人</th>
       <th>名稱</th>
       <th>重量</th>
       <th>成色</th>
@@ -22,6 +30,7 @@
     <tr>
       <td><%= scrap.code %></td>
       <td><%= scrap.collected_date.to_formatted_s(:short) %></td>
+      <td><%= scrap.user.name %></td>
       <td><%= link_to scrap.title, scrap_path(scrap) %></td>
       <td><%= scrap.gross_weight %></td>
       <td><%= scrap.wastage_rate %></td>
@@ -41,10 +50,12 @@
 
 <% if current_user.scraps.exists? %>
   <h5>
-    合計重量: <%= current_user.scraps.sum(:gross_weight)%> | 
-    合計實重: <%= current_user.scraps.sum(:net_weight) %> | 
-    平均成色: <%= current_user.scraps.average(:wastage_rate).round(4) %> | 
-    支出總和: $<%= current_user.scraps.sum(:total_price).round %> | 
-    平均金價: $<%= (current_user.scraps.sum(:total_price).round / current_user.scraps.sum(:net_weight)).round %>
+    合計重量: <%= @scraps.sum(:gross_weight)%> | 
+    合計實重: <%= @scraps.sum(:net_weight) %> | 
+    平均成色: <%= @scraps.average(:wastage_rate).round(4) %> | 
+    支出總和: $<%= @scraps.sum(:total_price).round %> | 
+    平均金價: $<%= (@scraps.sum(:total_price).round / @scraps.sum(:net_weight)).round %>
   </h5>
 <% end %>
+
+

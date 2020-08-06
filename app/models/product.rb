@@ -1,5 +1,6 @@
 class Product < ApplicationRecord
   include CodeGenerator
+  # has_one_attached :barcode
   has_rich_text :description
 
   belongs_to :price_board
