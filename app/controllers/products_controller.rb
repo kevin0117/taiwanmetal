@@ -27,17 +27,20 @@ class ProductsController < ApplicationController
 
     if @product.save
       @product.barcode = generate_barcode(@product.code.to_s, @product.id)    
+      # @product.barcode.attach(io: File.open("#{Rails.root}/public/barcode-#{@product.id}.png"), filename: "barcode-#{@product.id}.png")
+
       @product.save
       redirect_to products_path, notice: "商品建立成功"
     else
       render :new
     end
   end
-
+ 
   def update
     @product.title = ProductList.find(params[:product][:product_list_id]).name
     @product.barcode = generate_barcode(@product.code.to_s, @product.id) 
-    
+    # @product.barcode.attach(io: File.open("#{Rails.root}/public/barcode-#{@product.id}.png"), filename: "barcode-#{@product.id}.png")
+   
     if @product.update(product_params)
       redirect_to products_path, notice: "更新成功" 
     else
