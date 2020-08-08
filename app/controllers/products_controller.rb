@@ -1,9 +1,10 @@
 class ProductsController < ApplicationController
   before_action :find_product, only: %i[edit update show destroy add_to_cart delete_to_cart decrease_to_cart]
   before_action :find_price_board_id, only: %i[edit update add_to_cart delete_to_cart decrease_to_cart]
-  
+
   def index
-    @products = current_user.products.includes(:vendor, :product_list).order(:id)
+    @q = current_user.products.ransack(params[:q])
+    @products = @q.result(distinct: true).includes(:vendor, :product_list).order(:id).page(params[:page])
   end
 
   def new

@@ -5,14 +5,17 @@ class SalesController < ApplicationController
   before_action :set_all_products_in_order, only: %i[new create edit]
 
   def index
-    @sales = current_user.sales.order(sale_date: :desc)
+    @q = current_user.sales.ransack(params[:q])
+    @sales = @q.result.page params[:page]
   end
 
   def new
     @sale = Sale.new
+    @products = @q.result(distinct: true)
   end
 
   def create
+    @products = @q.result(distinct: true)
     @sale = Sale.new(sale_params)
     @sale.user_id = current_user.id
     # byebug
@@ -38,6 +41,8 @@ class SalesController < ApplicationController
   end
 
   def update
+    @products = @q.result(distinct: true)
+
     if @sale.update(sale_params)
       redirect_to sales_path, notice: "銷貨編輯成功"
     else
