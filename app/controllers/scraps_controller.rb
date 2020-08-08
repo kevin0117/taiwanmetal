@@ -1,9 +1,9 @@
 class ScrapsController < ApplicationController
   before_action :find_scrap, only: [:edit, :update, :show, :destroy]
-
+  
   def index
-    @q = current_user.scraps.ransack(params[:q])
-    @scraps = @q.result(distinct: true).order(collected_date: :desc)
+    @q = current_user.scraps.order(collected_date: :desc).ransack(params[:q])
+    @scraps = @q.result.page params[:page]
   end
 
   def new
