@@ -17,41 +17,42 @@
 
 <%= link_to "新增商品", new_product_path, class:'btn btn-success mb-3 button-product' %>
 <div class='table-responsive'>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>會員</th>
-      <th>代號</th>
-      <th>名稱</th>
-      <th>重量</th>
-      <th>工錢</th>
-      <th>廠商</th>
-      <th>庫存量</th>
-      <th>銷售狀態</th>
-      <th></th>
-    </tr>
-  </thead>
+  <%= paginate @products %>
   
-  <tbody>
-    <% @products.each do |product| %>
-    <tr>
-    <td><%= product.id %></td>
-    <td><%= product.user.name %></td>
-    <td><%= product.code %></td>
-    <td><%= link_to product.title, product_path(product) %></td> 
-    <td><%= product.weight %></td>
-    <td><%= product.service_fee %></td>
-    <td><%= product.vendor.name %></td>
-    <td><%= product.quantity %></td>
-    <td><%= product.on_sell %></td>
-    <td>
-      <%= link_to "編輯", edit_product_path(product), class:"btn btn-info btn-sm button-product" %>
-      <%= link_to "刪除", product_path(product), method: :delete, data: {confirm:"確認刪除嗎？"}, class:"btn btn-danger btn-sm button-product" %>
-    </td>
-    </tr>    
-    <% end %>  
-  </tbody>
-</table>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>會員</th>
+        <th>代號</th>
+        <th>名稱</th>
+        <th>重量</th>
+        <th>工錢</th>
+        <th>廠商</th>
+        <th>庫存量</th>
+        <th>銷售狀態</th>
+        <th></th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <% @products.each do |product| %>
+      <tr>
+      <td><%= product.id %></td>
+      <td><%= product.user.name %></td>
+      <td><%= product.code %></td>
+      <td><%= link_to product.title, product_path(product) %></td> 
+      <td><%= product.weight %></td>
+      <td><%= product.service_fee %></td>
+      <td><%= product.vendor.name %></td>
+      <td><%= product.quantity %></td>
+      <td><%= product.on_sell %></td>
+      <td>
+        <%= link_to "編輯", edit_product_path(product), class:"btn btn-info btn-sm button-product" %>
+        <%= link_to "刪除", product_path(product), method: :delete, data: {confirm:"確認刪除嗎？"}, class:"btn btn-danger btn-sm button-product" %>
+      </td>
+      </tr>    
+      <% end %>  
+    </tbody>
+  </table>
 </div>

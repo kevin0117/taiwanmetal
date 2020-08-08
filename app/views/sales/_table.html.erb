@@ -13,32 +13,41 @@
 }
 </style>
 <div class='table-responsive'>
-<table class="table" data-controller='table'>
-  <thead>
-    <tr>
-      <th></th>
-      <th>名稱</th>
-      <th>商品ID</th>
-      <th>重量</th>
-      <th>工錢</th>
-      <th>庫存量</th>
-      <th>銷售狀態</th>
-      <th></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% current_user.products.each do |product| %>
-    <tr>
-      <td><%= link_to "加入", add_to_cart_product_path(product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-info" %></td>
-      <td><%= product.title %></td>
-      <td><%= product.id %></td>
-      <td><%= product.weight %>
-      <td><%= product.service_fee %></td>
-      <td><%= product.quantity %></td>
-      <td><%= product.on_sell %></td>
-    </tr>    
-    <% end %>      
-  </tbody>
-</table> 
+  <table class="table" data-controller='table'>
+    <thead>
+      <tr>
+        <th></th>
+        <th>所有人</th>
+        <th>名稱</th>
+        <th>商品ID</th>
+        <th>重量</th>
+        <th>工錢</th>
+        <th>庫存量</th>
+        <th>銷售狀態</th>
+        <th></th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <% @products.take(1).each do |product| %>
+      <tr>
+        <td><%= link_to "加入", add_to_cart_product_path(product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-info" %></td>
+        <td><%= product.user.id %></td>
+        <td><%= product.title %></td>
+        <td><%= product.id %></td>
+        <td><%= product.weight %>
+        <td><%= product.service_fee %></td>
+        <td><%= product.quantity %></td>
+        <td><%= product.on_sell %></td>
+      </tr>    
+      <% end %>      
+    </tbody>
+  </table> 
+  <form class="form-inline">
+    <%= search_form_for @q do |f| %>
+      <%= f.submit class:"btn btn-outline-dark my-2 my-sm-0 mr-2" %>
+      <%= f.search_field :id_eq, class:"form-control mr-sm-2", type:"search", placeholder:"輸入商品ID"%>
+    <% end %>
+  </form>
 </div>
