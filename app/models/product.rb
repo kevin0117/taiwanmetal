@@ -2,6 +2,7 @@ class Product < ApplicationRecord
   include CodeGenerator
   # has_one_attached :barcode
   has_rich_text :description
+  paginates_per 10
 
   belongs_to :price_board
   belongs_to :product_list
