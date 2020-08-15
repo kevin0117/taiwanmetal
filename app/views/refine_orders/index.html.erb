@@ -1,0 +1,54 @@
+<h1>提煉列表</h1>
+
+<%= link_to "新增提煉", new_refine_order_path, class:"btn btn-success mb-3 button-refine_order" %>
+
+<table class='table'>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>請求日期</th>
+      <th>未提煉總重</th>
+      <th>提煉成色</th>
+      <th>已提煉總重</th>
+      <th>提煉費用</th>
+      <th>狀態</th>
+      <th></th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    <% @refineOrders.each do |refineOrder| %>
+    <tr>
+      <td><%= refineOrder.id %></td>
+      <td><%= link_to refineOrder.request_date, edit_refine_order_path(refineOrder) %></td>
+      <td><%= refineOrder.total_gross_weight %></td>
+      <td><%= refineOrder.result_purity %></td>
+      <td><%= refineOrder.result_weight %></td>
+      <td><%= refineOrder.refine_fee %></td>
+      <td><%= refineOrder.status %></td>
+      <td>
+        <%= link_to "編輯", edit_refine_order_path(refineOrder), class:"btn btn-info btn-sm button-refine" %>
+        <%= link_to "刪除", refine_order_path(refineOrder), method: :delete, data: { confirm: "確認刪除嗎？"}, class:"btn btn-danger btn-sm button-refine" %>
+      </td>
+
+    </tr>    
+    <% end %>
+  </tbody>
+</table>
+
+  <%# create_table "refine_orders", force: :cascade do |t|
+    t.date "request_date"
+    t.integer "status"
+    t.decimal "refine_fee"
+    t.decimal "result_weight"
+    t.decimal "result_purity"
+    t.string "slug"
+    t.text "note"
+    t.string "recipient"
+    t.bigint "scraps_id", null: false
+    t.bigint "users_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["scraps_id"], name: "index_refine_orders_on_scraps_id"
+    t.index ["users_id"], name: "index_refine_orders_on_users_id"
+  end %>

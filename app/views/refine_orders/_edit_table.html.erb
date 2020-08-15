@@ -1,0 +1,36 @@
+<table class="table" data-controller='table'>
+  <thead>
+    <tr>
+      <th></th>
+      <th>舊金ID</th>
+      <th>代號</th>
+      <th>所有人</th>
+      <th>重量</th>
+      <th>成色</th>
+      <th>實重</th>
+      <th>數量</th>
+      <th>庫存狀態</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% current_user.scraps.available.each do |scrap| %>
+    <tr>
+      <td><%= link_to "加入", add_refine_order_path(scrap, refine_order_id: refine_order.id), method: :post, class:"btn btn-sm btn-info" %></td>
+      <td><%= scrap.id %></td>
+      <td><%= scrap.code %></td>
+      <td><%= scrap.user.name %></td>
+      <td><%= scrap.gross_weight %></td>
+      <td><%= scrap.wastage_rate %></td>
+      <td><%= scrap.net_weight %></td>
+      <td><%= scrap.quantity %></td>
+      <td><%= scrap.in_stock %></td>
+    </tr>    
+    <% end %>      
+  </tbody>
+</table> 
+
+
+
+

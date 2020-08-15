@@ -1,0 +1,15 @@
+<style>
+
+@media (max-width: 992px){
+  h1{
+    font-size: 6rem;
+  }
+}
+</style>
+
+<h1>新增提煉</h1>
+
+<%= render 'table', refine_order: @refine_order %>
+<%= render 'cart', refine_order: @refine_order if !refining_cart.empty? %>
+
+

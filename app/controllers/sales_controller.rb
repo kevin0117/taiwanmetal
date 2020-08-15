@@ -3,6 +3,7 @@ class SalesController < ApplicationController
   before_action :find_product, only: %i[remove add decrease]
   before_action :set_sale, only: %i[decrease add remove]
   before_action :set_all_products_in_order, only: %i[new create edit]
+  before_action :set_ransack_obj
 
   def index
     @q = current_user.sales.ransack(params[:q])
@@ -13,7 +14,7 @@ class SalesController < ApplicationController
     @sale = Sale.new
     @products = @q.result(distinct: true)
   end
-
+ 
   def create
     @products = @q.result(distinct: true)
     @sale = Sale.new(sale_params)
@@ -66,6 +67,7 @@ class SalesController < ApplicationController
   end
 
   def remove
+    # byebug
     target_manifest = @sale.manifests.find_by(product_id: @product.id)
     @product.quantity += target_manifest.quantity
     @product.save
@@ -161,5 +163,9 @@ class SalesController < ApplicationController
                                  :customer_id,
                                  :user_id)
                                  
+  end
+
+  def set_ransack_obj
+    @q = (user_signed_in?) ? current_user.products.ransack(params[:q]) : Product.ransack(params[:q])
   end
 end

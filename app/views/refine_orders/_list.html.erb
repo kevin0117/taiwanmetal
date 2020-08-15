@@ -1,0 +1,74 @@
+<style>
+
+@media (max-width: 992px){
+  label{
+    font-size: 3rem;
+  }
+  .invalid-feedback{
+    font-size: 3rem;
+  }
+}
+</style>
+
+<div class="form-group" data-controller="sale">  
+  <%= simple_form_for(refine_order) do |form| %>  
+    <div class='form-row'>  
+      <div class='form-group col-lg-3 col-sm-12'>  
+        <%= form.label :request_date, "請求日期" %>
+        <%= form.datetime_field :request_date, class:"form-control" %>
+      </div>       
+      <div class='form-group col-lg-3 col-sm-12'>   
+        <%= form.label :recipient, "接收者" %>
+        <%= form.text_field :recipient, class:"form-control" %>
+      </div> 
+      <div class='form-group col-lg-3 col-sm-12'>  
+        <%= form.label :note, "備註" %>
+        <%= form.text_area :note, class:"form-control" %>
+      </div> 
+    </div>
+
+    <table class="table" data-controller='table'>
+      <thead>
+        <tr>
+          <th>舊金ID</th>
+          <th>代號</th>
+          <th>日期</th>
+          <th>所有人</th>
+          <th>重量</th>
+          <th>成色</th>
+          <th>實重</th>
+          <th>提煉單價(錢)</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% refine_order.scraps.each do |scrap| %>
+        <tr>
+          <td><%= form.text_field :scrap_id, value: scrap.id, readonly:"readonly" %></td>
+          <td><%= scrap.code %></td>
+          <td><%= scrap.collected_date.to_formatted_s(:short) %></td>
+          <td><%= scrap.user.name %></td>
+          <td><%= scrap.gross_weight %></td>
+          <td><%= scrap.wastage_rate %></td>
+          <td><%= scrap.net_weight %></td>
+          <td><%= scrap.refine_charge %></td>
+          <td>
+            <%= link_to "移除", remove_refine_order_path(scrap, refine_order_id: refine_order.id), method: :post, data: { confirm: "確認刪除嗎？"}, class:"btn btn-sm btn-danger" %>
+            <%= link_to "-", decrease_refine_order_path(scrap, refine_order_id: @refine_order.id), method: :post, class:"btn btn-sm btn-danger" %>
+          </td>
+        </tr>    
+        <% end %>      
+      </tbody>
+    </table> 
+    <%# if refining_cart.scrap_list.present? %>
+      <h6>
+      <label for="weight">合計重量</label>  
+      <%= form.text_field :total_gross_weight, class:"form-control", value: @refine_order.refine_lists.reduce(0){|sum, m| sum + m.weight}, readonly: "readonly" , data: { target: "sale.weight" } %>
+      <label for="service_fee">合計費用</label>
+      <%= form.text_field :refine_fee, class:"form-control", value: @refine_order.refine_lists.reduce(0){|sum, m| sum + m.service_fee}, readonly: "readonly" , data: { target: "sale.service_fee" } %>
+      </h6>
+    <%# end %>
+
+    <%= form.submit %>  
+  <% end %>
+</div>

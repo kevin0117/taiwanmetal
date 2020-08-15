@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   before_action :find_product, only: %i[edit update show destroy add_to_cart delete_to_cart decrease_to_cart]
   before_action :find_price_board_id, only: %i[edit update add_to_cart delete_to_cart decrease_to_cart]
+  before_action :set_ransack_obj
 
   def index
     @q = current_user.products.ransack(params[:q])
@@ -144,5 +145,9 @@ class ProductsController < ApplicationController
                                     :customer_id,
                                     :price_board_id,
                                     :description)
+  end
+
+  def set_ransack_obj
+    @q = (user_signed_in?) ? current_user.products.ransack(params[:q]) : Product.ransack(params[:q])
   end
 end

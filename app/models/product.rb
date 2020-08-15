@@ -15,5 +15,7 @@ class Product < ApplicationRecord
 
   has_many :manifests
   has_many :sales, through: :manifests
+  
+  scope :available, -> { where(on_sell: true) }
 
 end

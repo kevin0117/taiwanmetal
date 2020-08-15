@@ -13,9 +13,9 @@
   </thead>
 
   <tbody>
-    <% current_user.products.each do |product| %>
+    <% current_user.products.available.each do |product| %>
     <tr>
-      <td><%= link_to "加入", add_sale_path(product, sale_id: sale.id), method: :post %></td>
+      <td><%= link_to "加入", add_sale_path(product, sale_id: sale.id), method: :post, class:"btn btn-sm btn-info" %></td>
       <td><%= product.title %></td>
       <td><%= product.id %></td>
       <td><%= product.weight %>
