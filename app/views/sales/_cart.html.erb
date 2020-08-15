@@ -52,8 +52,8 @@
           <th>商品ID</th>
           <th>重量</th>
           <th>工錢</th>
+          <th>庫存量</th>
           <th>銷售狀態</th>
-          <th>數量</th>
         </tr>
       </thead>
      
@@ -64,8 +64,8 @@
           <td><%= form.text_field :product_id, value: product.id, readonly:"readonly" %></td>
           <td><%= product.weight %></td>
           <td><%= product.service_fee %></td>
-          <td><%= product.on_sell %></td>
           <td><%= find_quantity(product) %></td>
+          <td><%= product.on_sell %></td>
           <td><%= link_to " - ", decrease_to_cart_product_path(product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-danger" %></td>
           <td><%= link_to "移除", delete_to_cart_product_path(product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-danger" %></td>
         </tr>    

@@ -23,8 +23,8 @@
       <td><%= sale.payment_method %></td>
       <td><%= sale.user.name %></td>
       <td>
-        <%= link_to "編輯", edit_sale_path(sale) %>
-        <%= link_to "刪除", sale_path(sale), method: :delete, data: { confirm: "確認刪除嗎？"} %>
+        <%= link_to "編輯", edit_sale_path(sale), class:"btn btn-info btn-sm button-sales" %>
+        <%= link_to "刪除", sale_path(sale), method: :delete, data: { confirm: "確認刪除嗎？"}, class:"btn btn-danger btn-sm button-sales" %>
       </td>
     </tr>    
     <% end %>

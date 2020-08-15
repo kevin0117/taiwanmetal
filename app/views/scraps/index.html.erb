@@ -20,7 +20,8 @@
 <table class='table'>
   <thead>
     <tr>
-      <th>代號</th>
+      <th>舊金ID</th>
+      <%# <th>代號</th> %>
       <th>日期</th>
       <th>所有人</th>
       <th>名稱</th>
@@ -29,6 +30,8 @@
       <th>實重</th>
       <th>金價</th>
       <th>金額</th>
+      <th>數量</th>
+      <th>庫存</th>
       <th></th>
     </tr>
   </thead>
@@ -36,7 +39,8 @@
   <tbody>
     <% @scraps.each do |scrap| %>
     <tr>
-      <td><%= scrap.code %></td>
+      <td><%= scrap.id %></td>
+      <%# <td></td> %><%#= scrap.code %>
       <td><%= scrap.collected_date.to_formatted_s(:short) %></td>
       <td><%= scrap.user.name %></td>
       <td><%= link_to scrap.title, scrap_path(scrap) %></td>
@@ -45,9 +49,11 @@
       <td><%= scrap.net_weight %></td>
       <td><%= scrap.gold_buying %></td>
       <td><%= scrap.total_price %></td>
+      <td><%= scrap.quantity %></td>
+      <td><%= scrap.in_stock %></td>
       <td>
         <%= link_to "編輯", edit_scrap_path(scrap), class:"btn btn-info btn-sm"  %>
-        <%= link_to "刪除", scrap_path(scrap), method: 'delete', data:{ confirm: "確認刪除嗎？"}, class:"btn btn-info btn-sm" %>
+        <%= link_to "刪除", scrap_path(scrap), method: 'delete', data:{ confirm: "確認刪除嗎？"}, class:"btn btn-danger btn-sm button-scrap" %>
       </td>
 
     </tr>    

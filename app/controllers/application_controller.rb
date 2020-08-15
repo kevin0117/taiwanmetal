@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
-  helper_method :current_cart, :find_quantity
+  helper_method :current_cart, :find_quantity, :refining_cart
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :set_ransack_obj
+  
 
   def generate_barcode(text, id)
     barcode = Barby::Code39.new(text, true)
@@ -14,13 +14,12 @@ class ApplicationController < ActionController::Base
     @cart = @cart || Cart.restore_hash(session[:cart0117])
   end
 
-  def find_quantity(product)
-    current_cart.items.find{|item| item.product_id == product.id}.quantity
+  def refining_cart
+    @refine_cart = @refine_cart || RefineCart.restore_hash(session[:cart9527])
   end
 
-  # 設定Ransack::Search 的實體
-  def set_ransack_obj
-    @q = (user_signed_in?) ? current_user.products.ransack(params[:q]) : Product.ransack(params[:q])
+  def find_quantity(product)
+    current_cart.items.find{|item| item.product_id == product.id}.quantity
   end
 
   protected

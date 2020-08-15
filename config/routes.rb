@@ -34,7 +34,13 @@ Rails.application.routes.draw do
   end
 
   # 回收金屬
-  resources :scraps
+  resources :scraps do
+    member do
+      put :add_to_cart
+      put :decrease_to_cart
+      put :delete_to_cart
+    end
+  end
 
   # 銷售
   resources :sales do
@@ -43,6 +49,15 @@ Rails.application.routes.draw do
       post 'decrease', to: 'sales#decrease'
       post 'remove', to: 'sales#remove'
     end
+  end
+
+  # 提煉訂單
+  resources :refine_orders do
+    member do
+      post 'add', to: 'refine_orders#add'
+      post 'decrease', to: 'refine_orders#decrease'
+      post 'remove', to: 'refine_orders#remove'
+    end  
   end
 
 end

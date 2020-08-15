@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :customers
   has_many :price_boards
   has_many :product_lists
+  has_many :refine_orders
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
