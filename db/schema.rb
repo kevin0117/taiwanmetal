@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_06_134206) do
+ActiveRecord::Schema.define(version: 2020_08_14_013410) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,6 +130,34 @@ ActiveRecord::Schema.define(version: 2020_07_06_134206) do
     t.index ["vendor_id"], name: "index_products_on_vendor_id"
   end
 
+  create_table "refine_lists", force: :cascade do |t|
+    t.bigint "scrap_id", null: false
+    t.bigint "refine_order_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "quantity", default: 1
+    t.index ["refine_order_id"], name: "index_refine_lists_on_refine_order_id"
+    t.index ["scrap_id"], name: "index_refine_lists_on_scrap_id"
+  end
+
+  create_table "refine_orders", force: :cascade do |t|
+    t.date "request_date"
+    t.integer "status", default: 0
+    t.decimal "refine_fee"
+    t.decimal "result_weight"
+    t.decimal "result_purity"
+    t.string "slug"
+    t.text "note"
+    t.string "recipient"
+    t.bigint "scrap_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.decimal "total_gross_weight", default: "0.0"
+    t.index ["scrap_id"], name: "index_refine_orders_on_scrap_id"
+    t.index ["user_id"], name: "index_refine_orders_on_user_id"
+  end
+
   create_table "sales", force: :cascade do |t|
     t.datetime "sale_date", default: -> { "CURRENT_TIMESTAMP" }
     t.decimal "gold_selling"
@@ -166,6 +194,8 @@ ActiveRecord::Schema.define(version: 2020_07_06_134206) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "quantity", default: 1
+    t.decimal "refine_charge", default: "9.0"
     t.index ["customer_id"], name: "index_scraps_on_customer_id"
     t.index ["user_id"], name: "index_scraps_on_user_id"
   end
@@ -216,6 +246,10 @@ ActiveRecord::Schema.define(version: 2020_07_06_134206) do
   add_foreign_key "products", "product_lists"
   add_foreign_key "products", "users"
   add_foreign_key "products", "vendors"
+  add_foreign_key "refine_lists", "refine_orders"
+  add_foreign_key "refine_lists", "scraps"
+  add_foreign_key "refine_orders", "scraps"
+  add_foreign_key "refine_orders", "users"
   add_foreign_key "sales", "customers"
   add_foreign_key "sales", "products"
   add_foreign_key "sales", "users"
