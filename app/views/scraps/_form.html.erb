@@ -12,44 +12,57 @@
 
 <div class="form-group" data-controller='form'>
   <%= form_for(scrap) do |form| %>
-      <div>
+    <div>
       <%= form.label :collected_date, "日期" %>  
       <%= form.datetime_field :collected_date, class:"form-control" %>
-      </div> 
-      <div>  
-        <%= form.label :customer_id, "客戶" %>
-        <%= form.collection_select :customer_id, Customer.available(current_user.id), :id, :name, {}, class:"form-control" %>
-      </div> 
-      <div>
+    </div> 
+    <div>  
+      <%= form.label :customer_id, "客戶" %>
+      <%= form.collection_select :customer_id, Customer.available(current_user.id), :id, :name, {}, class:"form-control" %>
+    </div> 
+    <div>
       <%= form.label :title, "名稱" %>  
       <%= form.text_field :title, class:"form-control" %>
-      </div> 
+    </div> 
 
-      <div> 
+    <div> 
       <%= form.label :gross_weight, "重量" %> 
       <%= form.text_field :gross_weight, data: { target: "form.gross_weight" } ,class:"form-control" %>
-      </div> 
-      <div>  
+    </div> 
+    <div>  
       <%= form.label :wastage_rate, "成色" %>
       <%= form.text_field :wastage_rate, data: { target: "form.wastage_rate" }, class:"form-control mb-1" %>
-      </div> 
-      <div>  
+    </div> 
+    <div>  
       <%= form.label :net_weight, "實重" %> <%= link_to "計算實重", "#", data: { action: "click->form#cal_weight" }, class:"btn btn-info btn-sm" %>
       <%= form.text_field :net_weight, data: { target: "form.net_weight" }, class:"form-control" %>
-      </div> 
-      <div>  
+    </div> 
+    <div>  
       <%= form.label :gold_buying, "金價(錢)" %>
       <%= form.number_field :gold_buying, value: PriceBoard.find_gold_buying(current_user.id, scrap.collected_date) ,  data: { target: "form.gold_buying" }, class:"form-control mb-1" %>
-      </div> 
-      <div>  
+    </div> 
+    <div>  
       <%= form.label :total_price, "金額" %> <%= link_to "計算金額", "#", data: { action: "click->form#cal_amount"}, class:"btn btn-info btn-sm" %>
       <%= form.text_field :total_price, data: { target: "form.total_price" }, class:"form-control" %>
-      </div>  
-      <div>
+    </div>  
+    <div>
+      <%= form.label :refine_charge, "提煉費用單價(錢)" %>  
+      <%= form.number_field :refine_charge, class:"form-control" %>
+    </div> 
+    <div>
+      <%= form.label :quantity, "數量" %>  
+      <%= form.text_field :quantity, class:"form-control" %>
+    </div>   
+    <div>
+      <%= form.label :in_stock, "庫存有貨打勾" %>  
+      <%= form.check_box :in_stock%>
+    </div>     
+    <div>
       <br>
       <%= form.submit class:"btn btn-primary"%>
       <%= link_to "回收金列表頁", scraps_path, class:'btn btn-info' %>
-      </div>
+    </div>
+
   <% end %>
 </div>
  

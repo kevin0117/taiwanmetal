@@ -33,7 +33,7 @@
       <% @products.take(1).each do |product| %>
       <tr>
         <td><%= link_to "加入", add_to_cart_product_path(product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-info" %></td>
-        <td><%= product.user.id %></td>
+        <td><%= product.user.name %></td>
         <td><%= product.title %></td>
         <td><%= product.id %></td>
         <td><%= product.weight %>
