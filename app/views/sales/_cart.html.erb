@@ -15,11 +15,11 @@
     <div class='form-row'>  
       <div class='form-group col-lg-3 col-sm-12'>  
         <%= form.label :sale_date, "銷售日期" %>
-        <%= form.datetime_field :sale_date, class:"form-control" %>
+        <%= form.datetime_field :sale_date, data: { target: "sale.collected_date" }, class:"form-control" %>
       </div>       
       <div class='form-group col-lg-3 col-sm-12'>   
         <%= form.label :customer_id, "客戶" %>
-        <%= form.collection_select :customer_id, Customer.available(current_user.id), :id, :name, {}, class:"form-control" %>
+        <%= form.collection_select :customer_id, Customer.available(current_user.id), :id, :name, {}, data: { target: "sale.customer_id" }, class:"form-control" %>
       </div> 
       <div class='form-group col-lg-3 col-sm-12'>  
         <%= form.label :gold_selling, "金價(賣出)" %>
@@ -31,19 +31,24 @@
       </div>     
     </div>
     <div class='form-row'>  
-      <div class='form-group col-lg-4 col-sm-12'>  
+      <div class='form-group col-lg-3 col-sm-12'>  
         <%= form.label :exchange_weight, "換金重量" %>
         <%= form.text_field :exchange_weight, placeholder: "輸入換金重量", data: { target: "sale.exchange_weight" }, class:"form-control" %>
       </div> 
-      <div class='form-group col-lg-4 col-sm-12'>  
+      <div class='form-group col-lg-3 col-sm-12'>  
         <%= form.label :wastage_rate, "換金成色" %>
         <%= form.text_field :wastage_rate, data: { target: "sale.wastage_rate" }, class:"form-control" %>
       </div>  
-      <div class='form-group col-lg-4 col-sm-12'> 
-        <%= form.label :net_weight, "實重" %>
+      <div class='form-group col-lg-3 col-sm-12'> 
+        <%= form.label :net_weight, "換金實重" %>
         <%= link_to "計算", "#", data: { action: "click->sale#cal_weight" }, class:"btn btn-info btn-sm" %> 
         <%= form.text_field :net_weight, data: { target: "sale.net_weight" }, class:"form-control" %>
-      </div>     
+      </div>  
+      <div class='form-group col-lg-3 col-sm-12'>  
+        <%= form.label :scrap_weight, "買金重量" %>
+        <%= link_to "入庫", "#", data: { action: "click->sale#to_scrap" }, class:"btn btn-info btn-sm" %> 
+        <input type="text", class="form-control", data-target= "sale.scrap_weight",  readonly="readonly" >
+      </div>         
     </div>
     <table class="table">
       <thead>
@@ -88,6 +93,9 @@
     <div>  
       <%= form.input :payment_method, as: :select, collection: [['cash', '現金'], ['credit_card', '信用卡'], ['line_pay', 'LinePay']], label_method: :second, value_method: :first, label: "付款方式",  class:"form-control"%>
     </div> 
+
+    <input type="text", class="form-control", value="<%= current_user.id %>",  readonly="readonly", data-target= "sale.user_id" >
+
 
     <%= form.submit %>  
   <% end %>
