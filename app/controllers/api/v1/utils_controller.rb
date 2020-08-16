@@ -13,7 +13,8 @@ class Api::V1::UtilsController < ApplicationController
   def transfer
     collected_date = params['transfer']['collected_date']
     customer_id = params['transfer']['customer_id']
-    title = '換金'
+    title = '換金舊料'
+    title1 = '換金買料'
     gross_weight = (params['transfer']['gross_weight']).to_f
     wastage_rate = (params['transfer']['wastage_rate']).to_f
     net_weight = (params['transfer']['net_weight']).to_f
@@ -29,8 +30,20 @@ class Api::V1::UtilsController < ApplicationController
                       gold_buying: gold_buying,
                       customer_id: customer_id,
                       user_id: user_id)
+    
+    scrap1 = Scrap.new(collected_date: collected_date,
+                       title: title1, 
+                       gross_weight: net_weight,
+                       wastage_rate: 1.0,
+                       net_weight: net_weight,
+                       gold_buying: gold_buying,
+                       total_price: total_price,
+                       quantity: 0,
+                       in_stock: false,
+                       customer_id: customer_id,
+                       user_id: user_id)
 
-    if scrap.save
+    if scrap.save && scrap1.save
       render json: { status: 'ok' }
     else
       render json: { status: 'fail' }
