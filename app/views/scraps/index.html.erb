@@ -4,15 +4,12 @@
   
 
 <%= search_form_for @q, class: 'form-inline' do |f| %>
-  <%# <div class="row"> %>
-    <%# <div class='md-col-6'> %>
-      <%= f.date_field :collected_date_gteq, class:"form-control input-sm", placeholder: "Date >= to" %> &nbsp;
-      <%= f.date_field :collected_date_lteq, class:"form-control input-sm", placeholder: "Date <= to" %> &nbsp;
-    <%# </div> %>
-    <%# <div class='md-col-6'> %>
+      <%= f.date_field :collected_date_gteq, class:"form-control input-sm" %> &nbsp;
+      <%= f.date_field :collected_date_lteq, class:"form-control input-sm" %> &nbsp;
+      <%= f.search_field :title_cont, class:"form-control input-sm", placeholder: "名稱包含" %> &nbsp;
+      <%= f.search_field :title_not_cont, class:"form-control input-sm", placeholder: "名稱不包含" %> &nbsp;
+
       <%= f.submit class:"btn btn-outline-dark"%>
-    <%# </div> %>
-  <%# </div> %>
 <% end %>
 <br>
 <%= paginate @scraps %>

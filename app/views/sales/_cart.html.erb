@@ -33,6 +33,7 @@
     <div class='form-row'>  
       <div class='form-group col-lg-3 col-sm-12'>  
         <%= form.label :exchange_weight, "換金重量" %>
+        <%#= link_to "入庫", "#", data: { action: "click->sale#to_scrap" }, class:"btn btn-info btn-sm", data: { confirm: "確認入庫此舊金嗎？"} %> 
         <%= form.text_field :exchange_weight, placeholder: "輸入換金重量", data: { target: "sale.exchange_weight" }, class:"form-control" %>
       </div> 
       <div class='form-group col-lg-3 col-sm-12'>  
@@ -94,7 +95,7 @@
       <%= form.input :payment_method, as: :select, collection: [['cash', '現金'], ['credit_card', '信用卡'], ['line_pay', 'LinePay']], label_method: :second, value_method: :first, label: "付款方式",  class:"form-control"%>
     </div> 
 
-    <input type="text", class="form-control", value="<%= current_user.id %>",  readonly="readonly", data-target= "sale.user_id" >
+    <input type="text", class="form-control", value="<%= current_user.id %>",  style="display:none", data-target= "sale.user_id" >
 
 
     <%= form.submit %>  
