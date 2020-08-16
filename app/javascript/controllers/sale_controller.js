@@ -18,7 +18,7 @@ export default class extends Controller {
     let weight = parseFloat(this.weightTarget.value)
     let pure_weight = Math.floor((exchange_weight * wastage_rate)*100)/100
     this.net_weightTarget.value = pure_weight
-    let scrap_weight =  (pure_weight - weight)
+    let scrap_weight =  Math.round((pure_weight - weight)*100)/100
     this.scrap_weightTarget.value = scrap_weight
 
   }
@@ -34,7 +34,7 @@ export default class extends Controller {
     let exchange_weight = this.exchange_weightTarget.value
     let gold_buying = parseFloat(this.gold_buyingTarget.value)
     let pure_weight = Math.floor((exchange_weight * wastage_rate)*100)/100
-    let scrap_weight =  (pure_weight - weight)
+    let scrap_weight =  Math.round((pure_weight - weight)*100)/100
     let user_id = this.user_idTarget.value
     
     console.log(scrap_weight)
