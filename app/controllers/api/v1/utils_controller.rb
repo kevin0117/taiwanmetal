@@ -20,7 +20,7 @@ class Api::V1::UtilsController < ApplicationController
     wastage_rate = (params['transfer']['wastage_rate']).to_f
     net_weight = (params['transfer']['net_weight']).to_f
     gold_buying = (params['transfer']['gold_buying']).to_i
-    total_price = net_weight * gold_buying
+    total_price = (scrap_weight * gold_buying).round(2)
     user_id = params['transfer']['user_id']
     
     scrap = Scrap.new(collected_date: collected_date,
