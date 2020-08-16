@@ -16,6 +16,7 @@ class Api::V1::UtilsController < ApplicationController
     title = '換金舊料'
     title1 = '換金買料'
     gross_weight = (params['transfer']['gross_weight']).to_f
+    scrap_weight = (params['transfer']['scrap_weight']).to_f
     wastage_rate = (params['transfer']['wastage_rate']).to_f
     net_weight = (params['transfer']['net_weight']).to_f
     gold_buying = (params['transfer']['gold_buying']).to_i
@@ -33,9 +34,9 @@ class Api::V1::UtilsController < ApplicationController
     
     scrap1 = Scrap.new(collected_date: collected_date,
                        title: title1, 
-                       gross_weight: net_weight,
+                       gross_weight: scrap_weight,
                        wastage_rate: 1.0,
-                       net_weight: net_weight,
+                       net_weight: scrap_weight,
                        gold_buying: gold_buying,
                        total_price: total_price,
                        quantity: 0,

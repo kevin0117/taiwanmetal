@@ -30,10 +30,14 @@ export default class extends Controller {
     let gross_weight = this.exchange_weightTarget.value
     let wastage_rate = this.wastage_rateTarget.value
     let net_weight = this.net_weightTarget.value
+    let weight = parseFloat(this.weightTarget.value)
+    let exchange_weight = this.exchange_weightTarget.value
     let gold_buying = parseFloat(this.gold_buyingTarget.value)
+    let pure_weight = Math.floor((exchange_weight * wastage_rate)*100)/100
+    let scrap_weight =  (pure_weight - weight)
     let user_id = this.user_idTarget.value
     
-    console.log(gross_weight)
+    console.log(scrap_weight)
 
     // let email = this.emailTarget.value.trim();
     let data = new FormData();
@@ -42,6 +46,7 @@ export default class extends Controller {
     data.append("transfer[gross_weight]", gross_weight);
     data.append("transfer[wastage_rate]", wastage_rate);
     data.append("transfer[net_weight]", net_weight);
+    data.append("transfer[scrap_weight]", scrap_weight);
     data.append("transfer[gold_buying]", gold_buying);
     data.append("transfer[user_id]", user_id);
 
