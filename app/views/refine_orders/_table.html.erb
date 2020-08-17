@@ -31,7 +31,7 @@
     </thead>
   
     <tbody>
-      <% @scraps.available.each do |scrap| %>
+      <% current_user.scraps.available.each do |scrap| %>
       <tr>
         <td><%= link_to "加入", add_to_cart_scrap_path(scrap, refine_order_id: @refine_order.id), method: :put, class:"btn btn-sm btn-info" %></td>
         <td><%= scrap.id %></td>
