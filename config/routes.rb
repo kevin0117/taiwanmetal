@@ -58,6 +58,7 @@ Rails.application.routes.draw do
       post 'add', to: 'refine_orders#add'
       post 'decrease', to: 'refine_orders#decrease'
       post 'remove', to: 'refine_orders#remove'
+      get 'report', to: 'refine_orders#report'
     end  
   end
 
