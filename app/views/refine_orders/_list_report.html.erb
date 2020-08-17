@@ -1,0 +1,88 @@
+<style>
+
+@media (max-width: 992px){
+  label{
+    font-size: 3rem;
+  }
+  .invalid-feedback{
+    font-size: 3rem;
+  }
+}
+</style>
+
+
+<div class="form-group" data-controller="sale">  
+  <%= simple_form_for(refine_order) do |form| %>  
+    <div class='form-row'>  
+      <div class='form-group col-lg-3 col-sm-12'>  
+        <%= form.label :request_date, "請求日期" %>
+        <%= form.datetime_field :request_date, class:"form-control", readonly: "readonly" %>
+      </div>       
+      <div class='form-group col-lg-3 col-sm-12'>   
+        <%= form.label :recipient, "接收者" %>
+        <%= form.text_field :recipient, class:"form-control", readonly: "readonly" %>
+      </div> 
+      <div class='form-group col-lg-3 col-sm-12'>  
+        <%= form.label :note, "備註" %>
+        <%= form.text_field :note, class:"form-control", readonly: "readonly" %>
+      </div> 
+    </div>
+
+    <table class="table" data-controller='table'>
+      <thead>
+        <tr>
+          <th>舊金ID</th>
+          <th>代號</th>
+          <th>日期</th>
+          <th>重量</th>
+          <th>成色</th>
+          <th>實重</th>
+          <th>提煉工資(錢)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% refine_order.scraps.each do |scrap| %>
+        <tr>
+          <td><%= form.text_field :scrap_id, value: scrap.id, readonly:"readonly" %></td>
+          <td><%= scrap.code %></td>
+          <td><%= scrap.collected_date.to_formatted_s(:short) %></td>
+          <td><%= scrap.gross_weight %></td>
+          <td><%= scrap.wastage_rate %></td>
+          <td><%= scrap.net_weight %></td>
+          <td><%= scrap.refine_charge %></td>
+        </tr>    
+        <% end %>      
+      </tbody>
+    </table> 
+    <%# if refining_cart.scrap_list.present? %>
+      <h6>
+      <label for="weight">合計虛重</label>  
+      <%= form.text_field :total_gross_weight, class:"form-control", value: @refine_order.total_gross_weight, readonly: "readonly" , data: { target: "sale.weight" } %>
+      <label for="weight">合計實重</label>  
+      <%= form.text_field :total_net_weight, class:"form-control", value: @refine_order.total_net_weight, readonly: "readonly" %>
+      <label for="average_purity">平均成色</label>
+      <input type="text", class="form-control", value="<%= (@refine_order.total_net_weight / @refine_order.total_gross_weight).round(4) %>",  readonly="readonly", data-target= "sale.weight" >
+      <label for="service_fee">合計費用</label>
+      <%= form.text_field :refine_fee, class:"form-control", value: @refine_order.refine_fee, readonly: "readonly" , data: { target: "sale.service_fee" } %>
+      </h6>
+    <%# end %>
+    <br>
+    <hr>
+  <% end %>
+</div>
+  <h6>
+  <div class='row'>  
+    <div class='col-lg-4 col-sm-12' >
+      <label for="average_purity">提煉後成色</label>
+      <input type="text", class="form-control", value="<%= @refine_order.result_purity %>",  readonly="readonly" >
+    </div>
+    <div class='col-lg-4 col-sm-12' >
+      <label for="average_purity">提煉後實重</label>
+      <input type="text", class="form-control", value="<%= @refine_order.result_weight %>",  readonly="readonly" >
+    </div>
+    <div class='col-lg-4 col-sm-12' >
+      <label for="average_purity">盈餘金重</label>
+      <input type="text", class="form-control", value="<%= @refine_order.result_weight - @refine_order.total_net_weight %>",  readonly="readonly" >
+    </div>
+  </div>
+  </h6>

@@ -1,6 +1,6 @@
 class RefineOrdersController < ApplicationController
   before_action :set_scrap_ransack_obj
-  before_action :find_refine_order, only: %i[edit update show destroy]
+  before_action :find_refine_order, only: %i[edit update show destroy report]
   before_action :find_scrap, only: %i[remove add decrease]
   before_action :set_refine_order, only: %i[decrease add remove]
 
@@ -121,6 +121,10 @@ class RefineOrdersController < ApplicationController
     end
   end
 
+  def report
+    
+  end
+
   private
 
   def refine_order_params
@@ -132,7 +136,8 @@ class RefineOrdersController < ApplicationController
                                          :note,
                                          :recipient,
                                          :scrap_id,
-                                         :total_gross_weight)
+                                         :total_gross_weight,
+                                         :total_net_weight)
   end
 
   def find_refine_order

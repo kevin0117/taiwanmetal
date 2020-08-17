@@ -1,0 +1,10 @@
+<% if @refine_order.result_weight == nil %>
+  <h1>提煉報告等待中...</h1>
+<% else %>
+  <h1>提煉報告</h1>
+  <%= render 'list_report', refine_order: @refine_order %>
+<% end %>
+
+<br>
+<br>
+

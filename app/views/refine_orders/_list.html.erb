@@ -62,13 +62,30 @@
     </table> 
     <%# if refining_cart.scrap_list.present? %>
       <h6>
-      <label for="weight">合計重量</label>  
+      <label for="weight">合計虛重</label>  
       <%= form.text_field :total_gross_weight, class:"form-control", value: @refine_order.refine_lists.reduce(0){|sum, m| sum + m.weight}, readonly: "readonly" , data: { target: "sale.weight" } %>
+      <label for="weight">合計實重</label>  
+      <%= form.text_field :total_net_weight, class:"form-control", value: @refine_order.refine_lists.reduce(0){|sum, m| sum + m.net_weight}, readonly: "readonly" %>
+      <label for="average_purity">平均成色</label>
+      <input type="text", class="form-control", value="<%= (@refine_order.refine_lists.reduce(0){|sum, m| sum + m.net_weight} / @refine_order.refine_lists.reduce(0){|sum, m| sum + m.weight}).round(4) %>",  readonly="readonly", data-target= "sale.weight" >
+      <%#= form.text_field :refine_fee, class:"form-control", value: @refine_order.refine_lists.reduce(0){|sum, m| sum + m.service_fee}, readonly: "readonly" , data: { target: "sale.service_fee" } %>
       <label for="service_fee">合計費用</label>
       <%= form.text_field :refine_fee, class:"form-control", value: @refine_order.refine_lists.reduce(0){|sum, m| sum + m.service_fee}, readonly: "readonly" , data: { target: "sale.service_fee" } %>
       </h6>
     <%# end %>
+    <br>
+    <hr>
+<%# ----------------------------------------------------------------------------------- %>
+    <div class='form-group col-lg-3 col-sm-12'>  
+      <%= form.label :result_purity, "提煉後成色" %>
+      <%= form.text_field :result_purity, class:"form-control" %>
+    </div> 
 
+    <div class='form-group col-lg-3 col-sm-12'>  
+      <%= form.label :result_weight, "提煉後實重" %>
+      <%= form.text_field :result_weight, class:"form-control" %>
+    </div> 
+<%# ----------------------------------------------------------------------------------- %>
     <%= form.submit %>  
   <% end %>
 </div>
