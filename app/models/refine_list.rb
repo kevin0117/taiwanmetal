@@ -10,4 +10,8 @@ class RefineList < ApplicationRecord
     scrap.refine_charge * weight * quantity
   end
 
+  def net_weight
+    scrap.net_weight * quantity
+  end
+
 end
