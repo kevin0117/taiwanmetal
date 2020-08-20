@@ -6,7 +6,7 @@ class RefineOrdersController < ApplicationController
 
   def index
     @q = current_user.refine_orders.ransack(params[:q])
-    @refineOrders = @q.result(distinct: true).page(params[:page])
+    @refineOrders = @q.result(distinct: true).order(id: :desc).page(params[:page])
   end
 
   def new
@@ -116,6 +116,15 @@ class RefineOrdersController < ApplicationController
   end
 
   def destroy
+    @refine_order.refine_lists.map{ |refine_list| 
+      @refine_order.scraps.map{ |scrap|
+        if refine_list.scrap_id == scrap.id
+          scrap.quantity += refine_list.quantity
+          scrap.in_stock = true
+          scrap.save
+        end
+      }
+    }  
     if @refine_order.destroy
       redirect_to refine_orders_path, notice: "刪除成功"
     end
