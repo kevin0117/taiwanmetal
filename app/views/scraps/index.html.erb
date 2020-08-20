@@ -17,8 +17,8 @@
 <table class='table'>
   <thead>
     <tr>
-      <th>舊金ID</th>
-      <%# <th>代號</th> %>
+      <th>ID</th>
+      <th>客戶</th>
       <th>日期</th>
       <th>所有人</th>
       <th>名稱</th>
@@ -37,7 +37,7 @@
     <% @scraps.each do |scrap| %>
     <tr>
       <td><%= scrap.id %></td>
-      <%# <td></td> %><%#= scrap.code %>
+      <td><%= scrap.customer.name %></td>
       <td><%= scrap.collected_date.to_formatted_s(:short) %></td>
       <td><%= scrap.user.name %></td>
       <td><%= link_to scrap.title, scrap_path(scrap) %></td>

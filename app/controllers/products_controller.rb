@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
 
   def index
     @q = current_user.products.ransack(params[:q])
-    @products = @q.result(distinct: true).includes(:vendor, :product_list).order(:id).page(params[:page])
+    @products = @q.result(distinct: true).order(id: :desc).includes(:vendor, :product_list).order(:id).page(params[:page])
   end
 
   def new
