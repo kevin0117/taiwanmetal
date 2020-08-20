@@ -3,8 +3,8 @@ class ScrapsController < ApplicationController
   before_action :set_scrap_ransack_obj
 
   def index
-    @q = current_user.scraps.order(collected_date: :desc).ransack(params[:q])
-    @scraps = @q.result.page params[:page]
+    @q = current_user.scraps.ransack(params[:q])
+    @scraps = @q.result(distinct: true).order(id: :desc).page params[:page]
   end
 
   def new
