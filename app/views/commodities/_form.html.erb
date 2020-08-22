@@ -1,0 +1,20 @@
+<%= simple_form_for(commodity) do |form| %>
+<div>  
+  <%= form.input :weight, label: "重量",  class:"form-control" %>
+</div>  
+<div>  
+  <%= form.input :unit_price, label: "單價",  class:"form-control" %>
+</div> 
+<div>  
+  <%= form.input :total_price, label: "合計",  class:"form-control" %>
+</div> 
+<div>  
+  <%= form.input :action, as: :select, collection: [['Buy', '買'], ['Sell', '賣']], label_method: :second, value_method: :first, label: "買賣別",  class:"form-control"%>
+</div> 
+<div>  
+  <%#= form.input :status, label: "狀況",  class:"form-control" %>
+  <%= form.input :status, as: :select, collection: [['open', '等待中'], ['closed', '已成交']], label_method: :second, value_method: :first, label: "狀態",  class:"form-control"%>
+</div> 
+<%= form.submit %>
+  
+<% end %>

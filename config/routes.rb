@@ -62,4 +62,10 @@ Rails.application.routes.draw do
     end  
   end
 
+  resources :commodities, except: [:show] do
+    member do
+      post 'deal', to: 'commodities#deal'
+    end
+  end
+
 end
