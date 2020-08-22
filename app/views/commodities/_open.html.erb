@@ -1,0 +1,25 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>重量</th>
+      <th>單價</th>
+      <th>合計</th>
+      <th>買賣別</th>
+
+    </tr>
+  </thead>
+  
+  <tbody>
+    <% current_user.commodities.available.each do |commodity| %>
+    <tr>
+      <td><%= commodity.id %></td>
+      <td><%= commodity.weight %></td>
+      <td><%= commodity.unit_price %></td>
+      <td><%= commodity.total_price %></td>
+      <td><%= commodity.action %></td>
+      <td><%= link_to "取消", commodity_path(commodity), method: :delete, data: {confirm: "確認取消嗎？"}, class: 'btn btn-danger btn-sm' %></td>    
+      </tr>    
+    <% end %>
+  </tbody>
+</table>
