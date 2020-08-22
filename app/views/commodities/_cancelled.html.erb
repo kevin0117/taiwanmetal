@@ -1,0 +1,23 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>重量</th>
+      <th>單價</th>
+      <th>合計</th>
+      <th>買賣別</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    <% current_user.commodities.only_deleted.each do |commodity| %>
+    <tr>
+      <td><%= commodity.id %></td>
+      <td><%= commodity.weight %></td>
+      <td><%= commodity.unit_price %></td>
+      <td><%= commodity.total_price %></td>
+      <td><%= commodity.action %></td>
+    </tr>    
+    <% end %>
+  </tbody>
+</table>
