@@ -6,5 +6,5 @@ test:
 
 production:
   adapter: redis
-  url: redis://h:pf6ce48761ae8d4264c54c5ed7e69d8323b088d35989b8435ecf3849aeb7a9d3a@ec2-3-85-254-196.compute-1.amazonaws.com:24719
+  url: ENV['redius_url']
   channel_prefix: taiwanmetal_production
