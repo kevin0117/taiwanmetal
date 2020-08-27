@@ -17,6 +17,7 @@ class CommoditiesController < ApplicationController
     @commodity.user_id = current_user.id
     
     if @commodity.save
+      SendCommodityJob.perform_later(@commodity)
       redirect_to commodities_path, notice: "新增成功"
     else
       render :new
@@ -33,7 +34,8 @@ class CommoditiesController < ApplicationController
 
   def destroy
     if @commodity.destroy
-      @commodity.cancel!
+      @commodity.cancel!  # BUG: user close the deal at the same the time owner cancel the deal
+      RemoveCommodityJob.perform_later(@commodity)
       redirect_to commodities_path, notice: "取消成功"
     end
   end
@@ -42,6 +44,8 @@ class CommoditiesController < ApplicationController
     @commodity.trade!
     @commodity.closer_id = current_user.id
     @commodity.save
+    RemoveCommodityJob.perform_later(@commodity)
+    
     redirect_to commodities_path, notice: "下單成功"
   end
 
