@@ -1,20 +1,24 @@
-<%= simple_form_for(commodity) do |form| %>
-<div>  
-  <%= form.input :weight, label: "重量",  class:"form-control" %>
-</div>  
-<div>  
-  <%= form.input :unit_price, label: "單價",  class:"form-control" %>
-</div> 
-<div>  
-  <%= form.input :total_price, label: "合計",  class:"form-control" %>
-</div> 
-<div>  
-  <%= form.input :action, as: :select, collection: [['Buy', '買'], ['Sell', '賣']], label_method: :second, value_method: :first, label: "買賣別",  class:"form-control"%>
-</div> 
-<div>  
-  <%#= form.input :status, label: "狀況",  class:"form-control" %>
-  <%= form.input :status, as: :select, collection: [['open', '等待中'], ['closed', '已成交']], label_method: :second, value_method: :first, label: "狀態",  class:"form-control"%>
-</div> 
-<%= form.submit %>
-  
-<% end %>
+<div class="form-group" data-controller='commodity'>
+  <%= simple_form_for(commodity, remote: true) do |form| %>
+  <div>  
+    <%= form.label :weight, "重量" %> 
+    <%= form.text_field :weight, data: { target: "commodity.weight", action: "blur->commodity#cal_total_price" } ,class:"form-control" %>
+  </div>  
+  <div>
+    <%= form.label :unit_price, "單價" %> 
+    <%= form.text_field :unit_price, data: { target: "commodity.unit_price", action: "blur->commodity#cal_total_price" } ,class:"form-control" %>  
+  </div> 
+  <div>
+    <%= form.label :total_price, "金額" %>
+    <%= form.text_field :total_price, data: { target: "commodity.total_price"}, readonly:"readonly", class:"form-control" %>
+  </div> 
+  <div> 
+    <%= form.input :action, as: :select, collection: [['Buy', '買'], ['Sell', '賣']], label_method: :second, value_method: :first, label: "委託交易",  class:"form-control"%>
+  </div> 
+
+  <div>  
+    <%= form.hidden_field :status, as: :select, collection: [['open', '等待中'], ['closed', '已成交']], label_method: :second, value_method: :first, label: "狀態",  class:"form-control" %>
+  </div> 
+  <%= form.submit class: "btn btn-primary" %>
+  <% end %>
+</div>

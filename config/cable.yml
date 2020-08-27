@@ -2,9 +2,9 @@ development:
   adapter: async
 
 test:
-  adapter: test
+  adapter: async
 
 production:
   adapter: redis
-  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
+  url: redis://h:pf6ce48761ae8d4264c54c5ed7e69d8323b088d35989b8435ecf3849aeb7a9d3a@ec2-3-85-254-196.compute-1.amazonaws.com:24719
   channel_prefix: taiwanmetal_production
