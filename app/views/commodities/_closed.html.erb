@@ -1,7 +1,6 @@
 <table class="table">
   <thead>
     <tr>
-      <th>會員名稱</th>
       <th>ID</th>
       <th>重量</th>
       <th>單價</th>
@@ -12,14 +11,18 @@
   
   <tbody>
     <% @commodities.closed(current_user.id).each do |commodity| %>
-    <%# @commodities.where(closer_id: current_user.id).each do |commodity| %>
     <tr>
-      <td><%= commodity.user.name %></td>
       <td><%= commodity.id %></td>
       <td><%= commodity.weight %></td>
       <td><%= commodity.unit_price %></td>
       <td><%= commodity.total_price %></td>
-      <td><%= commodity.action %></td>
+      <td>
+        <% if commodity.action == 'Buy' %>
+          <%= "已賣出" %>
+        <% else %>
+          <%= "已買進" %>
+        <% end %>
+      </td>    
     </tr>    
     <% end %>
   </tbody>

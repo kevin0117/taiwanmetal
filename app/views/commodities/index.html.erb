@@ -1,3 +1,9 @@
+<style>
+  .info {
+    height: 75vh;
+  }
+</style>
+
 <h1>貴金屬交易中心</h1>
 
 
@@ -5,84 +11,68 @@
 
 <%= render 'trading' %>
 <br>
-<%#= link_to "新增掛單", new_commodity_path, class:'btn btn-info btn-sm' %>
 
 <h5>即時交易看板</h5>
 
 <table class="table">
   <thead>
     <tr>
-      <th>會員名稱</th>
-      <th>ID</th>
+      <th>委託單ID</th>
+      <th>委託買賣</th>
       <th>重量(台錢)</th>
-      <th>單價(台幣)</th>
+      <th>委託價格(台幣)</th>
       <th>合計</th>
-      <th>委託買賣</th> 
+      <th>交易選擇</th> 
       <th></th>
     </tr>
   </thead>
   
-  <tbody>
-    <% @commodities.available.each do |commodity| %>
-    <tr>
-      <td><%= commodity.user.name %></td>
-      <td><%= commodity.id %></td>
-      <td><%= commodity.weight %></td>
-      <td>$<%= commodity.unit_price %></td>
-      <td>$<%= commodity.total_price %></td>
-      <td><%= commodity.action %></td>
-      <td>
-        <% if commodity.action == 'Buy' %>
-          <%#= link_to "賣出", deal_commodity_path(commodity), method: :post, data: {confirm: "確認要賣出嗎？"}, class: 'btn btn-success btn-sm'%>
-          <%= link_to "賣出", deal_commodity_path(commodity), method: :post, data: {confirm: "確認要賣出重量：" + commodity.weight.to_i.to_s + " 錢嗎？"}, class: 'btn btn-success btn-sm'%>
-        <% else %>
-          <%= link_to "買進", deal_commodity_path(commodity), method: :post, data: {confirm: "確認要買進重量：" + commodity.weight.to_i.to_s + " 錢嗎？"}, class: 'btn btn-primary btn-sm' %>
-        <% end %>
-      </td>
-    </tr>    
-    <% end %>
+  <tbody id="commodities">
+      <% @commodities.available.each do |commodity| %>
+          <%= render 'commodities/commodity', commodity: commodity %>
+      <% end %>
   </tbody>
 </table>
 
 <%# -------------------------------------------- %>
 
-<div class="container">
+<div class="container info">
 
-<ul class="nav nav-tabs" id="myTab" role="tablist">
-  <li class="nav-item">
-    <a class="nav-link active" id="account-tab" data-toggle="tab" href="#account" role="tab" aria-controls="account" aria-selected="true">我的帳戶</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="add-tab" data-toggle="tab" href="#add" role="tab" aria-controls="add" aria-selected="false">新增掛單</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">待成交掛單</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="deal-tab" data-toggle="tab" href="#deal" role="tab" aria-controls="deal" aria-selected="false">已成交掛單</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="cancel-tab" data-toggle="tab" href="#cancel" role="tab" aria-controls="cancel" aria-selected="false">已取消掛單</a>
-  </li>
-</ul>
-<div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
-  我的帳戶...
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <%# <li class="nav-item"> %>
+      <%# <a class="nav-link active" id="account-tab" data-toggle="tab" href="#account" role="tab" aria-controls="account" aria-selected="true">我的帳戶</a> %>
+    <%# </li> %>
+    <li class="nav-item">
+      <a class="nav-link" id="add-tab" data-toggle="tab" href="#add" role="tab" aria-controls="add" aria-selected="false">新增掛單</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">待成交掛單</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="deal-tab" data-toggle="tab" href="#deal" role="tab" aria-controls="deal" aria-selected="false">已成交掛單</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="cancel-tab" data-toggle="tab" href="#cancel" role="tab" aria-controls="cancel" aria-selected="false">已取消掛單</a>
+    </li>
+  </ul>
 
+  <div class="tab-content" id="myTabContent">
+    <%# <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab"> %>
+    <%# 我的帳戶... %>
+    <%# </div> %>
+    <div class="tab-pane fade" id="add" role="tabpanel" aria-labelledby="add-tab">
+      <%= render 'form', commodity: @commodity %>
+    </div>
+    <div class="tab-pane fade" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+      <%= render 'open', commodity: @commodity %>
+    </div>
+    <div class="tab-pane fade" id="deal" role="tabpanel" aria-labelledby="deal-tab">
+      <%= render 'closed', commodity: @commodity %>
+    </div>
+    <div class="tab-pane fade" id="cancel" role="tabpanel" aria-labelledby="cancel-tab">
+      <%= render 'cancelled', commodity: @commodity %>
+    </div>
   </div>
-  <div class="tab-pane fade" id="add" role="tabpanel" aria-labelledby="add-tab">
-    <%= render 'form', commodity: @commodity %>
-  </div>
-  <div class="tab-pane fade" id="pending" role="tabpanel" aria-labelledby="pending-tab">
-    <%= render 'open', commodity: @commodity %>
-  </div>
-  <div class="tab-pane fade" id="deal" role="tabpanel" aria-labelledby="deal-tab">
-    <%= render 'closed', commodity: @commodity %>
-  </div>
-  <div class="tab-pane fade" id="cancel" role="tabpanel" aria-labelledby="cancel-tab">
-    <%= render 'cancelled', commodity: @commodity %>
-  </div>
-</div>
 
 </div>
 
