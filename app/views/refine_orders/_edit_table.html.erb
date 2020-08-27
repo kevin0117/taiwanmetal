@@ -3,7 +3,7 @@
     <tr>
       <th></th>
       <th>舊金ID</th>
-      <th>代號</th>
+      <th>名稱</th>
       <th>所有人</th>
       <th>重量</th>
       <th>成色</th>
@@ -19,7 +19,7 @@
     <tr>
       <td><%= link_to "加入", add_refine_order_path(scrap, refine_order_id: refine_order.id), method: :post, class:"btn btn-sm btn-info" %></td>
       <td><%= scrap.id %></td>
-      <td><%= scrap.code %></td>
+      <td><%= scrap.title %></td>
       <td><%= scrap.user.name %></td>
       <td><%= scrap.gross_weight %></td>
       <td><%= scrap.wastage_rate %></td>

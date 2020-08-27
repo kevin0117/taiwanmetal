@@ -30,7 +30,7 @@
       <thead>
         <tr>
           <th>舊金ID</th>
-          <th>代號</th>
+          <th>名稱</th>
           <th>日期</th>
           <th>所有人</th>
           <th>重量</th>
@@ -44,7 +44,7 @@
         <% refine_order.scraps.each do |scrap| %>
         <tr>
           <td><%= form.text_field :scrap_id, value: scrap.id, readonly:"readonly" %></td>
-          <td><%= scrap.code %></td>
+          <td><%= scrap.title %></td>
           <td><%= scrap.collected_date.to_formatted_s(:short) %></td>
           <td><%= scrap.user.name %></td>
           <td><%= scrap.gross_weight %></td>
