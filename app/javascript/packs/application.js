@@ -24,3 +24,4 @@ import '@fortawesome/fontawesome-free/css/all.css'
 
 require("trix")
 require("@rails/actiontext")
+require('data-confirm-modal')
