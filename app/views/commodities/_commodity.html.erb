@@ -6,10 +6,9 @@
   <td>$<%= commodity.total_price %></td>
   <td>
     <% if commodity.action == 'Buy' %>
-      <%#= link_to "賣出", deal_commodity_path(commodity), method: :post, data: { confirm: "確認要賣出重量：" + commodity.weight.to_i.to_s + " 錢嗎？"}, class: 'btn btn-success btn-sm', data: { toggle:"tooltip" }, data: {placement: "bottom"}, title: "點這裡賣黃金" %>
-      <%= link_to "賣出", deal_commodity_path(commodity), method: :post, data: { confirm: "確認要賣出重量：" + commodity.weight.to_f.to_s + " 錢嗎？"}, class: 'btn btn-success btn-sm' %>
+      <%= link_to "賣出", deal_commodity_path(commodity), method: :post, data: { confirm: "確認要賣出重量：" + commodity.weight.to_f.to_s + " 錢嗎？", commit: '是的', title: '你確定嗎?'}, class: 'btn btn-success btn-sm' %>
     <% else %>
-      <%= link_to "買進", deal_commodity_path(commodity), method: :post, data: {confirm: "確認要買進重量：" + commodity.weight.to_f.to_s + " 錢嗎？"}, class: 'btn btn-primary btn-sm' %>
+      <%= link_to "買進", deal_commodity_path(commodity), method: :post, data: {confirm: "確認要買進重量：" + commodity.weight.to_f.to_s + " 錢嗎？", commit: '是的', title: '你確定嗎?'}, class: 'btn btn-primary btn-sm' %>
     <% end %>
   </td>
 </tr>
