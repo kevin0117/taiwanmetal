@@ -33,10 +33,13 @@ class CommoditiesController < ApplicationController
   end
 
   def destroy
-    if @commodity.destroy
-      @commodity.cancel!  # BUG: user close the deal at the same the time owner cancel the deal
+    if @commodity.may_cancel?
+      @commodity.destroy
+      @commodity.cancel!
       RemoveCommodityJob.perform_later(@commodity)
       redirect_to commodities_path, notice: "取消成功"
+    else
+      redirect_to commodities_path, notice: "此委託單已成交"
     end
   end
 
