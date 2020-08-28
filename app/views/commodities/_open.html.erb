@@ -12,13 +12,14 @@
   
   <tbody>
     <% current_user.commodities.available.each do |commodity| %>
-    <tr>
+    <tr class='commodity_<%= commodity.id %>'>
+    <%# <tr> %>
       <td><%= commodity.id %></td>
       <td><%= commodity.weight %></td>
       <td><%= commodity.unit_price %></td>
       <td><%= commodity.total_price %></td>
       <td><%= commodity.action %></td>
-      <td><%= link_to "取消", commodity_path(commodity), method: :delete, data: {confirm: "確認取消嗎？"}, class: 'btn btn-danger btn-sm' %></td>    
+      <td><%= link_to "取消", commodity_path(commodity), method: :delete, data: {confirm: "確認取消委託單嗎？"}, class: 'btn btn-danger btn-sm' %></td>    
       </tr>    
     <% end %>
   </tbody>

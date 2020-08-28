@@ -9,21 +9,9 @@
     </tr>
   </thead>
   
-  <tbody>
+  <tbody id='closed_commodities'>
     <% @commodities.closed(current_user.id).each do |commodity| %>
-    <tr>
-      <td><%= commodity.id %></td>
-      <td><%= commodity.weight %></td>
-      <td><%= commodity.unit_price %></td>
-      <td><%= commodity.total_price %></td>
-      <td>
-        <% if commodity.action == 'Buy' %>
-          <%= "已賣出" %>
-        <% else %>
-          <%= "已買進" %>
-        <% end %>
-      </td>    
-    </tr>    
+      <%= render 'commodities/closed_commodity', commodity: commodity %>
     <% end %>
   </tbody>
 </table>
