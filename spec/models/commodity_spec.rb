@@ -1,5 +1,128 @@
 require 'rails_helper'
 
-RSpec.describe Commodity, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+RSpec.describe Commodity, type: :model, commodity: true do
+
+  context "當委託單成功建立時..." do
+    it "全部欄位填寫完成" do
+      commodity = FactoryBot.create(:commodity)
+      expect(commodity).to be_valid
+    end
+
+    it '重量有填寫' do
+      commodity = FactoryBot.create(:commodity, weight: "2.33")
+
+      expect(commodity).to be_valid
+    end 
+
+    it '重量不能是空白' do
+      commodity = FactoryBot.build(:commodity, weight: '')
+
+      expect(commodity).not_to be_valid
+      expect{ expect(commodity).to be_valid }.to raise_exception(/Weight can't be blank/)
+    end  
+
+    it '單價有填寫' do
+      commodity = FactoryBot.create(:commodity, unit_price: "2.33")
+
+      expect(commodity).to be_valid
+    end 
+
+    it '單價不能是空白' do
+      commodity = FactoryBot.build(:commodity, unit_price: '')
+
+      expect(commodity).not_to be_valid
+      expect{ expect(commodity).to be_valid }.to raise_exception(/Unit price can't be blank/)
+    end 
+
+    it '合計總額有填寫' do
+      commodity = FactoryBot.build(:commodity, weight: 10, unit_price: 6000)
+
+      expect(commodity.total_price).to eq 60000
+    end
+
+    it '單價不能是空白' do
+      commodity = FactoryBot.build(:commodity, total_price: '')
+
+      expect(commodity).not_to be_valid
+      expect{ expect(commodity).to be_valid }.to raise_exception(/Total price can't be blank/)
+    end 
+
+    it '委託交易有填寫' do
+      commodity = FactoryBot.create(:commodity, action: 0)
+
+      expect(commodity).to be_valid
+    end 
+
+    it '委託交易不能是空白' do
+      commodity = FactoryBot.build(:commodity, action: '')
+
+      expect(commodity).not_to be_valid
+      expect{ expect(commodity).to be_valid }.to raise_exception(/Action can't be blank/)
+    end 
+
+    it ' 委託單狀態為『未成交』時, 此單可以『交易』' do
+      commodity = FactoryBot.build(:commodity, status: "open")
+
+      expect(commodity).to have_state(:open)
+      expect(commodity).to allow_event :trade
+      expect(commodity).to transition_from(:open).to(:closed).on_event(:trade)
+    end
+  
+    it ' 委託單狀態為『未成交』時, 此單可以『取消』' do
+      commodity = FactoryBot.build(:commodity, status: "open")
+
+      expect(commodity).to have_state(:open)
+      expect(commodity).to allow_event :cancel
+    end
+
+    it ' 委託單狀態為『已成交』時, 此單不可以再次『交易』' do
+      commodity = FactoryBot.build(:commodity, status: "closed")
+
+      expect(commodity).to have_state(:closed)
+      expect(commodity).to_not allow_event :trade
+      expect(commodity).not_to transition_from(:closed).to(:open).on_event(:trade)
+    end
+
+    it ' 委託單狀態為『已成交』時, 此單不可以『取消』' do
+      commodity = FactoryBot.build(:commodity, status: "closed")
+
+      expect(commodity).to have_state(:closed)
+      expect(commodity).to_not allow_event :cancel
+      expect(commodity).not_to transition_from(:closed).to(:open).on_event(:cancel)
+    end
+
+    it ' 委託單狀態為『已取消』時, 此單不可以再次『交易』' do
+      commodity = FactoryBot.build(:commodity, status: "cancelled")
+
+      expect(commodity).to have_state(:cancelled)
+      expect(commodity).to_not allow_event :trade
+      expect(commodity).not_to transition_from(:cancelled).to(:open).on_event(:trade)
+    end
+
+    it ' 委託單狀態為『已取消』時, 此單不可以『取消』' do
+      commodity = FactoryBot.build(:commodity, status: "cancelled")
+
+      expect(commodity).to have_state(:cancelled)
+      expect(commodity).to_not allow_event :cancel
+      expect(commodity).not_to transition_from(:cancelled).to(:open).on_event(:cancel)
+    end
+
+
+
+  end
 end
+
+
+# job = Job.new
+# expect(job).to transition_from(:sleeping).to(:running).on_event(:run)
+# expect(job).not_to transition_from(:sleeping).to(:cleaning).on_event(:run)
+# expect(job).to have_state(:sleeping)
+# expect(job).not_to have_state(:running)
+# expect(job).to allow_event :run
+# expect(job).to_not allow_event :clean
+# expect(job).to allow_transition_to(:running)
+# expect(job).to_not allow_transition_to(:cleaning)
+# # on_event also accept multiple arguments
+# expect(job).to transition_from(:sleeping).to(:running).on_event(:run, :defragmentation)
+
+
