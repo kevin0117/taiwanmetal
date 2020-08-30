@@ -26,7 +26,7 @@
       <td><%= scrap.net_weight %></td>
       <td><%= scrap.quantity %></td>
       <td><%= scrap.in_stock %></td>
-      <% if refine_order.status == 'pending' %>
+      <% if refine_order.status == 'awaiting' %>
         <td><%= link_to "加入", add_refine_order_path(scrap, refine_order_id: refine_order.id), method: :post, class:"btn btn-sm btn-info" %></td>
       <% end %>
     </tr>    

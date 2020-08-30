@@ -29,7 +29,7 @@
       <td>
         <%= link_to "刪除", refine_order_path(refineOrder), method: :delete, data: { confirm: "確認刪除嗎？"}, class:"btn btn-danger btn-sm button-refine" %>
         <%= link_to "報告", report_refine_order_path(refineOrder), class:"btn btn-success btn-sm button-refine" %>
-        <% if refineOrder.status == 'pending' %>
+        <% if refineOrder.status == 'awaiting' %>
           <%= link_to "編輯", edit_refine_order_path(refineOrder), class:"btn btn-info btn-sm button-refine" %>
         <% end %>
       </td>

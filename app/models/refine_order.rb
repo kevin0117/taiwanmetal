@@ -6,22 +6,24 @@ class RefineOrder < ApplicationRecord
   has_many :refine_lists, dependent: :destroy
   has_many :scraps, through: :refine_lists
 
-  enum status: { pending: 0, scheduled: 1, confirmed:2, closed: 3 }
+  validates :request_date, :recipient, presence: true
+
+  enum status: { awaiting: 0, scheduled: 1, confirmed:2, closed: 3 }
 
   aasm column: 'state' do
     state :pending, initial: true
-    state :scheduled, :confirmed, :closed
+    state :scheduling, :confirming, :closing
 
     event :notify do
-      transitions from: :pending, to: :scheduled
+      transitions from: :pending, to: :scheduling
     end
 
     event :reply do
-      transitions from: :scheduled, to: :confirmed
+      transitions from: :scheduling, to: :confirming
     end
 
     event :refine do
-      transitions from: :confirmed, to: :closed
+      transitions from: :confirming, to: :closing
     end
   end
 
