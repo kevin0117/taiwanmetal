@@ -24,7 +24,11 @@
       <div class='form-group col-lg-3 col-sm-12'>  
         <%= form.label :note, "備註" %>
         <%= form.text_field :note, class:"form-control" %>
+      </div>       
+      <div class='form-group col-lg-3 col-sm-12'>  
+        <%= form.input :status, as: :select, collection:[['pending', '搜集中'], ['scheduled', '準備提煉']], label_method: :second, value_method: :first, label: "狀態" %>
       </div> 
+
     </div>
 
     <table class="table" data-controller='table'>
@@ -52,7 +56,6 @@
           <td><%= scrap.wastage_rate %></td>
           <td><%= scrap.net_weight %></td>
           <td><%= scrap.refine_charge %></td>
-          <td><%#= link_to " - ", decrease_to_cart_scrap_path(scrap, refine_order_id: @refine_order.id), method: :put, class:"btn btn-sm btn-danger" %></td>
           <td><%= link_to "移除", delete_to_cart_scrap_path(scrap, refine_order_id: @refine_order.id), method: :put, class:"btn btn-sm btn-danger" %></td>
         </tr>    
         <% end %>      
@@ -60,40 +63,14 @@
     </table> 
     <% if refining_cart.scrap_list.present? %>
       <h6>
-      <%#= refining_cart.scrap_list %>
       <label for="weight">合計重量</label>
       <%= form.text_field :total_gross_weight, value: refining_cart.total_weight,  readonly:"readonly", class:"form-control"   %>
       <label for="service_fee">合計費用</label>
       <%= form.text_field :refine_fee, value: refining_cart.total_service_fee,  readonly:"readonly", class:"form-control"   %>
       </h6>
     <% end %>
- 
-    <div> 
-      <%#= link_to "計算金額", "#", data: { action: "click->sale#calculate" }, class:"btn btn-info btn-sm mb-2" %> 
-      <%#= form.text_field :total_price, data: { target: "sale.total_price" }, class:"form-control"   %>
-    </div> 
-    <div>  
-      <%#= form.input :payment_method, as: :select, collection: [['cash', '現金'], ['credit_card', '信用卡'], ['line_pay', 'LinePay']], label_method: :second, value_method: :first, label: "付款方式",  class:"form-control"%>
-    </div> 
 
     <%= form.submit %>  
   <% end %>
 </div>
-
-
-  <%# create_table "refine_orders", force: :cascade do |t|
-    t.date "request_date"
-    t.integer "status"
-    t.decimal "refine_fee"
-    t.decimal "result_weight"
-    t.decimal "result_purity"
-    t.string "slug"
-    t.text "note"
-    t.string "recipient"
-    t.bigint "scrap_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["scrap_id"], name: "index_refine_orders_on_scrap_id"
-    t.index ["user_id"], name: "index_refine_orders_on_user_id"
-  end %>
+ 

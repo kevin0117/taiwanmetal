@@ -17,6 +17,22 @@ class RefineOrdersController < ApplicationController
   def edit
     @scraps = @q.result(distinct: true)
   end
+
+  def update
+    if @refine_order.may_notify?
+      if @refine_order.update(refine_order_params)
+        if @refine_order.status == 'scheduled'
+          @refine_order.notify!
+        end
+        redirect_to refine_orders_path, notice: "更新成功"
+      else
+        render :edit
+      end
+    else
+      flash[:notice] = "不能更改狀況"
+      render :edit
+    end
+  end
   
   def create
     @scrap = @q.result(distinct: true)
@@ -24,6 +40,11 @@ class RefineOrdersController < ApplicationController
     @refine_order.user_id = current_user.id
     # byebug
     if @refine_order.save
+
+      if @refine_order.status == 'scheduled'
+        @refine_order.notify!
+      end
+
       @scrap = Scrap.find(params[:refine_order][:scrap_id])
 
       refining_cart.scrap_list.map{|scrap|
@@ -105,14 +126,6 @@ class RefineOrdersController < ApplicationController
     
     redirect_to :controller => 'refine_orders', :action => 'edit', :id => params[:refine_order_id] 
     
-  end
-
-  def update
-    if @refine_order.update(refine_order_params)
-      redirect_to refine_orders_path, notice: "更新成功"
-    else
-      render :edit
-    end
   end
 
   def destroy
