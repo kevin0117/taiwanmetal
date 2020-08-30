@@ -17,7 +17,7 @@ class RefineOrdersController < ApplicationController
   def edit
     @scraps = @q.result(distinct: true)
   end
-
+ 
   def update
     if @refine_order.may_notify?
       if @refine_order.update(refine_order_params)
@@ -159,7 +159,8 @@ class RefineOrdersController < ApplicationController
                                          :recipient,
                                          :scrap_id,
                                          :total_gross_weight,
-                                         :total_net_weight)
+                                         :total_net_weight,
+                                         :state)
   end
 
   def find_refine_order
