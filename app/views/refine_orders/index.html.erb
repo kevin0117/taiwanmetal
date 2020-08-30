@@ -20,24 +20,24 @@
     <% @refineOrders.each do |refineOrder| %>
     <tr>
       <td><%= refineOrder.id %></td>
-      <td><%= link_to refineOrder.request_date, edit_refine_order_path(refineOrder) %></td>
+      <td><%= refineOrder.request_date %></td>
       <td><%= refineOrder.total_gross_weight %></td>
       <td><%= refineOrder.result_purity %></td>
       <td><%= refineOrder.result_weight %></td>
       <td><%= refineOrder.refine_fee %></td>
       <td><%= refineOrder.status %></td>
       <td>
-        <%= link_to "編輯", edit_refine_order_path(refineOrder), class:"btn btn-info btn-sm button-refine" %>
         <%= link_to "刪除", refine_order_path(refineOrder), method: :delete, data: { confirm: "確認刪除嗎？"}, class:"btn btn-danger btn-sm button-refine" %>
         <%= link_to "報告", report_refine_order_path(refineOrder), class:"btn btn-success btn-sm button-refine" %>
-
+        <% if refineOrder.status == 'awaiting' %>
+          <%= link_to "編輯", edit_refine_order_path(refineOrder), class:"btn btn-info btn-sm button-refine" %>
+        <% end %>
       </td>
 
     </tr>    
     <% end %>
   </tbody>
 </table>
-
   <%# create_table "refine_orders", force: :cascade do |t|
     t.date "request_date"
     t.integer "status"

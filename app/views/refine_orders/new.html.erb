@@ -9,6 +9,9 @@
 
 <h1>新增提煉</h1>
 
+<% @refine_order.errors.full_messages.each do |message| %>
+  <h2><%= message %></h2>
+<% end %>
 <%= render 'table', refine_order: @refine_order %>
 <%= render 'cart', refine_order: @refine_order if !refining_cart.empty? %>
 

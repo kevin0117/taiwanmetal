@@ -1,10 +1,30 @@
 class RefineOrder < ApplicationRecord
   belongs_to :scrap
   belongs_to :user
+  include AASM
 
   has_many :refine_lists, dependent: :destroy
   has_many :scraps, through: :refine_lists
 
-  enum status: { pending: 0, confirm: 1, delivered: 2 }
+  validates :request_date, :recipient, presence: true
 
-end
+  enum status: { awaiting: 0, scheduled: 1, confirmed:2, closed: 3 }
+
+  aasm column: 'state' do
+    state :pending, initial: true
+    state :scheduling, :confirming, :closing
+
+    event :notify do
+      transitions from: :pending, to: :scheduling
+    end
+
+    event :reply do
+      transitions from: :scheduling, to: :confirming
+    end
+
+    event :refine do
+      transitions from: :confirming, to: :closing
+    end
+  end
+
+end 

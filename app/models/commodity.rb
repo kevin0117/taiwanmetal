@@ -3,6 +3,8 @@ class Commodity < ApplicationRecord
   acts_as_paranoid
   include AASM
 
+  validates :weight, :unit_price, :total_price, :status, :action, presence: true
+
   enum action: { Buy: 0, Sell: 1}
   scope :available, -> { where(status: 'open') }
   scope :closed, ->(id) { (where(user_id: id).or(where(closer_id: id))).where(status: 'closed') }

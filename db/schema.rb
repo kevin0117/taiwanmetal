@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_22_155940) do
+ActiveRecord::Schema.define(version: 2020_08_30_052112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -170,6 +170,7 @@ ActiveRecord::Schema.define(version: 2020_08_22_155940) do
     t.datetime "updated_at", precision: 6, null: false
     t.decimal "total_gross_weight", default: "0.0"
     t.decimal "total_net_weight", default: "0.0"
+    t.string "state"
     t.index ["scrap_id"], name: "index_refine_orders_on_scrap_id"
     t.index ["user_id"], name: "index_refine_orders_on_user_id"
   end
