@@ -13,11 +13,12 @@
   }
   .form-control{
     height: calc(1.2em + 0.5rem + 3px);
-    font-size: 4.2rem;
-    width:75%;
+    font-size: 4.3rem;
+    margin-right: 2px;
+    /* width:75%; */
   }
   .dropdown-menu{
-  font-size: 3.5rem;
+    font-size: 3.5rem;
   }
 
   form .btn{
@@ -29,16 +30,20 @@
   .btn-trading{
     /* font-size: 10px; */
     margin-bottom: 8px;
-    height: 100%;
+    width: 100%;
+
+  }
+  #search{
+    width: 74%;
   }
 }
-.trading{
-  text-align: center;
-  margin-left: 1rem;
-}
-.btn-trading{
-  margin-left: 7px;
-}
+  .trading{
+    text-align: center;
+    margin-left: 1rem;
+  }
+  .btn-trading{
+    margin-left: 7px;
+  }
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -50,10 +55,10 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
     <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" >
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="search" >
       <button class="btn btn-outline-light my-2 ml-2 my-sm-0" type="submit"><i class="fas fa-search"></i>&nbsp;Search</button>
     </form>
-    <%= link_to "交易中心", commodities_path, class:'btn btn-light btn-trading' if user_signed_in? %>
+    <%= button_to "交易中心", commodities_path, method: :get, class:'btn btn-light btn-trading' if user_signed_in? %>
     </ul>
     <ul class="navbar-nav">
     <% if user_signed_in? %>
