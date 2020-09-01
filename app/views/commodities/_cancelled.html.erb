@@ -4,8 +4,8 @@
       <th>ID</th>
       <th>重量</th>
       <th>單價</th>
-      <th>合計</th>
-      <th>買賣別</th>
+      <th class="hide-table">合計</th>
+      <th>委託</th>
     </tr>
   </thead>
   
@@ -15,8 +15,8 @@
       <td><%= commodity.id %></td>
       <td><%= commodity.weight %></td>
       <td><%= commodity.unit_price %></td>
-      <td><%= commodity.total_price %></td>
-      <td><%= commodity.action %></td>
+      <td class="hide-table"><%= commodity.total_price %></td>
+      <td><%= print_action(commodity.action) %></td>
     </tr>    
     <% end %>
   </tbody>

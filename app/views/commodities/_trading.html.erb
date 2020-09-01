@@ -12,9 +12,25 @@
       text-align: center;
       font-size: 4rem;
     }
-  }
-  .content{
-    font-size: 24px;
+    .lead {
+      font-size: 4rem;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .NT{
+      background-color: #302d2d5e;
+      border-radius: 4%;
+      margin-bottom: 5px;
+    }
+    .US{
+      background-color: #aa8e8e5e;
+      border-radius: 4%;
+      margin-bottom: 5px;
+    }
+    .TW{
+      background-color: #302d2d5e;
+      border-radius: 4%;
+    }
   }
   section{
       margin-top: 2rem;
@@ -22,60 +38,61 @@
 </style>
 
 <section class="chart section" data-controller='chart'>
-<div class='row'>
-  <div class='col-4'>
-  <h5>台幣黃金價格(台錢)</h5>
-  <table class='table table-tw'>
-    <thead>
-      <tr>
-        <th>賣出</th>
-        <th>買入</th>
-      </tr>
-    </thead>
-    
-    <tbody>
-      <tr>
-        <td><%= @XAU_TWD_SELL %></td>
-        <td><%= @XAU_TWD_BUY %></td>
-      </tr>
-    </tbody>
-  </table>
+  <div class='row'>
+    <div class='col-lg-4 col-sm-12 p-3 NT rounded border-secondary'>
+      <h5>台幣黃金價格(台錢)</h5>
+      <table class='table table-tw'>
+        <thead>
+          <tr>
+            <th>賣出</th>
+            <th>買入</th>
+          </tr>
+        </thead>
+        
+        <tbody>
+          <tr>
+            <td>6890<%= @XAU_TWD_SELL %></td>
+            <td>6880<%= @XAU_TWD_BUY %></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    <div class='col-lg-4 col-sm-12 p-3 US rounded border-secondary'>
+      <h5>美元黃金價格(盎司)</h5>
+      <table class='table table-us'>
+        <thead>
+          <tr>
+            <th>賣出</th>
+            <th>買入</th>
+          </tr>
+        </thead>
+        
+        <tbody>
+          <tr>
+            <td>1878.60<%= @XAU_USD_SELL %></td>
+            <td>1877.60<%= @XAU_USD_BUY %></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    <div class='col-lg-4 col-sm-12 p-3 TW rounded border-secondary'>
+      <h5>大盤黃金價格(台錢)</h5>
+      <table class='table table-tw'>
+        <thead>
+          <tr>
+            <th>賣出</th>
+            <th>買入</th>
+          </tr>
+        </thead>
+        
+        <tbody>
+          <tr>
+            <td>6630<%= @XAU_TWD_SELL %></td>
+            <td>6620<%= @XAU_TWD_BUY %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-  <div class='col-4'>
-  <h5>美元黃金價格(盎司)</h5>
-  <table class='table table-us'>
-    <thead>
-      <tr>
-        <th>賣出</th>
-        <th>買入</th>
-      </tr>
-    </thead>
-    
-    <tbody>
-      <tr>
-        <td><%= @XAU_USD_SELL %></td>
-        <td><%= @XAU_USD_BUY %></td>
-      </tr>
-    </tbody>
-  </table>
-  </div>
-  <div class='col-4'>
-  <h5>大盤黃金價格(台錢)</h5>
-  <table class='table table-tw'>
-    <thead>
-      <tr>
-        <th>賣出</th>
-        <th>買入</th>
-      </tr>
-    </thead>
-    
-    <tbody>
-      <tr>
-        <td>6630<%= @XAU_TWD_SELL %></td>
-        <td>6620<%= @XAU_TWD_BUY %></td>
-      </tr>
-    </tbody>
-  </table>
-  </div>
-  <p class="lead">&nbsp;即時更新請&nbsp;<a class="reload" href="javascript:location.reload()">按此</a></p>
+  <div class="mt-2 lead">&nbsp;即時更新請&nbsp;<a class="reload" href="javascript:location.reload()">按此</a></div>
 </section>
