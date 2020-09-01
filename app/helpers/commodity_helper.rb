@@ -1,9 +1,9 @@
 module CommodityHelper
   def print_action(action)
     if action == "Buy"
-      "求買"
+      "買進"
     else
-      "求賣"
+      "賣出"
     end
   end
 end

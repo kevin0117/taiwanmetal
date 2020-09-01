@@ -2,7 +2,7 @@
   <td><%= commodity.id %></td>
   <td><%= commodity.weight %></td>
   <td><%= commodity.unit_price %></td>
-  <td><%= commodity.total_price %></td>
+  <td class="hide-table"><%= commodity.total_price %></td>
   <td>
     <% if commodity.action == 'Buy' %>
       <%= "已賣出" %>
