@@ -13,8 +13,8 @@ class Api::V1::UtilsController < ApplicationController
   def transfer
     collected_date = params['transfer']['collected_date']
     customer_id = params['transfer']['customer_id']
-    title = '換金舊料'
-    title1 = '換金買料'
+    title = '待提煉換金-舊料'
+    title1 = '待提煉換金-買料'
     gross_weight = (params['transfer']['gross_weight']).to_f
     scrap_weight = (params['transfer']['scrap_weight']).to_f
     wastage_rate = (params['transfer']['wastage_rate']).to_f

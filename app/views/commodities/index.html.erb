@@ -1,47 +1,65 @@
 <style>
+  @media (max-width: 992px){
+    h1{
+      text-align: center;
+      font-size: 5rem;
+    }
+    .btn{
+      font-size: 2rem;
+    }
+    .hide-table{
+      display: none;
+    }
+    p{
+      font-size: 3rem;
+    }
+    .close{
+      font-size: 5rem;
+    }
+  }
   .info {
     height: 75vh;
   }
+
 </style>
 
-<h1>貴金屬交易中心</h1>
 
+<h1>貴金屬交易中心</h1>
 
 <%# --------------------------------------- %>
 
 <%= render 'trading' %>
 <br>
-
-<h5>即時交易看板</h5>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>委託單ID</th>
-      <th>委託買賣</th>
-      <th>重量(台錢)</th>
-      <th>委託價格(台幣)</th>
-      <th>合計</th>
-      <th>交易選擇</th> 
-      <th></th>
-    </tr>
-  </thead>
-  
-  <tbody id="commodities">
-      <% @commodities.available.each do |commodity| %>
-          <%= render 'commodities/commodity', commodity: commodity %>
-      <% end %>
-  </tbody>
-</table>
+<div class="row">
+  <h5>即時交易看板</h5>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th class="hide-table">委託買賣</th>
+        <th>重量</th>
+        <th>委託價格</th>
+        <th class="hide-table">合計</th>
+        <th>下單</th> 
+      </tr>
+    </thead>
+    
+    <tbody id="commodities">
+        <% @commodities.available.each do |commodity| %>
+            <%= render 'commodities/commodity', commodity: commodity %>
+        <% end %>
+    </tbody>
+  </table>
+</div>
 
 <%# -------------------------------------------- %>
 
 <div class="container info">
 
   <ul class="nav nav-tabs" id="myTab" role="tablist">
-    <%# <li class="nav-item"> %>
-      <%# <a class="nav-link active" id="account-tab" data-toggle="tab" href="#account" role="tab" aria-controls="account" aria-selected="true">我的帳戶</a> %>
-    <%# </li> %>
+    <li class="nav-item">
+      <a class="nav-link active" id="account-tab" data-toggle="tab" href="#account" role="tab" aria-controls="account" aria-selected="true">我的帳戶</a>
+    </li>
     <li class="nav-item">
       <a class="nav-link" id="add-tab" data-toggle="tab" href="#add" role="tab" aria-controls="add" aria-selected="false">新增掛單</a>
     </li>
@@ -57,9 +75,9 @@
   </ul>
 
   <div class="tab-content" id="myTabContent">
-    <%# <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab"> %>
-    <%# 我的帳戶... %>
-    <%# </div> %>
+    <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
+    我的帳戶...
+    </div>
     <div class="tab-pane fade" id="add" role="tabpanel" aria-labelledby="add-tab">
       <%= render 'form', commodity: @commodity %>
     </div>
@@ -73,8 +91,8 @@
       <%= render 'cancelled', commodity: @commodity %>
     </div>
   </div>
-
 </div>
+
 
 
 

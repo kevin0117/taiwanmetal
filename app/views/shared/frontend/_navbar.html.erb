@@ -13,7 +13,7 @@
   }
   .form-control{
     height: calc(1.2em + 0.5rem + 3px);
-    font-size: 4.3rem;
+    font-size: 4.2rem;
     width:75%;
   }
   .dropdown-menu{
@@ -26,9 +26,18 @@
   .nav-link{
     font-size: 3.5rem;
   }
+  .btn-trading{
+    /* font-size: 10px; */
+    margin-bottom: 8px;
+    height: 100%;
+  }
 }
 .trading{
+  text-align: center;
   margin-left: 1rem;
+}
+.btn-trading{
+  margin-left: 7px;
 }
 </style>
 
@@ -42,9 +51,9 @@
     <ul class="navbar-nav mr-auto">
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" >
-      <button class="btn btn-outline-light my-2 my-sm-0" type="submit"><i class="fas fa-search"></i>&nbsp;Search</button>
+      <button class="btn btn-outline-light my-2 ml-2 my-sm-0" type="submit"><i class="fas fa-search"></i>&nbsp;Search</button>
     </form>
-    <%= link_to "交易中心", commodities_path, class:'btn btn-light trading' if user_signed_in? %>
+    <%= link_to "交易中心", commodities_path, class:'btn btn-light btn-trading' if user_signed_in? %>
     </ul>
     <ul class="navbar-nav">
     <% if user_signed_in? %>
