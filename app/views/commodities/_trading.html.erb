@@ -18,18 +18,18 @@
       margin-bottom: 20px;
     }
     .NT{
-      background-color: #302d2d5e;
-      border-radius: 4%;
+      /* background-color: #302d2d5e; */
+      /* border-radius: 4%; */
       margin-bottom: 5px;
     }
     .US{
-      background-color: #aa8e8e5e;
-      border-radius: 4%;
+      /* background-color: #aa8e8e5e; */
+      /* border-radius: 4%; */
       margin-bottom: 5px;
     }
     .TW{
-      background-color: #302d2d5e;
-      border-radius: 4%;
+      /* background-color: #302d2d5e; */
+      /* border-radius: 4%; */
     }
   }
   section{
@@ -41,8 +41,8 @@
   <div class='row'>
     <div class='col-lg-6 col-sm-12 p-3 NT rounded border-secondary'>
       <h5>台幣黃金價格(台錢)</h5>
-      <table class='table table-tw'>
-        <thead>
+      <table class='table table-tw rounded'>
+        <thead class='thead-dark'>
           <tr>
             <th>賣出</th>
             <th>買入</th>
@@ -51,16 +51,16 @@
         
         <tbody>
           <tr>
-            <td>6890<%= @XAU_TWD_SELL %></td>
-            <td>6880<%= @XAU_TWD_BUY %></td>
+            <td class="table-secondary">6890<%= @XAU_TWD_SELL %></td>
+            <td class="table-secondary">6880<%= @XAU_TWD_BUY %></td>
           </tr>
         </tbody>
       </table>
       </div>
     <div class='col-lg-6 col-sm-12 p-3 US rounded border-secondary'>
       <h5>美元黃金價格(盎司)</h5>
-      <table class='table table-us'>
-        <thead>
+      <table class='table table-us table-triped rounded'>
+        <thead class='thead-dark'>
           <tr>
             <th>賣出</th>
             <th>買入</th>
@@ -69,8 +69,8 @@
         
         <tbody>
           <tr>
-            <td>1878.60<%= @XAU_USD_SELL %></td>
-            <td>1877.60<%= @XAU_USD_BUY %></td>
+            <td class="table-secondary">1878.60<%= @XAU_USD_SELL %></td>
+            <td class="table-secondary">1877.60<%= @XAU_USD_BUY %></td>
           </tr>
         </tbody>
       </table>
