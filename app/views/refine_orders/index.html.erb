@@ -1,9 +1,106 @@
+<style>
+table tr td,
+table tr th {
+    /* border: 1px solid #1d1e22; */
+    padding: 5px;
+}
+table {
+    border-collapse: collapse;
+}
+
+@media (max-width: 992px){
+  table.responsive-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+      display: block;
+      position: relative;
+      /* sort out borders */
+  }
+  table.responsive-table td:empty:before {
+      content: "\00a0";
+  }
+  table.responsive-table th,
+  table.responsive-table td {
+      margin: 0;
+      vertical-align: top;
+  }
+  table.responsive-table th {
+      text-align: left;
+  }
+  table.responsive-table thead {
+      display: block;
+      float: left;
+  }
+  table.responsive-table thead tr {
+      display: block;
+      padding: 0 10px 0 0;
+  }
+  table.responsive-table thead tr th::before {
+      content: "\00a0";
+  }
+  table.responsive-table tbody {
+      display: block;
+      width: auto;
+      position: relative;
+      overflow-x: auto;
+      white-space: nowrap;
+  }
+  table.responsive-table tbody tr {
+      display: inline-block;
+      vertical-align: top;
+  }
+  table.responsive-table th {
+      display: block;
+      text-align: right;
+  }
+  table.responsive-table td {
+      display: block;
+      min-height: 1.25em;
+      text-align: left;
+  }
+  table.responsive-table tr {
+      border-bottom: none;
+      padding: 0 10px;
+  }
+  table.responsive-table thead {
+      border: 0;
+      /* border-right: 1px solid #1d1e22; */
+  }
+  p{
+    font-size: 3rem;
+  }
+  .btn{
+    font-size: 2rem;
+  }
+  h5{
+    font-size: 4rem;
+  }
+  h3{
+    font-size: 3rem;
+  }
+  h1{
+    font-size: 6rem;
+  }
+  .button-refine{
+    font-size: 2rem;
+  }
+  table{
+    font-size: 2rem;
+  }
+  .pagination{
+    font-size: 3rem;
+  }
+}
+</style>
+
 <h1>提煉列表</h1>
 
-<%= link_to "新增提煉", new_refine_order_path, class:"btn btn-success mb-3 button-refine_order" %>
+<%= link_to "新增提煉", new_refine_order_path, class:"btn btn-outline-secondary mb-3 button-refine" %>
+<div class='table-responsive'>
 
-<table class='table'>
-  <thead>
+  <table class='table table-hover responsive-table table-light'>
+  <thead class='thead-dark'>
     <tr>
       <th>ID</th>
       <th>請求日期</th>
@@ -27,17 +124,19 @@
       <td><%= refineOrder.refine_fee %></td>
       <td><%= refineOrder.status %></td>
       <td>
-        <%= link_to "刪除", refine_order_path(refineOrder), method: :delete, data: { confirm: "確認刪除嗎？"}, class:"btn btn-danger btn-sm button-refine" %>
-        <%= link_to "報告", report_refine_order_path(refineOrder), class:"btn btn-success btn-sm button-refine" %>
+        <%= link_to "刪除", refine_order_path(refineOrder), method: :delete, data: {confirm: "確認取消嗎？", commit: '是的', title: '你確定嗎?', cancel: '取消'}, class:"btn btn-outline-danger button-refine" %>
         <% if refineOrder.status == 'awaiting' %>
-          <%= link_to "編輯", edit_refine_order_path(refineOrder), class:"btn btn-info btn-sm button-refine" %>
+          <%= link_to "編輯", edit_refine_order_path(refineOrder), class:"btn btn-outline-success button-refine" %>
         <% end %>
+        <%= link_to "報告", report_refine_order_path(refineOrder), class:"btn btn-outline-info button-refine" %>
+
       </td>
 
     </tr>    
     <% end %>
   </tbody>
-</table>
+  </table>
+</div>
   <%# create_table "refine_orders", force: :cascade do |t|
     t.date "request_date"
     t.integer "status"

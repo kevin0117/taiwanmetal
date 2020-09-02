@@ -7,11 +7,14 @@
   .invalid-feedback{
     font-size: 3rem;
   }
+  .description{
+    font-size: 3rem;
+  }
 }
 </style>
 
 <div class="form-group">  
-  <%= form_for(product) do |form| %>
+  <%= simple_form_for(product) do |form| %>
     <div>
       <%= form.label :product_lists_id, "商品名稱" %>
       <%= form.collection_select :product_list_id, ProductList.available(current_user.id), :id, :name, {}, class:"form-control" %>
@@ -40,7 +43,7 @@
       <%= form.check_box :on_sell, class:"form-check-input" %>
       <%= form.label :on_sell, "是否上架" %>
     </div> 
-    <div>  
+    <div class='description'>  
       <%= form.label :description, "描述" %>
       <%= form.rich_text_area :description %>
     </div> 

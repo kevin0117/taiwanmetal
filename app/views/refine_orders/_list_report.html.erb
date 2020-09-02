@@ -7,6 +7,9 @@
   .invalid-feedback{
     font-size: 3rem;
   }
+  .hide-table{
+    display: none;
+  }
 }
 </style>
 
@@ -27,9 +30,9 @@
         <%= form.text_field :note, class:"form-control", readonly: "readonly" %>
       </div> 
     </div>
-
-    <table class="table" data-controller='table'>
-      <thead>
+    <hr>
+    <table class="table hide-table table-hover table-light" data-controller='table'>
+      <thead class='thead-dark'>
         <tr>
           <th>舊金ID</th>
           <th>代號</th>
