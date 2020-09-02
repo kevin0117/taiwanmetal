@@ -4,22 +4,30 @@
   h1{
     font-size: 6rem;
   }
+  .btn{
+    font-size: 2rem;
+  }
+  h5{
+    font-size: 4rem;
+  }
+  p{
+    font-size: 3rem;
+  }
   .button-product_list{
     font-size: 3rem;
   }
   table{
         font-size: 3rem;
-
   }
 }
 </style>
 
 <h1>商品基本資料</h1>
 
-<%= link_to "新增商品資料", new_product_list_path, class:"btn btn-success mb-3 button-product_list" %>
+<%= link_to "新增商品資料", new_product_list_path, class:"btn btn-outline-secondary mb-3 button-product_list" %>
 
-<table class='table'>
-  <thead>
+<table class='table table-hover'>
+  <thead class='thead-light'>
     <tr>
       <th>名稱</th>
       <th>描述</th>
@@ -33,8 +41,8 @@
       <td><%= link_to productList.name, edit_product_list_path(productList) %></td>
       <td><%= strip_tags(productList.description).truncate(100) %></td>
       <td>
-        <%= link_to "編輯", edit_product_list_path(productList) %>
-        <%= link_to "刪除", product_list_path(productList), method: :delete, data: { confirm: "確認刪除嗎？"} %>
+        <%= link_to "編輯", edit_product_list_path(productList), class:"btn btn-outline-success button-product_list"%>
+        <%= link_to "刪除", product_list_path(productList), method: :delete, data: {confirm: "確認取消嗎？", commit: '是的', title: '你確定嗎?', cancel: '取消'}, class: 'btn btn-outline-danger button-product_list'%>
       </td>
     </tr>    
     <% end %>
