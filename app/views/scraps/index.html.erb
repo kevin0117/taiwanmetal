@@ -15,6 +15,7 @@ table {
       border-spacing: 0;
       display: block;
       position: relative;
+      font-size: 4rem;
       /* sort out borders */
   }
   table.responsive-table td:empty:before {
@@ -102,6 +103,12 @@ table {
   #q_title_not_cont{
     width: 100%;
   }
+  #q_collected_date_lteq{
+    width: 100%;
+  }
+  #q_collected_date_gteq{
+    width: 100%;
+  }
 }
 </style>
 
@@ -112,8 +119,8 @@ table {
 
 <%= search_form_for @q, class: 'form-inline' do |f| %>
   <div class="row">
-    <div class='col-lg-5 col-sm-12'><%= f.date_field :collected_date_gteq, class:"form-control input-sm search_field" %></div>
-    <div class='col-lg-5 col-sm-12'><%= f.date_field :collected_date_lteq, class:"form-control input-sm search_field" %></div>
+    <div class='col-lg-5 col-sm-5'><%= f.date_field :collected_date_gteq, class:"form-control input-sm search_field" %></div>
+    <div class='col-lg-5 col-sm-5'><%= f.date_field :collected_date_lteq, class:"form-control input-sm search_field" %></div>
   </div>
 
   <div class="row">
