@@ -10,9 +10,12 @@
     /* background-color: black; */
   }
 }
+.new_form{
+  font-size: 1.3rem;
+}
 </style>
 
-<div class="form-group" data-controller='commodity'>
+<div class="form-group new_form" data-controller='commodity'>
   <%= simple_form_for(commodity, remote: true) do |form| %>
   <div>  
     <%= form.label :weight, "重量" %> 
@@ -33,6 +36,6 @@
   <div>  
     <%= form.hidden_field :status, as: :select, collection: [['open', '等待中'], ['closed', '已成交']], label_method: :second, value_method: :first, label: "狀態",  class:"form-control form-input" %>
   </div> 
-  <%= form.submit class: "btn btn-primary" %>
+  <%= form.submit "建立委託單", class: "btn btn-primary" %>
   <% end %>
 </div>
