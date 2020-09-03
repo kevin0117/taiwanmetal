@@ -1,6 +1,77 @@
 <style>
 
 @media (max-width: 992px){
+  h1{
+      font-size: 6rem;
+  }
+  h4{
+      font-size: 3rem;
+  }
+  .button-refine-list{
+    font-size: 3.5rem;
+  }
+  .hide-table{
+    display: none;
+  }
+  table.responsive-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+      display: block;
+      position: relative;
+      font-size: 4rem;
+      /* sort out borders */
+  }
+  table.responsive-table td:empty:before {
+      content: "\00a0";
+  }
+  table.responsive-table th,
+  table.responsive-table td {
+      margin: 0;
+      vertical-align: top;
+  }
+  table.responsive-table th {
+      text-align: left;
+  }
+  table.responsive-table thead {
+      display: block;
+      float: left;
+  }
+  table.responsive-table thead tr {
+      display: block;
+      padding: 0 10px 0 0;
+  }
+  table.responsive-table thead tr th::before {
+      content: "\00a0";
+  }
+  table.responsive-table tbody {
+      display: block;
+      width: auto;
+      position: relative;
+      overflow-x: auto;
+      white-space: nowrap;
+  }
+  table.responsive-table tbody tr {
+      display: inline-block;
+      vertical-align: top;
+  }
+  table.responsive-table th {
+      display: block;
+      text-align: right;
+  }
+  table.responsive-table td {
+      display: block;
+      min-height: 1.25em;
+      text-align: left;
+  }
+  table.responsive-table tr {
+      border-bottom: none;
+      padding: 0 10px;
+  }
+  table.responsive-table thead {
+      border: 0;
+      /* border-right: 1px solid #1d1e22; */
+  }
   label{
     font-size: 3rem;
   }
@@ -26,14 +97,12 @@
         <%= form.text_field :note, class:"form-control" %>
       </div>     
       <div class='form-group col-lg-3 col-sm-12'>  
-        <%# if @refine_order.status == 'awaiting' %>
           <%= form.input :status, as: :select, collection:[['awaiting', '等待中'], ['scheduled', '提煉申請']], label_method: :second, value_method: :first, readonly: "readonly", label: "狀態" %>
-        <%# end %>        
       </div> 
     </div>
-
-    <table class="table" data-controller='table'>
-      <thead>
+  <div class='table-responsive'>
+    <table class="table table-hover responsive-table" data-controller='table'>
+      <thead class='thead-light'>
         <tr>
           <th>舊金ID</th>
           <th>名稱</th>
@@ -59,8 +128,8 @@
           <td><%= scrap.refine_charge %></td>
           <td>
             <% if refine_order.status == 'awaiting' %>
-              <%= link_to "移除", remove_refine_order_path(scrap, refine_order_id: refine_order.id), method: :post, data: { confirm: "確認刪除嗎？"}, class:"btn btn-sm btn-danger" %>
-              <%= link_to "-", decrease_refine_order_path(scrap, refine_order_id: @refine_order.id), method: :post, class:"btn btn-sm btn-danger" %>
+              <%= link_to "移除", remove_refine_order_path(scrap, refine_order_id: refine_order.id), method: :post, data: { confirm: "確認刪除嗎？"}, class:"btn btn-sm btn-danger button-sale-table" %>
+              <%= link_to "減一", decrease_refine_order_path(scrap, refine_order_id: @refine_order.id), method: :post, class:"btn btn-sm btn-danger button-sale-table" %>
             <% end %>      
           </td>
         </tr>    
@@ -89,6 +158,6 @@
     <%#= form.input :status, as: :select, collection:[['confirmed', '已確認'], ['closed', '已交貨']], label_method: :second, value_method: :first, label: "狀態" %>
   <%# </div> %>
 <%# ----------------------------------------------------------------------------------- %>
-    <%= form.submit %>  
+    <%= form.submit class:"btn btn-outline-dark button-refine-list" %>
   <% end %>
 </div>

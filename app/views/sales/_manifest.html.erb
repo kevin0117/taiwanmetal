@@ -1,14 +1,82 @@
 <style>
 
 @media (max-width: 992px){
+  h1{
+      font-size: 6rem;
+  }
+  h4{
+      font-size: 3rem;
+  }
+  .button-sale-manifest{
+    font-size: 3.5rem;
+  }
+  .hide-table{
+    display: none;
+  }
+  table.responsive-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+      display: block;
+      position: relative;
+      font-size: 4rem;
+      /* sort out borders */
+  }
+  table.responsive-table td:empty:before {
+      content: "\00a0";
+  }
+  table.responsive-table th,
+  table.responsive-table td {
+      margin: 0;
+      vertical-align: top;
+  }
+  table.responsive-table th {
+      text-align: left;
+  }
+  table.responsive-table thead {
+      display: block;
+      float: left;
+  }
+  table.responsive-table thead tr {
+      display: block;
+      padding: 0 10px 0 0;
+  }
+  table.responsive-table thead tr th::before {
+      content: "\00a0";
+  }
+  table.responsive-table tbody {
+      display: block;
+      width: auto;
+      position: relative;
+      overflow-x: auto;
+      white-space: nowrap;
+  }
+  table.responsive-table tbody tr {
+      display: inline-block;
+      vertical-align: top;
+  }
+  table.responsive-table th {
+      display: block;
+      text-align: right;
+  }
+  table.responsive-table td {
+      display: block;
+      min-height: 1.25em;
+      text-align: left;
+  }
+  table.responsive-table tr {
+      border-bottom: none;
+      padding: 0 10px;
+  }
+  table.responsive-table thead {
+      border: 0;
+      /* border-right: 1px solid #1d1e22; */
+  }
   label{
     font-size: 3rem;
   }
   .invalid-feedback{
     font-size: 3rem;
-  }
-  table{
-    font-size: 2rem;
   }
 }
 </style>
@@ -45,8 +113,8 @@
       </div>     
     </div>
     <div class='table-responsive'>
-    <table class="table">
-      <thead>
+    <table class="table table-hover responsive-table">
+      <thead class='thead-light'>
         <tr>
           <th>名稱</th>
           <th>商品ID</th>
@@ -54,8 +122,8 @@
           <th>工錢</th>
           <th>數量</th>
           <th>銷售狀態</th>
-          <th>貨單ID</th>
           <th>小計</th>
+          <th></th>
         </tr>
       </thead>
     
@@ -71,11 +139,11 @@
           </td>
           <td><%= product.on_sell %></td>
           <td>
-            <%= link_to "移除", remove_sale_path(product, sale_id: sale.id), method: :post, data: { confirm: "確認刪除嗎？"}, class:"btn btn-sm btn-danger" %>
-            <%= link_to "-", decrease_sale_path(product, sale_id: @sale.id), method: :post, class:"btn btn-sm btn-danger" %>
+            <%= sale.manifests.find_by(product_id: product.id).weight %>
           </td>
           <td>
-            <%= sale.manifests.find_by(product_id: product.id).weight %>
+            <%= link_to "移除", remove_sale_path(product, sale_id: sale.id), method: :post, data: { confirm: "確認刪除嗎？"}, class:"btn btn-sm btn-danger" %>
+            <%= link_to "減一", decrease_sale_path(product, sale_id: @sale.id), method: :post, class:"btn btn-sm btn-danger" %>
           </td>
         </tr>    
         <% end %>      
@@ -99,6 +167,6 @@
       <%= form.input :payment_method, as: :select, collection: [['cash', '現金'], ['credit_card', '信用卡'], ['line_pay', 'LinePay']], label_method: :second, value_method: :first, label: "付款方式",  class:"form-control"%>
     </div> 
 
-    <%= form.submit %>  
+    <%= form.submit class:"btn btn-outline-dark button-sale-manifest" %>
   <% end %>
 </div>

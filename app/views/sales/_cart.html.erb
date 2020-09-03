@@ -1,6 +1,77 @@
 <style>
 
 @media (max-width: 992px){
+  h1{
+      font-size: 6rem;
+  }
+  h4{
+      font-size: 3rem;
+  }
+  .button-sale-table{
+    font-size: 3.5rem;
+  }
+  .hide-table{
+    display: none;
+  }
+  table.responsive-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+      display: block;
+      position: relative;
+      font-size: 4rem;
+      /* sort out borders */
+  }
+  table.responsive-table td:empty:before {
+      content: "\00a0";
+  }
+  table.responsive-table th,
+  table.responsive-table td {
+      margin: 0;
+      vertical-align: top;
+  }
+  table.responsive-table th {
+      text-align: left;
+  }
+  table.responsive-table thead {
+      display: block;
+      float: left;
+  }
+  table.responsive-table thead tr {
+      display: block;
+      padding: 0 10px 0 0;
+  }
+  table.responsive-table thead tr th::before {
+      content: "\00a0";
+  }
+  table.responsive-table tbody {
+      display: block;
+      width: auto;
+      position: relative;
+      overflow-x: auto;
+      white-space: nowrap;
+  }
+  table.responsive-table tbody tr {
+      display: inline-block;
+      vertical-align: top;
+  }
+  table.responsive-table th {
+      display: block;
+      text-align: right;
+  }
+  table.responsive-table td {
+      display: block;
+      min-height: 1.25em;
+      text-align: left;
+  }
+  table.responsive-table tr {
+      border-bottom: none;
+      padding: 0 10px;
+  }
+  table.responsive-table thead {
+      border: 0;
+      /* border-right: 1px solid #1d1e22; */
+  }
   label{
     font-size: 3rem;
   }
@@ -33,7 +104,6 @@
     <div class='form-row'>  
       <div class='form-group col-lg-3 col-sm-12'>  
         <%= form.label :exchange_weight, "換金重量" %>
-        <%#= link_to "入庫", "#", data: { action: "click->sale#to_scrap" }, class:"btn btn-info btn-sm", data: { confirm: "確認入庫此舊金嗎？"} %> 
         <%= form.text_field :exchange_weight, placeholder: "輸入換金重量", data: { target: "sale.exchange_weight" }, class:"form-control" %>
       </div> 
       <div class='form-group col-lg-3 col-sm-12'>  
@@ -51,7 +121,8 @@
         <input type="text", class="form-control", data-target= "sale.scrap_weight",  readonly="readonly" >
       </div>         
     </div>
-    <table class="table">
+    <div class='table-responsive'>
+    <table class="table table-hover responsive-table">
       <thead>
         <tr>
           <th>名稱</th>
@@ -61,7 +132,7 @@
           <th>庫存量</th>
           <th>銷售狀態</th>
           <th></th>
-          <th></th>
+          <%# <th></th> %>
         </tr>
       </thead>
      
@@ -74,12 +145,15 @@
           <td><%= product.service_fee %></td>
           <td><%= find_quantity(product) %></td>
           <td><%= product.on_sell %></td>
-          <td><%= link_to " - ", decrease_to_cart_product_path(product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-danger" %></td>
-          <td><%= link_to "移除", delete_to_cart_product_path(product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-danger" %></td>
+          <td>
+              <%= link_to "減少", decrease_to_cart_product_path(product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-danger button-sale-table" %>
+              <%= link_to "移除", delete_to_cart_product_path(product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-danger button-sale-table" %>
+          </td>
         </tr>    
         <% end %>      
       </tbody>
     </table> 
+    </div>
     <% if current_cart.product_list.present? %>
       <h6>
       <label for="weight">合計重量</label>
@@ -100,6 +174,6 @@
     <input type="text", class="form-control", value="<%= current_user.id %>",  style="display:none", data-target= "sale.user_id" >
 
 
-    <%= form.submit %>  
+    <%= form.submit class:'btn btn-info'%>
   <% end %>
 </div>
