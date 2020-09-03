@@ -76,7 +76,7 @@ table {
   h1{
     font-size: 6rem;
   }
-  .button-product{
+  .btn{
     font-size: 3.5rem;
   }
   table{
@@ -85,12 +85,15 @@ table {
   .pagination{
     font-size: 4rem;
   }
+  .close{
+    font-size: 4rem;
+  }
 }
 </style>
 
 <h1>商品列表</h1>
 
-<%= link_to "新增商品", new_product_path, class:'btn btn-outline-secondary mb-3 button-product' %>
+<%= link_to "新增商品", new_product_path, class:'btn btn-outline-secondary mb-3' %>
 <div class='table-responsive'>
   <%= paginate @products %>
   
@@ -123,8 +126,8 @@ table {
       <td><%= product.quantity %></td>
       <td><%= product.on_sell %></td>
       <td>
-        <%= link_to "編輯", edit_product_path(product), class:"btn btn-outline-success button-product" %>
-        <%= link_to "刪除", product_path(product), method: :delete, data: {confirm: "確認取消嗎？", commit: '是的', title: '你確定嗎?', cancel: '取消'}, class:"btn btn-outline-danger button-product" %>
+        <%= link_to "編輯", edit_product_path(product), class:"btn btn-outline-success" %>
+        <%= link_to "刪除", product_path(product), method: :delete, data: {confirm: "確認取消嗎？", commit: '是的', title: '你確定嗎?', cancel: '取消'}, class:"btn btn-outline-danger" %>
       </td>
       </tr>    
       <% end %>  

@@ -72,7 +72,7 @@ table {
     font-size: 3rem;
   }
   .btn{
-    font-size: 2rem;
+    font-size: 3.5rem;
   }
   h5{
     font-size: 4rem;
@@ -83,10 +83,10 @@ table {
   h1{
     font-size: 6rem;
   }
-  .button-sale{
-    font-size: 3.5rem;
-  }
   .pagination{
+    font-size: 4rem;
+  }
+  .close{
     font-size: 4rem;
   }
 }
@@ -94,7 +94,7 @@ table {
 
 <h1>銷售列表</h1>
 
-<%= link_to "新增銷售", new_sale_path, class:"btn btn-outline-secondary mb-3 button-sale" %>
+<%= link_to "新增銷售", new_sale_path, class:"btn btn-outline-secondary mb-3" %>
 
 <table class='table table-hover responsive-table table-light'>
   <thead class='thead-dark'>
@@ -117,8 +117,8 @@ table {
       <td><%= sale.payment_method %></td>
       <td><%= sale.user.name %></td>
       <td>
-        <%= link_to "編輯", edit_sale_path(sale), class:"btn btn-outline-success button-sale" %>
-        <%= link_to "刪除", sale_path(sale), method: :delete, data: {confirm: "確認取消嗎？", commit: '是的', title: '你確定嗎?', cancel: '取消'}, class:"btn btn-outline-danger button-sale" %>
+        <%= link_to "編輯", edit_sale_path(sale), class:"btn btn-outline-success" %>
+        <%= link_to "刪除", sale_path(sale), method: :delete, data: {confirm: "確認取消嗎？", commit: '是的', title: '你確定嗎?', cancel: '取消'}, class:"btn btn-outline-danger" %>
       </td>
     </tr>    
     <% end %>
