@@ -7,6 +7,14 @@
   .invalid-feedback{
     font-size: 3rem;
   }
+  #scrap_in_stock{
+    height: 35px;
+    width: 35px;
+    margin-top: 18px;
+  }
+  .form-check-label{
+    margin-left: 25px;
+  }
 }
 .new_form{
   font-size: 1.3rem;
@@ -14,7 +22,7 @@
 </style>
 
 <div class="form-group new_form" data-controller='form'>
-  <%= form_for(scrap) do |form| %>
+  <%= simple_form_for(scrap) do |form| %>
   <div class='row'>
     <div class='col-lg-6 col-sm-12'>
       <%= form.label :collected_date, "日期" %>  
@@ -62,8 +70,7 @@
       <%= form.text_field :quantity, class:"form-control" %>
     </div>   
     <div>
-      <%= form.label :in_stock, "庫存有貨打勾" %>  
-      <%= form.check_box :in_stock%>
+      <%= form.input :in_stock, label: '庫存有貨打勾', class:"form-control"  %>
     </div>     
     <div>
       <br>
