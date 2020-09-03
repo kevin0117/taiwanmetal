@@ -79,9 +79,12 @@
     font-size: 3rem;
   }
 }
+.new_form{
+  font-size: 1.3rem;
+}
 </style>
 
-<div class="form-group">  
+<div class="form-group new_form">  
   <%= simple_form_for(refine_order) do |form| %>  
     <div class='form-row'>  
       <div class='form-group col-lg-3 col-sm-12'>  
@@ -129,7 +132,6 @@
           <td>
             <% if refine_order.status == 'awaiting' %>
               <%= link_to "移除", remove_refine_order_path(scrap, refine_order_id: refine_order.id), method: :post, data: { confirm: "確認刪除嗎？"}, class:"btn btn-sm btn-danger button-sale-table" %>
-              <%= link_to "減一", decrease_refine_order_path(scrap, refine_order_id: @refine_order.id), method: :post, class:"btn btn-sm btn-danger button-sale-table" %>
             <% end %>      
           </td>
         </tr>    

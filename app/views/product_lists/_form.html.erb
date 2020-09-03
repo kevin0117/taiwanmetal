@@ -8,9 +8,12 @@
     font-size: 3rem;
   }
 }
+.new_form{
+  font-size: 1.3rem;
+}
 </style>
 
-<div class="form-group">
+<div class="form-group new_form">
   <%= simple_form_for(product_list) do |f| %>
     <%= f.input :name, label: '名稱', class:"form-control"  %>
     <%= f.input :description, label: '描述', class:"form-control"  %>

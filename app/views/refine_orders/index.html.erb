@@ -72,7 +72,7 @@ table {
     font-size: 3rem;
   }
   .btn{
-    font-size: 2rem;
+    font-size: 3.5rem;
   }
   h5{
     font-size: 4rem;
@@ -83,10 +83,10 @@ table {
   h1{
     font-size: 6rem;
   }
-  .button-refine{
-    font-size: 3.5rem;
-  }
   .pagination{
+    font-size: 4rem;
+  }
+  .close{
     font-size: 4rem;
   }
 }
@@ -94,7 +94,7 @@ table {
 
 <h1>提煉列表</h1>
 
-<%= link_to "新增提煉", new_refine_order_path, class:"btn btn-outline-secondary mb-3 button-refine" %>
+<%= link_to "新增提煉", new_refine_order_path, class:"btn btn-outline-secondary mb-3" %>
 <div class='table-responsive'>
 
   <table class='table table-hover responsive-table table-light'>
@@ -122,11 +122,11 @@ table {
       <td><%= refineOrder.refine_fee %></td>
       <td><%= refineOrder.status %></td>
       <td>
-        <%= link_to "刪除", refine_order_path(refineOrder), method: :delete, data: {confirm: "確認取消嗎？", commit: '是的', title: '你確定嗎?', cancel: '取消'}, class:"btn btn-outline-danger button-refine" %>
+        <%= link_to "刪除", refine_order_path(refineOrder), method: :delete, data: {confirm: "確認取消嗎？", commit: '是的', title: '你確定嗎?', cancel: '取消'}, class:"btn btn-outline-danger" %>
         <% if refineOrder.status == 'awaiting' %>
-          <%= link_to "編輯", edit_refine_order_path(refineOrder), class:"btn btn-outline-success button-refine" %>
+          <%= link_to "編輯", edit_refine_order_path(refineOrder), class:"btn btn-outline-success" %>
         <% end %>
-        <%= link_to "報告", report_refine_order_path(refineOrder), class:"btn btn-outline-info button-refine" %>
+        <%= link_to "報告", report_refine_order_path(refineOrder), class:"btn btn-outline-info" %>
 
       </td>
 

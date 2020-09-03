@@ -10,11 +10,14 @@
   p{
     font-size: 3rem;
   }
-  .button-customer{
+  table{
+    font-size: 3rem;
+  }
+  .btn{
     font-size: 3.5rem;
   }
-  table{
-        font-size: 3rem;
+  .close{
+    font-size: 4rem;
   }
 }
 
@@ -22,7 +25,7 @@
 
 <h1>客戶基本資料</h1>
 
-<%= link_to "新增客戶", new_customer_path, class:"btn btn-outline-secondary mb-3 button-customer" %>
+<%= link_to "新增客戶", new_customer_path, class:"btn btn-outline-secondary mb-3" %>
 
 <table class='table table-hover'>
   <thead class='thead-light'>
@@ -39,8 +42,8 @@
       <td><%= link_to customer.name, edit_customer_path(customer) %></td>
       <td><%= strip_tags(customer.description).truncate(100) %></td>
       <td>
-        <%= link_to "編輯", edit_customer_path(customer), class:'btn btn-outline-success button-customer' %>
-        <%= link_to "刪除", customer_path(customer), method: :delete, data: {confirm: "確認取消嗎？", commit: '是的', title: '你確定嗎?', cancel: '取消'}, class: 'btn btn-outline-danger button-customer' %>
+        <%= link_to "編輯", edit_customer_path(customer), class:'btn btn-outline-success' %>
+        <%= link_to "刪除", customer_path(customer), method: :delete, data: {confirm: "確認取消嗎？", commit: '是的', title: '你確定嗎?', cancel: '取消'}, class: 'btn btn-outline-danger' %>
       </td>
     </tr>    
     <% end %>
