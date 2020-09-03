@@ -1,6 +1,77 @@
 <style>
 
 @media (max-width: 992px){
+  h1{
+      font-size: 6rem;
+  }
+  h4{
+      font-size: 3rem;
+  }
+  .button-sale-cart{
+    font-size: 3.5rem;
+  }
+  .hide-table{
+    display: none;
+  }
+  table.responsive-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+      display: block;
+      position: relative;
+      font-size: 4rem;
+      /* sort out borders */
+  }
+  table.responsive-table td:empty:before {
+      content: "\00a0";
+  }
+  table.responsive-table th,
+  table.responsive-table td {
+      margin: 0;
+      vertical-align: top;
+  }
+  table.responsive-table th {
+      text-align: left;
+  }
+  table.responsive-table thead {
+      display: block;
+      float: left;
+  }
+  table.responsive-table thead tr {
+      display: block;
+      padding: 0 10px 0 0;
+  }
+  table.responsive-table thead tr th::before {
+      content: "\00a0";
+  }
+  table.responsive-table tbody {
+      display: block;
+      width: auto;
+      position: relative;
+      overflow-x: auto;
+      white-space: nowrap;
+  }
+  table.responsive-table tbody tr {
+      display: inline-block;
+      vertical-align: top;
+  }
+  table.responsive-table th {
+      display: block;
+      text-align: right;
+  }
+  table.responsive-table td {
+      display: block;
+      min-height: 1.25em;
+      text-align: left;
+  }
+  table.responsive-table tr {
+      border-bottom: none;
+      padding: 0 10px;
+  }
+  table.responsive-table thead {
+      border: 0;
+      /* border-right: 1px solid #1d1e22; */
+  }
   label{
     font-size: 3rem;
   }
@@ -31,8 +102,8 @@
 
     </div>
 
-    <table class="table" data-controller='table'>
-      <thead>
+    <table class="table table-hover responsive-table" data-controller='table'>
+      <thead class='thead-light'>
         <tr>
           <th>舊金ID</th>
           <th>代號</th>
@@ -56,7 +127,7 @@
           <td><%= scrap.wastage_rate %></td>
           <td><%= scrap.net_weight %></td>
           <td><%= scrap.refine_charge %></td>
-          <td><%= link_to "移除", delete_to_cart_scrap_path(scrap, refine_order_id: @refine_order.id), method: :put, class:"btn btn-sm btn-danger" %></td>
+          <td><%= link_to "移除", delete_to_cart_scrap_path(scrap, refine_order_id: @refine_order.id), method: :put, class:"btn btn-sm btn-danger button-sale-cart" %></td>
         </tr>    
         <% end %>      
       </tbody>
@@ -70,7 +141,7 @@
       </h6>
     <% end %>
 
-    <%= form.submit %>  
+    <%= form.submit class:"btn btn-outline-dark button-refine-table" %>
   <% end %>
 </div>
  
