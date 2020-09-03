@@ -13,6 +13,7 @@ gem 'ransack', '~> 2.3', '>= 2.3.2'
 gem 'aasm', '~> 5.1', '>= 5.1.1'
 gem 'paranoia', '~> 2.4', '>= 2.4.2'
 gem 'data-confirm-modal', '~> 1.6', '>= 1.6.3'
+gem 'rails-i18n', '~> 6.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.1'
 # Use postgresql as the database for Active Record
