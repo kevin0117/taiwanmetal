@@ -10,6 +10,14 @@
   .description{
     font-size: 3rem;
   }
+  #product_on_sell{
+    height: 35px;
+    width: 35px;
+    margin-top: 18px;
+  }
+  .form-check-label{
+    margin-left: 25px;
+  }
 }
 .new_form{
   font-size: 1.3rem;
@@ -43,8 +51,7 @@
       <%= form.number_field :quantity, class:"form-control" %>
     </div>     
     <div class="form-group form-check">  
-      <%= form.check_box :on_sell, class:"form-check-input" %>
-      <%= form.label :on_sell, "是否上架" %>
+      <%= form.input :on_sell, label: '是否上架', class:"form-control"  %>
     </div> 
     <div class='description'>  
       <%= form.label :description, "描述" %>
