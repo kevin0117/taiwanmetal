@@ -15,7 +15,7 @@ table {
       border-spacing: 0;
       display: block;
       position: relative;
-      font-size: 4rem;
+      font-size: 5rem;
       /* sort out borders */
   }
   table.responsive-table td:empty:before {
@@ -81,16 +81,19 @@ table {
     font-size: 3rem;
   }
   h1{
-    font-size: 6rem;
+    font-size: 8rem;
+  }
+  .badge-scrap{
+    font-size: 5rem;
   }
   .button-scrap{
-    font-size: 2rem;
+    font-size: 5rem;
   }
-  table{
+  /* table{
     font-size: 2rem;
-  }
+  } */
   .pagination{
-    font-size: 3rem;
+    font-size: 5rem;
   }
   .search_field{
     margin-bottom: 10px;
@@ -109,7 +112,12 @@ table {
   #q_collected_date_gteq{
     width: 100%;
   }
+  .scrap-table {
+    text-align: center;
+    font-size: 3rem;
+  }
 }
+
 </style>
 
 <h1>收金列表</h1>
@@ -180,18 +188,31 @@ table {
   </table>
 
 </div>
-<hr>
-
+<%# <hr> %>
 <% if current_user.scraps.exists? %>
-  <h3>
-    <div class="row">
-      <div class='badge badge-secondary badge-block mr-2 sm-col-12 mb-2'>合計重量: <%= @scraps.sum(:gross_weight)%></div>
-      <div class='badge badge-secondary mr-2 sm-col-12 mb-2'>合計實重: <%= @scraps.sum(:net_weight) %></div>
-      <div class='badge badge-secondary mr-2 sm-col-12 mb-2'>平均成色: <%= (@scraps.sum(:net_weight) / @scraps.sum(:gross_weight)).round(4) %></div> 
-      <div class='badge badge-secondary mr-2 sm-col-12 mb-2'>支出總和: $<%= @scraps.sum(:total_price).round %></div>
-      <div class='badge badge-secondary mr-2 sm-col-12 mb-2'>平均金價: $<%= (@scraps.sum(:total_price) / @scraps.sum(:net_weight)).round if @scraps.sum(:net_weight)!=0%></div>
-    </div>
-  </h3>
+  <div class='table-responsive'>
+    <table class='table table-hover table-light scrap-table' >
+      <thead class='thead-dark'>
+        <tr>
+          <th>合計重量</th>
+          <th>合計實重</th>
+          <th>平均成色</th>
+          <th>支出總和</th>
+          <th>平均金價</th>
+        </tr>
+      </thead>
+      
+      <tbody>
+        <tr>
+          <td><%= @scraps.sum(:gross_weight)%></td>
+          <td><%= @scraps.sum(:net_weight) %></td>
+          <td><%= (@scraps.sum(:net_weight) / @scraps.sum(:gross_weight)).round(4) %></td>
+          <td>$<%= @scraps.sum(:total_price).round %></td>
+          <td>$<%= (@scraps.sum(:total_price) / @scraps.sum(:net_weight)).round if @scraps.sum(:net_weight)!=0%></td>
+        </tr>
+      </tbody>
+    </table>
+  </div> 
 <% end %>
 
 
