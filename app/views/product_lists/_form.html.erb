@@ -14,8 +14,8 @@
   <%= simple_form_for(product_list) do |f| %>
     <%= f.input :name, label: '名稱', class:"form-control"  %>
     <%= f.input :description, label: '描述', class:"form-control"  %>
-    <%= f.input :online, label: '正常營運中', class:"form-control"  %>
+    <%= f.input :online, label: '上架中', class:"form-control"  %>
 
-    <%= f.button :submit, class:'btn btn-info'%>  
+    <%= f.button :submit, "建立商品名稱", class:'btn btn-info'%>  
   <% end %>
 </div>
