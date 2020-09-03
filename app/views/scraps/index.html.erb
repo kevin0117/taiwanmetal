@@ -15,7 +15,7 @@ table {
       border-spacing: 0;
       display: block;
       position: relative;
-      font-size: 5rem;
+      font-size: 4rem;
       /* sort out borders */
   }
   table.responsive-table td:empty:before {
@@ -82,23 +82,16 @@ table {
   }
   h1{
     font-size: 8rem;
-  }
-  .badge-scrap{
-    font-size: 5rem;
+    text-align: center;
   }
   .button-scrap{
-    font-size: 5rem;
+    font-size: 4rem;
   }
-  /* table{
-    font-size: 2rem;
-  } */
   .pagination{
-    font-size: 5rem;
+    font-size: 4rem;
   }
   .search_field{
     margin-bottom: 10px;
-    /* width: 10px; */
-    /* background-color: red; */
   }
   #q_title_cont{
     width: 100%;
@@ -114,7 +107,7 @@ table {
   }
   .scrap-table {
     text-align: center;
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
 }
 
@@ -123,18 +116,28 @@ table {
 <h1>收金列表</h1>
 
 <%= link_to "新增舊金", new_scrap_path, class:"btn btn-outline-secondary mb-3 button-scrap" %>
-  
+<%# # data: { toggle:"tooltip", placement:"top", title: "Tooltip on top"} %>
 
 <%= search_form_for @q, class: 'form-inline' do |f| %>
   <div class="row">
-    <div class='col-lg-5 col-sm-5'><%= f.date_field :collected_date_gteq, class:"form-control input-sm search_field" %></div>
-    <div class='col-lg-5 col-sm-5'><%= f.date_field :collected_date_lteq, class:"form-control input-sm search_field" %></div>
+    <div class='col-lg-5 col-sm-6'>
+      <%= f.date_field :collected_date_gteq, 
+        class: "form-control input-sm search_field", data: { toggle: "tooltip", placement: "top"},  title: "起始日期"
+        # class: "form-control input-sm search_field", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', 'title' => "起始日期"  
+      %>
+    </div>
+    <div class='col-lg-5 col-sm-6'>
+      <%= f.date_field :collected_date_lteq, 
+        class: "form-control input-sm search_field", data: { toggle: "tooltip", placement: "top"},  title: "結束日期"
+        # class:"form-control input-sm search_field", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', 'title' => "結束日期"
+      %>
+    </div>
   </div>
 
   <div class="row">
     <div class='col-lg-4 col-sm-5'><%= f.search_field :title_cont, class:"form-control search_field", placeholder: "名稱包括" %></div>
     <div class='col-lg-4 col-sm-5'><%= f.search_field :title_not_cont, class:"form-control search_field", placeholder: "名稱不包括" %></div>
-    <div class='col-lg-2 col-sm-2'><%= f.submit "搜尋", class:"btn btn-outline-dark ml-3"%></div>
+    <div class='col-lg-2 col-sm-2'><%= f.submit "搜尋", class:"btn btn-outline-dark ml-2"%></div>
   </div>
 
 <% end %>
