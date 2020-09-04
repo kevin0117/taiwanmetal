@@ -109,9 +109,22 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <%= link_to "個人資訊", edit_user_registration_path, class: 'dropdown-item' %>
-          <a class="dropdown-item" href="#">Action</a>
+          <%# <div class="dropdown-divider"></div>  %>
+          <%#= link_to('中文', :locale => 'zh-TW', class: 'dropdown-item') %>
+          <%# <div class="dropdown-divider"></div>  %>
+          <%#= link_to('English', :locale => 'en', class: 'dropdown-item') %>
         </div>
       </li>
+        <%# <li class="nav-item dropdown"> %>
+          <%# <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> %>
+          <%#= t('.language') %>
+          <%# </a> %>
+          <%# <div class="dropdown-menu p-2" aria-labelledby="navbarDropdown"> %>
+            <%#= link_to('中文', :locale => 'zh-TW', class: 'dropdown-item') %>
+            <%# <div class="dropdown-divider"></div>  %>
+            <%#= link_to('English', :locale => 'en', class: 'dropdown-item') %>
+          <%# </div> %>
+        <%# </li>  %>
       <li class="nav-item">
         <%= link_to "登出", destroy_user_session_path, method: :delete, class: 'nav-link' %>
       </li>
