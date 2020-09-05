@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  require 'sidekiq/web'
 
   # POST/api/v1/subscribe
   namespace :api do
@@ -67,5 +68,8 @@ Rails.application.routes.draw do
       post 'deal', to: 'commodities#deal'
     end
   end
+
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
 
 end
