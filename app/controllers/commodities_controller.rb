@@ -48,6 +48,13 @@ class CommoditiesController < ApplicationController
     @commodity.closer_id = current_user.id
     @commodity.save
     RemoveCommodityWorker.perform_async(@commodity.id)
+    # 寄給結單使用者
+    MailWorker.perform_async(@commodity.closer_id)
+    # 寄給掛單委託者
+    MailWorker.perform_async(@commodity.user_id)
+    # 寄給系統管理員
+    MailAdminWorker.perform_async(1, @commodity.user_id, @commodity.closer_id)
+
     redirect_to commodities_path, notice: "下單成功"
   end
 
