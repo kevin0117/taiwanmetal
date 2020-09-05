@@ -13,7 +13,7 @@ RSpec.describe Vendor, type: :model do
     it '名稱不能是空白' do
       vendor = FactoryBot.build(:vendor, name:'')
       expect(vendor).not_to be_valid
-      expect{ expect(vendor).to be_valid }.to raise_exception(/Name can't be blank/)
+      expect{ expect(vendor).to be_valid }.to raise_exception(/Name 不能為空白/)
     end
   end
 end

@@ -13,7 +13,7 @@ RSpec.describe ProductList, type: :model do
     it '名稱不能是空白' do
       pl = FactoryBot.build(:product_list, name: '')
       expect(pl).not_to be_valid
-      expect{ expect(pl).to be_valid }.to raise_exception(/Name can't be blank/)
+      expect{ expect(pl).to be_valid }.to raise_exception(/Name 不能為空白/)
     end
   end
 end

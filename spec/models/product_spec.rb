@@ -16,7 +16,7 @@ RSpec.describe Product, type: :model, product: true do
       p1 = FactoryBot.build(:product, title:'')
 
       expect(p1).not_to be_valid
-      expect{ expect(p1).to be_valid }.to raise_exception(/Title can't be blank/)
+      expect{ expect(p1).to be_valid }.to raise_exception(/Title 不能為空白/)
     end
     it '重量有填寫' do
       p1 = FactoryBot.create(:product, weight: '3.23')
@@ -26,7 +26,7 @@ RSpec.describe Product, type: :model, product: true do
     it '重量不能是空白' do
       p1 = FactoryBot.build(:product, weight: '')
       expect(p1).not_to be_valid
-      expect { expect(p1).to be_valid }.to raise_exception(/Weight can't be blank/)
+      expect { expect(p1).to be_valid }.to raise_exception(/Weight 不能為空白/)
     end
     it '成本有填寫' do
       p1 = FactoryBot.create(:product, cost: '200')
@@ -36,7 +36,7 @@ RSpec.describe Product, type: :model, product: true do
     it '成本不能是空白' do
       p1 = FactoryBot.build(:product, cost: '')
       expect(p1).not_to be_valid
-      expect { expect(p1).to be_valid }.to raise_exception(/Cost can't be blank/)
+      expect { expect(p1).to be_valid }.to raise_exception(/Cost 不能為空白/)
     end
     it '工錢有填寫' do
       p1 = FactoryBot.create(:product, service_fee: '200')
@@ -46,7 +46,7 @@ RSpec.describe Product, type: :model, product: true do
     it '工錢不能是空白' do
       p1 = FactoryBot.build(:product, service_fee: '')
       expect(p1).not_to be_valid
-      expect { expect(p1).to be_valid }.to raise_exception(/Service fee can't be blank/)
+      expect { expect(p1).to be_valid }.to raise_exception(/Service fee 不能為空白/)
     end
   end
 end
