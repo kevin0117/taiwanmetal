@@ -1,6 +1,7 @@
 Rails.application.configure do
   config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
   # Settings specified here will take precedence over those in config/application.rb.
+  config.active_job.queue_adapter = :sidekiq
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
@@ -62,4 +63,16 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  config.action_mailer.default_url_options = { host: 'http://localhost:3000' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: ENV['smtp_address'],
+    port: 587,
+    domain: 'postmaster@chienhao.tw',
+    user_name: ENV['smtp_username'],
+    password: ENV['smtp_password'],
+    authentication: 'plain',
+    enable_starttls_auto: true
+  }
 end

@@ -18,7 +18,7 @@ RSpec.describe Scrap, type: :model do
       scrap = FactoryBot.build(:scrap, title: '')
 
       expect(scrap).not_to be_valid
-      expect{ expect(scrap).to be_valid }.to raise_exception(/Title can't be blank/)
+      expect{ expect(scrap).to be_valid }.to raise_exception(/Title 不能為空白/)
     end
 
     it '重量有填寫' do
@@ -31,7 +31,7 @@ RSpec.describe Scrap, type: :model do
       scrap = FactoryBot.build(:scrap, gross_weight: '')
 
       expect(scrap).not_to be_valid
-      expect{ expect(scrap).to be_valid }.to raise_exception(/Gross weight can't be blank/)
+      expect{ expect(scrap).to be_valid }.to raise_exception(/Gross weight 不能為空白/)
     end
     it '成色有填寫' do
       scrap = FactoryBot.create(:scrap, wastage_rate: "0.95")
@@ -43,7 +43,7 @@ RSpec.describe Scrap, type: :model do
       scrap = FactoryBot.build(:scrap, wastage_rate: '')
 
       expect(scrap).not_to be_valid
-      expect{ expect(scrap).to be_valid }.to raise_exception(/Wastage rate can't be blank/)
+      expect{ expect(scrap).to be_valid }.to raise_exception(/Wastage rate 不能為空白/)
     end
     it '金價欄位有填寫' do
       scrap = FactoryBot.create(:scrap, gold_buying: "6000")
@@ -55,7 +55,7 @@ RSpec.describe Scrap, type: :model do
       scrap = FactoryBot.build(:scrap, gold_buying: '')
 
       expect(scrap).not_to be_valid
-      expect{ expect(scrap).to be_valid }.to raise_exception(/Gold buying can't be blank/)
+      expect{ expect(scrap).to be_valid }.to raise_exception(/Gold buying 不能為空白/)
     end
   end
 

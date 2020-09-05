@@ -13,7 +13,7 @@ RSpec.describe User, type: :model do
     it '電子信箱不能是空白' do
       user = FactoryBot.build(:user, email: '')
       expect(user).not_to be_valid
-      expect { expect(user).to be_valid }.to raise_exception(/Email can't be blank/)
+      expect { expect(user).to be_valid }.to raise_exception(/電子信箱 不能為空白/)
     end
     it '密碼有填寫' do
       user = FactoryBot.build(:user, password: '123456')
@@ -22,7 +22,7 @@ RSpec.describe User, type: :model do
     it '密碼不能是空白' do
       user = FactoryBot.build(:user, password: '')
       expect(user).not_to be_valid
-      expect { expect(user).to be_valid }.to raise_exception(/Password can't be blank/)
+      expect { expect(user).to be_valid }.to raise_exception(/密碼 不能為空白/)
     end
   end
 end

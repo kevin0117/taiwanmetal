@@ -31,7 +31,7 @@ RSpec.describe RefineOrder, type: :model, refine: true do
       r1 = FactoryBot.build(:refine_order, recipient: '')
 
       expect(r1).not_to be_valid
-      expect{ expect(r1).to be_valid }.to raise_exception(/Recipient can't be blank/)
+      expect{ expect(r1).to be_valid }.to raise_exception(/Recipient 不能為空白/)
     end
 
   end

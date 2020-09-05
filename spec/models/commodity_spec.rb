@@ -18,7 +18,7 @@ RSpec.describe Commodity, type: :model, commodity: true do
       commodity = FactoryBot.build(:commodity, weight: '')
 
       expect(commodity).not_to be_valid
-      expect{ expect(commodity).to be_valid }.to raise_exception(/Weight can't be blank/)
+      expect{ expect(commodity).to be_valid }.to raise_exception(/Weight 不能為空白/)
     end  
 
     it '單價有填寫' do
@@ -31,7 +31,7 @@ RSpec.describe Commodity, type: :model, commodity: true do
       commodity = FactoryBot.build(:commodity, unit_price: '')
 
       expect(commodity).not_to be_valid
-      expect{ expect(commodity).to be_valid }.to raise_exception(/Unit price can't be blank/)
+      expect{ expect(commodity).to be_valid }.to raise_exception(/Unit price 不能為空白/)
     end 
 
     it '合計總額有填寫' do
@@ -40,11 +40,11 @@ RSpec.describe Commodity, type: :model, commodity: true do
       expect(commodity.total_price).to eq 60000
     end
 
-    it '單價不能是空白' do
+    it '合計總額不能是空白' do
       commodity = FactoryBot.build(:commodity, total_price: '')
 
       expect(commodity).not_to be_valid
-      expect{ expect(commodity).to be_valid }.to raise_exception(/Total price can't be blank/)
+      expect{ expect(commodity).to be_valid }.to raise_exception(/Total price 不能為空白/)
     end 
 
     it '委託交易有填寫' do
@@ -57,7 +57,7 @@ RSpec.describe Commodity, type: :model, commodity: true do
       commodity = FactoryBot.build(:commodity, action: '')
 
       expect(commodity).not_to be_valid
-      expect{ expect(commodity).to be_valid }.to raise_exception(/Action can't be blank/)
+      expect{ expect(commodity).to be_valid }.to raise_exception(/Action 不能為空白/)
     end 
 
     it ' 委託單狀態為『未成交』時, 此單可以『交易』' do

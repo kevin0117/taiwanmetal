@@ -30,7 +30,7 @@ RSpec.describe Sale, type: :model, sale: true do
       s1 = FactoryBot.build(:sale, gold_selling: "")
     
       expect(s1).not_to be_valid
-      expect{ expect(s1).to be_valid }.to raise_exception(/Gold selling can't be blank/)
+      expect{ expect(s1).to be_valid }.to raise_exception(/Gold selling 不能為空白/)
     end
 
     it '黃金買入價格有填寫' do
@@ -43,14 +43,14 @@ RSpec.describe Sale, type: :model, sale: true do
       s1 = FactoryBot.build(:sale, gold_buying: "")
     
       expect(s1).not_to be_valid
-      expect{ expect(s1).to be_valid }.to raise_exception(/Gold buying can't be blank/)
+      expect{ expect(s1).to be_valid }.to raise_exception(/Gold buying 不能為空白/)
     end
 
     it '銷售總額不能是空白' do
       s1 = FactoryBot.build(:sale, total_price: "")
 
       expect(s1).not_to be_valid
-      expect{ expect(s1).to be_valid }.to raise_exception(/Total price can't be blank/)
+      expect{ expect(s1).to be_valid }.to raise_exception(/Total price 不能為空白/)
     end
     
   end
