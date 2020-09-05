@@ -17,7 +17,7 @@ class CommoditiesController < ApplicationController
     @commodity.user_id = current_user.id
     
     if @commodity.save
-      SendCommodityJob.perform_later(@commodity)
+      SendCommodityWorker.perform_async(@commodity.id)
       redirect_to commodities_path, notice: "新增成功"
     else
       render :new
@@ -36,7 +36,7 @@ class CommoditiesController < ApplicationController
     if @commodity.may_cancel?
       @commodity.destroy
       @commodity.cancel!
-      RemoveCommodityJob.perform_later(@commodity)
+      RemoveCommodityWorker.perform_async(@commodity.id)
       redirect_to commodities_path, notice: "取消成功"
     else
       redirect_to commodities_path, notice: "此委託單已成交"
@@ -47,8 +47,7 @@ class CommoditiesController < ApplicationController
     @commodity.trade!
     @commodity.closer_id = current_user.id
     @commodity.save
-    RemoveCommodityJob.perform_later(@commodity)
-    
+    RemoveCommodityWorker.perform_async(@commodity.id)
     redirect_to commodities_path, notice: "下單成功"
   end
 
