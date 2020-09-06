@@ -1,7 +1,7 @@
 class CommoditiesController < ApplicationController
   before_action :find_commodity, only: %i[edit show update destroy deal]
-  include CurrentPrice
-  before_action :show_price, only: %i[index]
+  # include CurrentPrice
+  # before_action :show_price, only: %i[index]
   
   def index
     @commodities = Commodity.order(id: :desc)
