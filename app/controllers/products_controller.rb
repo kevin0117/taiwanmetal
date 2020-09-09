@@ -28,10 +28,14 @@ class ProductsController < ApplicationController
                               end
 
     if @product.save
-      generate_barcode(@product.code.to_s, @product.id)    
-      @product.barcode.attach(io: File.open("#{Rails.root}/public/barcode-#{@product.id}.png"), filename: "barcode-#{@product.id}.png")
-
-      @product.save
+      # create barcode image by using the product's code and its id
+      generate_barcode(@product.code.to_s, @product.id)
+      
+      # attach the barcode image from the public folder and store in S3 AWS
+      @product.barcode.attach(io: File.open("#{Rails.root}/public/barcode-#{@product.id}.png"),
+                              filename: "barcode-#{@product.id}.png",
+                              content_type: 'image/png')
+      byebug
       redirect_to products_path, notice: "商品建立成功"
     else
       render :new

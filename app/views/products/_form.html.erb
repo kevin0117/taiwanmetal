@@ -53,6 +53,9 @@
     <div class="form-group form-check">  
       <%= form.input :on_sell, label: '是否上架', class:"form-control"  %>
     </div> 
+    <div class='barcode'>  
+      <%= form.file_field :barcode %>
+    </div> 
     <div class='description'>  
       <%= form.label :description, "描述" %>
       <%= form.rich_text_area :description %>
