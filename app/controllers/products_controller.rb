@@ -35,7 +35,7 @@ class ProductsController < ApplicationController
       @product.barcode.attach(io: File.open("#{Rails.root}/public/barcode-#{@product.id}.png"),
                               filename: "barcode-#{@product.id}.png",
                               content_type: 'image/png')
-      byebug
+      # byebug
       redirect_to products_path, notice: "商品建立成功"
     else
       render :new
