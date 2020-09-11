@@ -60,7 +60,7 @@ RSpec.describe Commodity, type: :model, commodity: true do
       expect{ expect(commodity).to be_valid }.to raise_exception(/Action 不能為空白/)
     end 
 
-    it ' 委託單狀態為『未成交』時, 此單可以『交易』' do
+    it '委託單狀態為『可成交 open』時, 此單可以『交易』' do
       commodity = FactoryBot.build(:commodity, status: "open")
 
       expect(commodity).to have_state(:open)
@@ -68,14 +68,14 @@ RSpec.describe Commodity, type: :model, commodity: true do
       expect(commodity).to transition_from(:open).to(:closed).on_event(:trade)
     end
   
-    it ' 委託單狀態為『未成交』時, 此單可以『取消』' do
+    it '委託單狀態為『可交易 open』時, 此單可以『取消』' do
       commodity = FactoryBot.build(:commodity, status: "open")
 
       expect(commodity).to have_state(:open)
       expect(commodity).to allow_event :cancel
     end
 
-    it ' 委託單狀態為『已成交』時, 此單不可以再次『交易』' do
+    it '委託單狀態為『已成交 closed』時, 此單不可以再次『交易』' do
       commodity = FactoryBot.build(:commodity, status: "closed")
 
       expect(commodity).to have_state(:closed)
@@ -83,7 +83,7 @@ RSpec.describe Commodity, type: :model, commodity: true do
       expect(commodity).not_to transition_from(:closed).to(:open).on_event(:trade)
     end
 
-    it ' 委託單狀態為『已成交』時, 此單不可以『取消』' do
+    it '委託單狀態為『已成交 closed』時, 此單不可以『取消』' do
       commodity = FactoryBot.build(:commodity, status: "closed")
 
       expect(commodity).to have_state(:closed)
@@ -91,7 +91,7 @@ RSpec.describe Commodity, type: :model, commodity: true do
       expect(commodity).not_to transition_from(:closed).to(:open).on_event(:cancel)
     end
 
-    it ' 委託單狀態為『已取消』時, 此單不可以再次『交易』' do
+    it '委託單狀態為『已取消 cancelled』時, 此單不可以再次『交易』' do
       commodity = FactoryBot.build(:commodity, status: "cancelled")
 
       expect(commodity).to have_state(:cancelled)
@@ -99,7 +99,7 @@ RSpec.describe Commodity, type: :model, commodity: true do
       expect(commodity).not_to transition_from(:cancelled).to(:open).on_event(:trade)
     end
 
-    it ' 委託單狀態為『已取消』時, 此單不可以『取消』' do
+    it '委託單狀態為『已取消 cancelled』時, 此單不可以『取消』' do
       commodity = FactoryBot.build(:commodity, status: "cancelled")
 
       expect(commodity).to have_state(:cancelled)
@@ -107,7 +107,31 @@ RSpec.describe Commodity, type: :model, commodity: true do
       expect(commodity).not_to transition_from(:cancelled).to(:open).on_event(:cancel)
     end
 
+    it '可以拿出所有『可成交 open』委託單' do
+      commodity1 = FactoryBot.create(:commodity, status: "open")
+      commodity2 = FactoryBot.create(:commodity, status: "open")
+      commodity3 = FactoryBot.create(:commodity, status: "closed")
 
+      expect(Commodity.all.available).to be_include(commodity1)
+      expect(Commodity.all.available).to be_include(commodity2)
+      expect(Commodity.all.available).not_to be_include(commodity3)
+    end
+
+    it '可以拿出所有個別使用者的『已成交 closed』委託單' do
+      kevin = User.create(first_name: "Kevin", last_name: "Wang", email: "kevin111@gmail.com", password: "123456")
+      annie = User.create(first_name: "Annie", last_name: "Lee", email: "Annie222@gmail.com", password: "123456")
+      
+      commodity1 = FactoryBot.create(:commodity, status: "closed", user_id: kevin.id)
+      commodity2 = FactoryBot.create(:commodity, status: "open", user_id: kevin.id)
+      commodity3 = FactoryBot.create(:commodity, status: "closed", user_id: kevin.id)
+      commodity4 = FactoryBot.create(:commodity, status: "closed", user_id: annie.id)
+
+      
+      expect(Commodity.all.closed(kevin.id)).to be_include(commodity1)
+      expect(Commodity.all.closed(kevin.id)).to be_include(commodity3)
+      expect(Commodity.all.closed(kevin.id)).not_to be_include(commodity2)
+      expect(Commodity.all.closed(kevin.id)).not_to be_include(commodity4)
+    end
 
   end
 end
