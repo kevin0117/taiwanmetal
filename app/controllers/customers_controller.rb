@@ -1,4 +1,5 @@
 class CustomersController < ApplicationController
+  before_action :authenticate_user!
   before_action :find_customer, only: %i[edit update show destroy]
 
   def index

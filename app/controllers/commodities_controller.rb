@@ -1,4 +1,5 @@
 class CommoditiesController < ApplicationController
+  before_action :authenticate_user!
   before_action :find_commodity, only: %i[edit show update destroy deal]
   # include CurrentPrice
   # before_action :show_price, only: %i[index]

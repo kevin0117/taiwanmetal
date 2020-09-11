@@ -1,4 +1,5 @@
 class ProductListsController < ApplicationController
+  before_action :authenticate_user!
   before_action :find_product_list, only: %i[edit update destroy]
 
   def index

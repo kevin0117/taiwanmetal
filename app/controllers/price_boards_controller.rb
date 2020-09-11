@@ -1,4 +1,5 @@
 class PriceBoardsController < ApplicationController
+  before_action :authenticate_user!
   before_action :find_price_board, only: %i[edit update destroy]  
 
   def index

@@ -1,4 +1,5 @@
 class VendorsController < ApplicationController
+  before_action :authenticate_user!
   before_action :find_vendor, only: %i[edit update destroy]
 
   def index
