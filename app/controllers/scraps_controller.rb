@@ -1,4 +1,5 @@
 class ScrapsController < ApplicationController
+  before_action :authenticate_user!
   before_action :find_scrap, only: [:edit, :update, :show, :destroy, :add_to_cart, :delete_to_cart]
   before_action :set_scrap_ransack_obj
 

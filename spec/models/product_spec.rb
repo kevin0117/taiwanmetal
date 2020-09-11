@@ -48,5 +48,16 @@ RSpec.describe Product, type: :model, product: true do
       expect(p1).not_to be_valid
       expect { expect(p1).to be_valid }.to raise_exception(/Service fee 不能為空白/)
     end
+
+    it '可以拿出所有『上架中』的產品' do
+      product1 = FactoryBot.create(:product, on_sell: true)
+      product2 = FactoryBot.create(:product, on_sell: true)
+      product3 = FactoryBot.create(:product, on_sell: false)
+      product4 = FactoryBot.create(:product, on_sell: true)
+
+      expect(Product.all.available).to be_include(product1)
+      expect(Product.all.available).to be_include(product2)
+      expect(Product.all.available).not_to be_include(product3)
+    end
   end
 end

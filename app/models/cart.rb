@@ -5,6 +5,11 @@ class Cart
     @items = items  
   end
 
+  # Grabbing all products in the cart
+  def selected_products
+    @items.map { |item| Product.find(item.product_id) }  
+  end
+
   def add_product(product)
     current_item = items.find{|item| item.product_id == product.id}
     
@@ -65,10 +70,4 @@ class Cart
       Cart.new
     end
   end
-
-  def product_list
-    id_list = @items.map { |item| Product.find(item.product_id) }  
-  end
-
-
 end

@@ -1,4 +1,5 @@
 class SalesController < ApplicationController
+  before_action :authenticate_user!
   before_action :find_sale, only: %i[edit update show destroy]
   before_action :find_product, only: %i[remove add decrease]
   before_action :set_sale, only: %i[decrease add remove]
@@ -19,16 +20,19 @@ class SalesController < ApplicationController
     @products = @q.result(distinct: true)
     @sale = Sale.new(sale_params)
     @sale.user_id = current_user.id
-    # byebug
+    
     if @sale.save
       @product = Product.find(params[:sale][:product_id])
-
-      current_cart.product_list.map{|product| 
+      
+      # Grabbing products that were sold in the current_cart  
+      # Updating its quantity & on_sell's status
+      current_cart.selected_products.map{ |product| 
         if product.quantity <= 0
           product.update(on_sell: false)
         end
       }
 
+      # Creating manifest with info from current cart
       current_cart.items.map{ |item| 
         Manifest.create(product_id: item.product_id,
                         sale_id: @sale.id,

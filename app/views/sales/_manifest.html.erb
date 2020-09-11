@@ -150,14 +150,12 @@
       </tbody>
     </table> 
     </div>
-    <%# if .product_list.present? %>
       <h6>
       <label for="weight">合計重量</label>
       <input type="text", class="form-control", value="<%= @sale.manifests.reduce(0){|sum, m| sum + m.weight} %>",  readonly="readonly", data-target= "sale.weight" >
       <label for="service_fee">合計工錢</label>
       <input type="text", class="form-control", value="<%= @sale.manifests.reduce(0){|sum, m| sum + m.service_fee} %>",  readonly="readonly", data-target= "sale.service_fee" >
       </h6>
-    <%# end %>
  
     <div> 
       <%= link_to "計算金額", "#", data: { action: "click->sale#calculate" }, class:"btn btn-info btn-sm mb-2" %> 
