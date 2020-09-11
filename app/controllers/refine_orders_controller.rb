@@ -1,4 +1,5 @@
 class RefineOrdersController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_scrap_ransack_obj
   before_action :find_refine_order, only: %i[edit update show destroy report]
   before_action :find_scrap, only: %i[remove add decrease]

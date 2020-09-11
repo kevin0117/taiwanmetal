@@ -140,7 +140,7 @@
       </thead>
      
       <tbody>
-        <% current_cart.product_list.each do |product| %>
+        <% current_cart.selected_products.each do |product| %>
         <tr>
           <td><%= link_to product.title, product_path(product) %></td>
           <td><%= form.text_field :product_id, value: product.id, readonly:"readonly" %></td>
@@ -157,7 +157,7 @@
       </tbody>
     </table> 
     </div>
-    <% if current_cart.product_list.present? %>
+    <% if current_cart.selected_products.present? %>
       <h6>
       <label for="weight">合計重量</label>
       <input type="text", class="form-control", value="<%= current_cart.total_weight %>",  readonly="readonly", data-target= "sale.weight" >

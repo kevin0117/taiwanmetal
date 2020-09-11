@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  before_action :authenticate_user!
   before_action :find_product, only: %i[edit update show destroy add_to_cart delete_to_cart decrease_to_cart]
   before_action :find_price_board_id, only: %i[edit update add_to_cart delete_to_cart decrease_to_cart]
   before_action :set_ransack_obj
@@ -35,7 +36,7 @@ class ProductsController < ApplicationController
       @product.barcode.attach(io: File.open("#{Rails.root}/public/barcode-#{@product.id}.png"),
                               filename: "barcode-#{@product.id}.png",
                               content_type: 'image/png')
-      # byebug
+    
       redirect_to products_path, notice: "商品建立成功"
     else
       render :new
