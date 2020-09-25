@@ -16,6 +16,7 @@ gem 'data-confirm-modal', '~> 1.6', '>= 1.6.3'
 gem 'rails-i18n', '~> 6.0'
 gem 'devise-i18n', '~> 1.9', '>= 1.9.2'
 gem 'sidekiq', '~> 6.1', '>= 6.1.1'
+gem 'rails-controller-testing'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.1'
 # Use postgresql as the database for Active Record
