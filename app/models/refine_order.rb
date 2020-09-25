@@ -8,22 +8,24 @@ class RefineOrder < ApplicationRecord
 
   validates :request_date, :recipient, presence: true
 
-  enum status: { awaiting: 0, scheduled: 1, confirmed:2, closed: 3 }
-
-  aasm column: 'state' do
+  aasm column: 'status' do
     state :pending, initial: true
-    state :scheduling, :confirming, :closing
+    state :scheduling, :refining, :closing
 
     event :notify do
       transitions from: :pending, to: :scheduling
     end
 
-    event :reply do
-      transitions from: :scheduling, to: :confirming
+    event :cancel do
+      transitions from: :pending, to: :closing
     end
 
-    event :refine do
-      transitions from: :confirming, to: :closing
+    event :reply do
+      transitions from: :scheduling, to: :refining
+    end
+
+    event :report do
+      transitions from: :refining, to: :closing
     end
   end
 

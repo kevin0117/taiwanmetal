@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Scrap, type: :model do
+RSpec.describe Scrap, type: :model, scrap: true do
   context '貴金屬回收成功建立時..' do
     it '全部欄位正確填寫' do
       scrap = FactoryBot.create(:scrap)
@@ -57,6 +57,16 @@ RSpec.describe Scrap, type: :model do
       expect(scrap).not_to be_valid
       expect{ expect(scrap).to be_valid }.to raise_exception(/Gold buying 不能為空白/)
     end
-  end
 
+    it '可以拿出所有『有庫存』的待提煉舊金' do
+      scrap1 = FactoryBot.create(:scrap, in_stock: true)
+      scrap2 = FactoryBot.create(:scrap, in_stock: true)
+      scrap3 = FactoryBot.create(:scrap, in_stock: false)
+      scrap4 = FactoryBot.create(:scrap, in_stock: true)
+
+      expect(Scrap.all.available).to be_include(scrap1)
+      expect(Scrap.all.available).to be_include(scrap2)
+      expect(Scrap.all.available).not_to be_include(scrap3)
+    end
+  end
 end
