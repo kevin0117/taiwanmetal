@@ -20,21 +20,14 @@ class RefineOrdersController < ApplicationController
   end
  
   def update
-    if @refine_order.may_notify?
-      if @refine_order.update(refine_order_params)
-        if @refine_order.status == 'scheduling'
-          @refine_order.reply!
-        end
-        redirect_to refine_orders_path, notice: "更新成功"
-      else
-        render :edit
-      end
+    if @refine_order.update(refine_order_params)
+      redirect_to refine_orders_path, notice: "更新成功"
     else
-      flash[:notice] = "不能更改狀況"
+      flash[:notice] = "更新失敗"
       render :edit
     end
   end
-  
+
   def create
     @scrap = @q.result(distinct: true)
     @refine_order = RefineOrder.new(refine_order_params)
