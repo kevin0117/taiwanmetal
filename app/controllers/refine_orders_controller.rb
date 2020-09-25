@@ -22,8 +22,8 @@ class RefineOrdersController < ApplicationController
   def update
     if @refine_order.may_notify?
       if @refine_order.update(refine_order_params)
-        if @refine_order.status == 'scheduled'
-          @refine_order.notify!
+        if @refine_order.status == 'scheduling'
+          @refine_order.reply!
         end
         redirect_to refine_orders_path, notice: "更新成功"
       else
@@ -42,7 +42,7 @@ class RefineOrdersController < ApplicationController
     # byebug
     if @refine_order.save
 
-      if @refine_order.status == 'scheduled'
+      if @refine_order.status == 'scheduling'
         @refine_order.notify!
       end
 
@@ -160,8 +160,8 @@ class RefineOrdersController < ApplicationController
                                          :recipient,
                                          :scrap_id,
                                          :total_gross_weight,
-                                         :total_net_weight,
-                                         :state)
+                                         :total_net_weight)
+                                         
   end
 
   def find_refine_order

@@ -123,7 +123,7 @@ table {
       <td><%= refineOrder.status %></td>
       <td>
         <%= link_to "刪除", refine_order_path(refineOrder), method: :delete, data: {confirm: "確認取消嗎？", commit: '是的', title: '你確定嗎?', cancel: '取消'}, class:"btn btn-outline-danger" %>
-        <% if refineOrder.status == 'awaiting' %>
+        <% if refineOrder.status == 'pending' %>
           <%= link_to "編輯", edit_refine_order_path(refineOrder), class:"btn btn-outline-success" %>
         <% end %>
         <%= link_to "報告", report_refine_order_path(refineOrder), class:"btn btn-outline-info" %>

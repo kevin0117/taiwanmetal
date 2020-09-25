@@ -153,12 +153,12 @@
     <br>
     <hr>
 <%# ----------------------------------------------------------------------------------- %>
-  <%# <h2>管理員後台</h2> %>
-  <%# <div> %>
-    <%#= form.input :result_purity, label: "提煉後成色" %>
-    <%#= form.input :result_weight, label: "提煉後實重" %>
-    <%#= form.input :status, as: :select, collection:[['confirmed', '已確認'], ['closed', '已交貨']], label_method: :second, value_method: :first, label: "狀態" %>
-  <%# </div> %>
+  <h2>管理員後台</h2>
+  <div>
+    <%= form.input :result_purity, label: "提煉後成色" %>
+    <%= form.input :result_weight, label: "提煉後實重" %>
+    <%= form.input :status, as: :select, collection:[['confirmed', '已確認'], ['closed', '已交貨']], label_method: :second, value_method: :first, label: "狀態" %>
+  </div>
 <%# ----------------------------------------------------------------------------------- %>
     <%= form.submit class:"btn btn-outline-dark button-refine-list" %>
   <% end %>
