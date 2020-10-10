@@ -35,9 +35,9 @@ class CommoditiesController < ApplicationController
 
   def destroy
     if @commodity.may_cancel?
+      RemoveCommodityWorker.perform_async(@commodity.id)
       @commodity.destroy
       @commodity.cancel!
-      RemoveCommodityWorker.perform_async(@commodity.id)
       redirect_to commodities_path, notice: "取消成功"
     else
       redirect_to commodities_path, notice: "此委託單已成交"
