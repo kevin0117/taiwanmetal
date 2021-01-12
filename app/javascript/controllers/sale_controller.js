@@ -2,13 +2,13 @@ import { Controller } from "stimulus";
 import Rails from "@rails/ujs";
 
 
-export default class extends Controller { 
-  static targets = [ "weight", "service_fee", "gold_selling", 
-                     "exchange_weight", "wastage_rate", 
-                     "net_weight", "gold_buying", "total_price", 
-                     "scrap_weight", "collected_date", 
-                     "customer_id", "user_id" ] 
- 
+export default class extends Controller {
+  static targets = [ "weight", "service_fee", "gold_selling",
+                     "exchange_weight", "wastage_rate",
+                     "net_weight", "gold_buying", "total_price",
+                     "scrap_weight", "collected_date",
+                     "customer_id", "user_id" ]
+
   cal_weight(event) {
     event.preventDefault()
 
@@ -36,7 +36,7 @@ export default class extends Controller {
     let pure_weight = Math.floor((exchange_weight * wastage_rate)*100)/100
     let scrap_weight =  Math.round((pure_weight - weight)*100)/100
     let user_id = this.user_idTarget.value
-    
+
     console.log(scrap_weight)
 
     // let email = this.emailTarget.value.trim();

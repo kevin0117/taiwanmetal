@@ -18,7 +18,7 @@ RSpec.describe User, type: :model do
     it '密碼有填寫' do
       user = FactoryBot.build(:user, password: '123456')
       expect(user).to be_valid
-    end    
+    end
     it '密碼不能是空白' do
       user = FactoryBot.build(:user, password: '')
       expect(user).not_to be_valid

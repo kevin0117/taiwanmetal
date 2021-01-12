@@ -16,8 +16,8 @@ RSpec.describe ProductList, type: :model, list: true do
       expect{ expect(pl).to be_valid }.to raise_exception(/Name 不能為空白/)
     end
     it '可以拿出個別使用者『上架中』的產品名稱' do
-      kevin = User.create(first_name: "Kevin", last_name: "Wang", email: "kevin111@gmail.com", password: "123456")
-      annie = User.create(first_name: "Annie", last_name: "Lee", email: "Annie222@gmail.com", password: "123456")
+      kevin = FactoryBot.create(:user, first_name: 'Kevin', last_name: 'Wang', password: '123456')
+      annie = FactoryBot.create(:user, first_name: 'Annie', last_name: 'Wang', password: '123456')
 
       product_list1 = FactoryBot.create(:product_list, online: true, user_id: kevin.id)
       product_list2 = FactoryBot.create(:product_list, online: true, user_id: kevin.id)

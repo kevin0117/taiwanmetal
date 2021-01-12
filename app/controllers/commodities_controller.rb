@@ -3,7 +3,7 @@ class CommoditiesController < ApplicationController
   before_action :find_commodity, only: %i[edit show update destroy deal]
   include CurrentPrice
   before_action :show_price, only: %i[index]
-  
+
   def index
     @commodities = Commodity.order(id: :desc)
     @commodity = Commodity.new
@@ -16,7 +16,7 @@ class CommoditiesController < ApplicationController
   def create
     @commodity = Commodity.new(commodity_params)
     @commodity.user_id = current_user.id
-    
+
     if @commodity.save
       SendCommodityWorker.perform_async(@commodity.id)
       redirect_to commodities_path, notice: "新增成功"
@@ -68,11 +68,11 @@ class CommoditiesController < ApplicationController
     @commodity = Commodity.find(params[:id])
   end
 
-  def commodity_params                                                            
+  def commodity_params
     params.require(:commodity).permit(:weight,
-                                      :unit_price, 
-                                      :total_price, 
-                                      :status, 
+                                      :unit_price,
+                                      :total_price,
+                                      :status,
                                       :action,
                                       :user_id)
   end
