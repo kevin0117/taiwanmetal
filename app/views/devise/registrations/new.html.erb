@@ -1,6 +1,5 @@
 <style>
-
-@media (max-width: 992px){
+  @media (max-width: 992px){
   h2{
     font-size: 5rem;
   }
@@ -12,48 +11,50 @@
   label{
     font-size: 4rem;
   }
+  small{
+    font-size: 2rem;
+  }
   .btn{
     font-size: 3rem;
   }
-}
-
+  }
 </style>
 
-<section class='container'>
-  <div class='row mt-2'>
-    <div class='col-lg-3 col-sm-12'>
-
-      <h2>註冊</h2>
-      <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-      <%= f.error_notification %>
-
-      <div class="form-inputs">
-        <%= f.input :email,
-                    required: true,
-                    autofocus: true,
-                    input_html: { autocomplete: "email" }%>
-        <%= f.input :name,
-                    required: true,
-                    autofocus: true,
-                    input_html: { autocomplete: "username" }%>
-        <%= f.input :password,
-                    required: true,
-                    hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
-                    input_html: { autocomplete: "new-password" } %>
-        <%= f.input :password_confirmation,
-                    required: true,
-                    input_html: { autocomplete: "new-password" } %>
+<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <section class='container bg-light mt-4 shadow p-3 mb-5 bg-white rounded'>
+    <div class='row'>
+      <div class='col-lg-6 col-sm-12'>
+        <img src="https://images.unsplash.com/photo-1598561222812-63429c3eee2f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" style="width:100%">
       </div>
-    
-      <div class="form-actions">
-        <%= f.button :submit, "註冊", class:'btn btn-info' %>
+      <div class='col-lg-6 col-sm-12'>
+        <h2>註冊</h2>
+        <%= f.error_notification %>
+        <div class="form-inputs">
+          <%= f.input :email,
+                      required: true,
+                      autofocus: true,
+                      input_html: { autocomplete: "email" }%>
+          <%= f.input :name,
+                      required: true,
+                      autofocus: true,
+                      input_html: { autocomplete: "username" }%>
+          <%= f.input :password,
+                      required: true,
+                      hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                      input_html: { autocomplete: "new-password" } %>
+          <%= f.input :password_confirmation,
+                      required: true,
+                      input_html: { autocomplete: "new-password" } %>
+        </div>
+        <div class="form-actions">
+          <%= f.button :submit, "註冊", class:'btn btn-lg btn-primary', style:"width: 100%" %>
+        </div>
+        <br>
+        <%- if controller_name != 'sessions' %>
+          <%= link_to "登入", new_session_path(resource_name), class: 'btn btn-lg btn-outline-primary', style:"width: 100%" %><br />
+        <% end %>
+        <%#= render "devise/shared/links" %>
       </div>
-      <% end %>
-      
-      <%= render "devise/shared/links" %>
     </div>
-    <div class='col-lg-9 col-sm-12'>
-      <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1266&q=80" style="width:100%">
-    </div>
-  </div>
-</section>
+  </section>
+<% end %>

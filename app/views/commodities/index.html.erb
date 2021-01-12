@@ -46,10 +46,10 @@
         <th>重量(錢)</th>
         <th>委託價格</th>
         <th class="hide-table">合計</th>
-        <th>下單</th> 
+        <th>下單</th>
       </tr>
     </thead>
-    
+
     <tbody id="commodities">
         <% @commodities.available.each do |commodity| %>
           <%= render 'commodities/commodity', commodity: commodity %>
@@ -57,7 +57,7 @@
     </tbody>
   </table>
 </div>
- 
+
 <%# -------------------------------------------- %>
 
 <div class="info">
@@ -69,9 +69,6 @@
     <li class="nav-item">
       <a class="nav-link" id="add-tab" data-toggle="tab" href="#add" role="tab" aria-controls="add" aria-selected="false">新增掛單</a>
     </li>
-    <%# <li class="nav-item">
-      <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">待成交掛單</a>
-    </li> %>
     <li class="nav-item">
       <a class="nav-link" id="deal-tab" data-toggle="tab" href="#deal" role="tab" aria-controls="deal" aria-selected="false">已成交</a>
     </li>
@@ -87,9 +84,6 @@
     <div class="tab-pane fade" id="add" role="tabpanel" aria-labelledby="add-tab">
       <%= render 'form', commodity: @commodity %>
     </div>
-    <%# <div class="tab-pane fade" id="pending" role="tabpanel" aria-labelledby="pending-tab"> %>
-      <%#= render 'open', commodity: @commodity %>
-    <%# </div> %>
     <div class="tab-pane fade" id="deal" role="tabpanel" aria-labelledby="deal-tab">
       <%= render 'closed', commodity: @commodity %>
     </div>

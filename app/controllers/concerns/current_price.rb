@@ -1,26 +1,26 @@
 module CurrentPrice
-  
+
   private
-  
+
   def show_price
     require 'net/http'
     require 'json'
 
     access_key = ENV['ACCESS_KEY']
-    overhead = ENV['OVERHEAD'].to_i 
-    agio = ENV['AGIO'].to_i 
+    overhead = ENV['OVERHEAD'].to_i
+    agio = ENV['AGIO'].to_i
     ratio = 8.2943
     endpoint = 'latest'
     currency = 'TWD'
     symbols = 'XAU'
 
-    @url = 'https://metals-api.com/api/' + 
-           endpoint + 
-           '?access_key=' + 
-           access_key + 
-           '&base=' + 
+    @url = 'https://metals-api.com/api/' +
+           endpoint +
+           '?access_key=' +
+           access_key +
+           '&base=' +
            currency +
-           '&symbols=' + 
+           '&symbols=' +
            symbols
 
     @uri = URI(@url)
@@ -33,13 +33,13 @@ module CurrentPrice
     currency1 = 'USD'
     ratio1 = 1
 
-    @url1 = 'https://metals-api.com/api/' + 
-    endpoint + 
-    '?access_key=' + 
-    access_key + 
-    '&base=' + 
+    @url1 = 'https://metals-api.com/api/' +
+    endpoint +
+    '?access_key=' +
+    access_key +
+    '&base=' +
     currency1 +
-    '&symbols=' + 
+    '&symbols=' +
     symbols
 
     @uri1 = URI(@url1)

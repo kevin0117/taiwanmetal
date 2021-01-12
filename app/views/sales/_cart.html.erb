@@ -104,7 +104,7 @@
         <%= form.number_field :gold_buying, value: PriceBoard.find_gold_buying(current_user.id), data: { target: "sale.gold_buying" }, class:"form-control" %>
       </div>     
     </div>
-    <div class='form-row'>  
+    <div class='form-row'>
       <div class='form-group col-lg-3 col-sm-12'>  
         <%= form.label :exchange_weight, "換金重量" %>
         <%= form.text_field :exchange_weight, placeholder: "輸入換金重量", data: { target: "sale.exchange_weight" }, class:"form-control" %>

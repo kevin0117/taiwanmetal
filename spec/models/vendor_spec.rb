@@ -16,8 +16,8 @@ RSpec.describe Vendor, type: :model, vendor: true do
       expect{ expect(vendor).to be_valid }.to raise_exception(/Name 不能為空白/)
     end
     it '可以拿出個別使用者的『營運中』廠商群' do
-      kevin = User.create(first_name: "Kevin", last_name: "Wang", email: "kevin111@gmail.com", password: "123456")
-      annie = User.create(first_name: "Annie", last_name: "Lee", email: "Annie222@gmail.com", password: "123456")
+      kevin = FactoryBot.create(:user, first_name: 'Kevin', last_name: 'Wang', password: '123456')
+      annie = FactoryBot.create(:user, first_name: 'Annie', last_name: 'Wang', password: '123456')
 
       vendor1 = FactoryBot.create(:vendor, online: true, user_id: kevin.id)
       vendor2 = FactoryBot.create(:vendor, online: true, user_id: kevin.id)
