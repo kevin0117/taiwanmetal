@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Utils API', type: :request, api: true do
   context '在新增銷售單時，有換金需求時...' do
     annie = User.create(first_name: 'Annie', last_name: 'Wang', email: 'annie111@gmail.com', password: '123456')
-    kevin = User.create(first_name: 'Kevin', last_name: 'Wang', email: 'kevin111@gmail.com', password: '123456', id: '1')
+    kevin = User.create(first_name: 'Kevin', last_name: 'Wang', email: 'kevin111@gmail.com', password: '123456')
     customer1 = FactoryBot.create(:customer, name: 'Kevin', online: true)
     user1 = FactoryBot.create(:user, first_name: 'Annie', last_name: 'Wang', password: '123456')
 
