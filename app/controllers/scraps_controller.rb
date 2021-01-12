@@ -48,7 +48,6 @@ class ScrapsController < ApplicationController
         @scrap.quantity -= 1
         @scrap.save
         session[:cart9527] = refining_cart.serialize
-        # p session[:cart9527]
         flash[:notice] = "加入提煉單"
       else
         flash[:notice] = "超過庫存數量"

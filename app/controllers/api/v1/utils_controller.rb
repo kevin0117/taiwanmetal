@@ -22,18 +22,18 @@ class Api::V1::UtilsController < ApplicationController
     gold_buying = (params['transfer']['gold_buying']).to_i
     total_price = (scrap_weight * gold_buying).round(2)
     user_id = params['transfer']['user_id']
-    
+
     scrap = Scrap.new(collected_date: collected_date,
-                      title: title, 
+                      title: title,
                       gross_weight: gross_weight,
                       wastage_rate: wastage_rate,
                       net_weight: net_weight,
                       gold_buying: gold_buying,
                       customer_id: customer_id,
                       user_id: user_id)
-    
+
     scrap1 = Scrap.new(collected_date: collected_date,
-                       title: title1, 
+                       title: title1,
                        gross_weight: scrap_weight,
                        wastage_rate: 1.0,
                        net_weight: scrap_weight,
@@ -43,12 +43,11 @@ class Api::V1::UtilsController < ApplicationController
                        in_stock: false,
                        customer_id: customer_id,
                        user_id: user_id)
-
+    # byebug
     if scrap.save && scrap1.save
       render json: { status: 'ok' }
     else
       render json: { status: 'fail' }
     end
-    
   end
 end

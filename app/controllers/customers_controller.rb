@@ -35,9 +35,11 @@ class CustomersController < ApplicationController
   end
 
   def edit; end
+
   def show; end
 
   private
+
   def find_customer
     @customer = Customer.find(params[:id])
   end
