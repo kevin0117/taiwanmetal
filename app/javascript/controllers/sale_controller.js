@@ -9,6 +9,37 @@ export default class extends Controller {
                      "scrap_weight", "collected_date",
                      "customer_id", "user_id" ]
 
+  get_price(event) {
+    event.preventDefault();
+
+    let collected_date = this.collected_dateTarget.value.trim();
+    let data = new FormData();
+    data.append("get_price[collected_date]", collected_date);
+    console.log(collected_date)
+    Rails.ajax({
+      url: '/api/v1/get_price',
+      data: data,
+      type: 'POST',
+      dataType: 'json',
+      success: (response) => {
+        switch (response.status) {
+          case 'ok':
+            this.gold_buyingTarget.value = response.buying_price;
+            this.gold_sellingTarget.value = response.selling_price;
+            break;
+
+          case 'fail':
+            alert('該日金價未設定');
+            this.gold_buyingTarget.value = response.buying_price;
+            break;
+        }
+      },
+      error: function(err) {
+        console.log(err);
+      }
+    });
+ }
+
   cal_weight(event) {
     event.preventDefault()
 

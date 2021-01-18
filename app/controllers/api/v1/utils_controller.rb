@@ -1,4 +1,17 @@
 class Api::V1::UtilsController < ApplicationController
+  def get_price
+    collected_date = params['get_price']['collected_date']
+    target_record = PriceBoard.find_by(price_date: collected_date, user_id: current_user.id)
+
+    if target_record.present?
+      buying_price = target_record.gold_buying
+      selling_price = target_record.gold_selling
+      render json: { status: 'ok', buying_price: buying_price, selling_price: selling_price }
+    else
+      render json: { status: 'fail', buying_price: 0 }
+    end
+  end
+
   def subscribe
     email = params['subscribe']['email']
     sub = Subscribe.new(email: email)

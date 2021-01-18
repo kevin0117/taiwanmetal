@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       post 'subscribe', to: 'utils#subscribe'
       post 'transfer', to: 'utils#transfer'
+      post 'get_price', to: 'utils#get_price'
     end
   end
 
