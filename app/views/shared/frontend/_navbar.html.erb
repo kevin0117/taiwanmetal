@@ -47,17 +47,13 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-    <%# <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="search" >
-      <button class="btn btn-outline-light my-2 ml-2 my-sm-0" type="submit"><i class="fas fa-search"></i>&nbsp;Search</button>
-    </form> %>
     <%= button_to "交易中心", commodities_path, method: :get, class:'btn btn-light btn-lg btn-block btn-trading' if user_signed_in? %>
     </ul>
     <ul class="navbar-nav">
     <% if user_signed_in? %>
       <li class="nav-item">
         <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="btn btn-dark dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             基本資料
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
@@ -66,11 +62,11 @@
             <%= link_to "商品", product_lists_path, class:"dropdown-item" %>
             <%= link_to "金價", price_boards_path, class:"dropdown-item" %>
           </div>
-        </div>  
+        </div>
       </li>
       <li class="nav-item">
         <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             進貨入庫
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -81,7 +77,7 @@
       </li> 
       <li class="nav-item">
         <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             銷貨出庫
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -92,7 +88,7 @@
       </li> 
       <li class="nav-item">
         <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             庫存管理
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
