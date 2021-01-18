@@ -1,0 +1,176 @@
+<style>
+  @media (max-width: 992px){
+    h1{
+        font-size: 6rem;
+    }
+    h4{
+        font-size: 3rem;
+    }
+    .button-sale-table{
+      font-size: 3.5rem;
+    }
+    .hide-table{
+      display: none;
+    }
+    table.responsive-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        display: block;
+        position: relative;
+        font-size: 4rem;
+        /* sort out borders */
+    }
+    table.responsive-table td:empty:before {
+        content: "\00a0";
+    }
+    table.responsive-table th,
+    table.responsive-table td {
+        margin: 0;
+        vertical-align: top;
+    }
+    table.responsive-table th {
+        text-align: left;
+    }
+    table.responsive-table thead {
+        display: block;
+        float: left;
+    }
+    table.responsive-table thead tr {
+        display: block;
+        padding: 0 10px 0 0;
+    }
+    table.responsive-table thead tr th::before {
+        content: "\00a0";
+    }
+    table.responsive-table tbody {
+        display: block;
+        width: auto;
+        position: relative;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    table.responsive-table tbody tr {
+        display: inline-block;
+        vertical-align: top;
+    }
+    table.responsive-table th {
+        display: block;
+        text-align: right;
+    }
+    table.responsive-table td {
+        display: block;
+        min-height: 1.25em;
+        text-align: left;
+    }
+    table.responsive-table tr {
+        border-bottom: none;
+        padding: 0 10px;
+    }
+    table.responsive-table thead {
+        border: 0;
+        /* border-right: 1px solid #1d1e22; */
+    }
+    label{
+      font-size: 3rem;
+    }
+    .invalid-feedback{
+      font-size: 3rem;
+    }
+  }
+  .new_form{
+    font-size: 1.3rem;
+  }
+</style>
+
+<div class="form-group new_form" data-controller="sale">
+  <%= simple_form_for(sale) do |form| %>
+    <div class='form-row'>
+      <div class='form-group col-lg-3 col-sm-12'>
+        <%= form.label :sale_date, "銷售日期" %>
+        <%= form.datetime_field :sale_date, data: { target: "sale.collected_date", action: "blur->sale#get_price" }, class:"form-control" %>
+      </div>
+      <div class='form-group col-lg-3 col-sm-12'>
+        <%= form.label :customer_id, "客戶" %>
+        <%= form.collection_select :customer_id, Customer.available(current_user.id), :id, :name, {}, data: { target: "sale.customer_id" }, class:"form-control" %>
+      </div>
+      <div class='form-group col-lg-3 col-sm-12'>
+        <%= form.label :gold_selling, "金價(賣出)" %>
+        <%= form.number_field :gold_selling, data: { target: "sale.gold_selling"}, class:"form-control mb-1" %>
+      </div>
+      <div class='form-group col-lg-3 col-sm-12'>
+        <%= form.label :gold_buying, "金價(買入)" %>
+        <%= form.number_field :gold_buying, data: { target: "sale.gold_buying"}, class:"form-control mb-1" %>
+      </div>
+    </div>
+    <div class='form-row'>
+      <div class='form-group col-lg-3 col-sm-12'>
+        <%= form.label :exchange_weight, "換金重量" %>
+        <%= form.text_field :exchange_weight, placeholder: "輸入換金重量", data: { target: "sale.exchange_weight" }, class:"form-control" %>
+      </div>
+      <div class='form-group col-lg-3 col-sm-12'>
+        <%= form.label :wastage_rate, "換金成色" %>
+        <%= form.text_field :wastage_rate, data: { target: "sale.wastage_rate" }, class:"form-control" %>
+      </div>
+      <div class='form-group col-lg-3 col-sm-12'>
+        <%= form.label :net_weight, "換金實重" %>
+        <%= link_to "計算", "#", data: { action: "click->sale#cal_weight" }, class:"btn btn-info btn-sm" %> 
+        <%= form.text_field :net_weight, data: { target: "sale.net_weight" }, class:"form-control" %>
+      </div>
+      <div class='form-group col-lg-3 col-sm-12'>
+        <%= form.label :scrap_weight, "買金重量" %>
+        <%= link_to "入庫", "#", data: { action: "click->sale#to_scrap" }, class:"btn btn-info btn-sm" %> 
+        <input type="text", class="form-control", data-target= "sale.scrap_weight",  readonly="readonly" >
+      </div>
+    </div>
+    <div class='table-responsive'>
+    <table class="table table-hover responsive-table">
+      <thead>
+        <tr>
+          <th>名稱</th>
+          <th>商品ID</th>
+          <th>重量</th>
+          <th>工錢</th>
+          <th>庫存量</th>
+          <th>銷售狀態</th>
+          <th></th>
+          <%# <th></th> %>
+        </tr>
+      </thead>
+      <tbody>
+        <% current_cart.selected_products.each do |product| %>
+        <tr>
+          <td><%= link_to product.title, product_path(product) %></td>
+          <td><%= form.text_field :product_id, value: product.id, readonly:"readonly" %></td>
+          <td><%= product.weight %></td>
+          <td><%= product.service_fee %></td>
+          <td><%= find_quantity(product) %></td>
+          <td><%= product.on_sell %></td>
+          <td>
+              <%= link_to "減少", decrease_to_cart_product_path(product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-danger button-sale-table" %>
+              <%= link_to "移除", delete_to_cart_product_path(product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-danger button-sale-table" %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    </div>
+      <% if current_cart.selected_products.present? %>
+        <h6>
+        <label for="weight">合計重量</label>
+        <input type="text", class="form-control", value="<%= current_cart.total_weight %>",  readonly="readonly", data-target= "sale.weight" >
+        <label for="service_fee">合計工錢</label>
+        <input type="text", class="form-control", value="<%= current_cart.total_service_fee %>",  readonly="readonly", data-target= "sale.service_fee" >
+        </h6>
+      <% end %>
+    <div>
+      <%= link_to "計算金額", "#", data: { action: "click->sale#calculate" }, class:"btn btn-info btn-sm mb-2" %> 
+      <%= form.text_field :total_price, data: { target: "sale.total_price" }, class:"form-control"   %>
+    </div>
+    <div>
+      <%= form.input :payment_method, as: :select, collection: [['cash', '現金'], ['credit_card', '信用卡'], ['line_pay', 'LinePay']], label_method: :second, value_method: :first, label: "付款方式",  class:"form-control"%>
+    </div>
+    <input type="text", class="form-control", value="<%= current_user.id %>",  style="display:none", data-target= "sale.user_id" >
+    <%= form.submit class:'btn btn-info'%>
+  <% end %>
+</div>
