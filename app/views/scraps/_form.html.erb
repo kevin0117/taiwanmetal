@@ -1,77 +1,76 @@
 <style>
-
-@media (max-width: 992px){
-  label{
-    font-size: 3rem;
+  @media (max-width: 992px){
+    label{
+      font-size: 3rem;
+    }
+    .invalid-feedback{
+      font-size: 3rem;
+    }
+    #scrap_in_stock{
+      height: 35px;
+      width: 35px;
+      margin-top: 18px;
+    }
+    .form-check-label{
+      margin-left: 25px;
+    }
   }
-  .invalid-feedback{
-    font-size: 3rem;
+  .new_form{
+    font-size: 1.3rem;
   }
-  #scrap_in_stock{
-    height: 35px;
-    width: 35px;
-    margin-top: 18px;
-  }
-  .form-check-label{
-    margin-left: 25px;
-  }
-}
-.new_form{
-  font-size: 1.3rem;
-}
 </style>
 
 <div class="form-group new_form" data-controller='form'>
   <%= simple_form_for(scrap) do |form| %>
   <div class='row'>
     <div class='col-lg-6 col-sm-12'>
-      <%= form.label :collected_date, "日期" %>  
-      <%= form.datetime_field :collected_date, class:"form-control" %>
-    </div> 
+      <%= form.label :collected_date, "日期" %>
+      <%= form.datetime_field :collected_date, data: { target: "form.collected_date", action: "blur->form#get_price" }, class:"form-control" %>
+    </div>
     <div class='col-lg-6 col-sm-12'>
       <%= form.label :customer_id, "客戶" %>
       <%= form.collection_select :customer_id, Customer.available(current_user.id), :id, :name, {}, class:"form-control" %>
-    </div> 
+    </div>
   </div>
   <div class='row mt-2'>
     <div class='col-lg-3 col-sm-12'>
-      <%= form.label :title, "名稱" %>  
+      <%= form.label :title, "名稱" %>
       <%= form.text_field :title, class:"form-control" %>
-    </div> 
+    </div>
     <div class='col-lg-3 col-sm-12'>
-      <%= form.label :gross_weight, "重量" %> 
+      <%= form.label :gross_weight, "重量" %>
       <%= form.text_field :gross_weight, data: { target: "form.gross_weight", action: "blur->form#cal_weight" } ,class:"form-control" %>
-    </div> 
+    </div>
     <div class='col-lg-3 col-sm-12'>
       <%= form.label :wastage_rate, "成色" %>
       <%= form.text_field :wastage_rate, data: { target: "form.wastage_rate", action: "blur->form#cal_weight" }, class:"form-control mb-1" %>
-    </div> 
+    </div>
     <div class='col-lg-3 col-sm-12'>
-      <%= form.label :net_weight, "實重" %> <%#= link_to "計算實重", "#", data: { action: "click->form#cal_weight" }, class:"btn btn-info btn-sm" %>
+      <%= form.label :net_weight, "實重" %>
       <%= form.text_field :net_weight, data: { target: "form.net_weight", action: "blur->form#cal_amount" }, class:"form-control" %>
-    </div> 
+    </div>
   </div>
   <div class='row mt-2'>
     <div class='col-lg-6 col-sm-12'>
       <%= form.label :gold_buying, "金價(錢)" %>
-      <%= form.number_field :gold_buying, value: PriceBoard.find_gold_buying(current_user.id, scrap.collected_date) ,  data: { target: "form.gold_buying", action: "blur->form#cal_amount" }, class:"form-control mb-1" %>
-    </div> 
+      <%= form.number_field :gold_buying ,  data: { target: "form.gold_buying", action: "blur->form#cal_amount" }, class:"form-control mb-1" %>
+    </div>
     <div class='col-lg-6 col-sm-12'>
-      <%= form.label :total_price, "金額" %> <%#= link_to "計算金額", "#", data: { action: "click->form#cal_amount" }, class:"btn btn-info btn-sm" %>
+      <%= form.label :total_price, "金額" %>
       <%= form.text_field :total_price, data: { target: "form.total_price", action: "focus->form#cal_amount" }, class:"form-control" %>
-    </div>  
+    </div>
   </div>
     <div>
-      <%= form.label :refine_charge, "提煉費用單價(錢)" %>  
+      <%= form.label :refine_charge, "提煉費用單價(錢)" %>
       <%= form.number_field :refine_charge, class:"form-control" %>
-    </div> 
+    </div>
     <div>
-      <%= form.label :quantity, "數量" %>  
+      <%= form.label :quantity, "數量" %>
       <%= form.text_field :quantity, class:"form-control" %>
-    </div>   
+    </div>
     <div>
       <%= form.input :in_stock, label: '庫存有貨打勾', class:"form-control"  %>
-    </div>     
+    </div>
     <div>
       <br>
       <%= form.submit class:"btn btn-primary"%>
@@ -79,4 +78,3 @@
     </div>
   <% end %>
 </div>
- 
