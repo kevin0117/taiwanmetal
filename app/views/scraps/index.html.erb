@@ -121,15 +121,13 @@ table {
 <%= search_form_for @q, class: 'form-inline' do |f| %>
   <div class="row">
     <div class='col-lg-5 col-sm-6'>
-      <%= f.date_field :collected_date_gteq, 
+      <%= f.date_field :collected_date_gteq,
         class: "form-control input-sm search_field", data: { toggle: "tooltip", placement: "top"},  title: "起始日期"
-        # class: "form-control input-sm search_field", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', 'title' => "起始日期"  
       %>
     </div>
     <div class='col-lg-5 col-sm-6'>
-      <%= f.date_field :collected_date_lteq, 
+      <%= f.date_field :collected_date_lteq,
         class: "form-control input-sm search_field", data: { toggle: "tooltip", placement: "top"},  title: "結束日期"
-        # class:"form-control input-sm search_field", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', 'title' => "結束日期"
       %>
     </div>
   </div>
@@ -137,7 +135,7 @@ table {
   <div class="row">
     <div class='col-lg-4 col-sm-5'><%= f.search_field :title_cont, class:"form-control search_field", placeholder: "名稱包括" %></div>
     <div class='col-lg-4 col-sm-5'><%= f.search_field :title_not_cont, class:"form-control search_field", placeholder: "名稱不包括" %></div>
-    <div class='col-lg-2 col-sm-2'><%= f.submit "搜尋", class:"btn btn-outline-dark ml-2"%></div>
+    <div class='col-lg-2 col-sm-2'><%= f.submit "搜尋", class:"btn btn-outline-dark ml-3"%></div>
   </div>
 
 <% end %>
