@@ -24,3 +24,14 @@
   <li>條碼：<%= image_tag url_for(@product.barcode), class: "img-responsive" if @product.barcode.attached? %></li>
   <li>描述：<%= @product.description %></li>
 </ul>
+<p>
+  <%= product_url(@product.barcode) %>
+  <%# qrcode = RQRCode::QRCode.new(product_url(@product)) %>
+  <%#= qrcode.as_svg(
+    offset: 0,
+    color: '000000',
+    module_size: 3,
+    standalone: true
+  ).html_safe %>
+  <%= QrCode.call(product_url(@product)) %>
+</p>
