@@ -81,3 +81,5 @@ end
 gem 'kaminari'
 gem 'devise'
 gem "figaro", "~> 1.2"
+
+gem "rqrcode", "~> 1.2"
