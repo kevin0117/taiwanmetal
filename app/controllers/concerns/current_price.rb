@@ -26,8 +26,15 @@ module CurrentPrice
     @uri = URI(@url)
     @response = Net::HTTP.get(@uri)
     puts "@response: " + @response
-
-    @XAU_TWD_SELL = (JSON.parse(@response)["rates"]["XAU"]/ratio - overhead).to_i
+    # @response: {"success":false,"error":{"code":104,"type":"request_limit_reached","info":"The maximum allowed API amount of monthly API requests has been reached."}}
+    # if @response.include?("error")
+    #   @XAU_TWD_SELL = 0
+    #   @XAU_TWD_BUY = 0
+    # else
+    #   @XAU_TWD_SELL = 0 || (JSON.parse(@response)["rates"]["XAU"]/ratio - overhead).to_i
+    #   @XAU_TWD_BUY = @XAU_TWD_SELL - agio
+    # end
+    @XAU_TWD_SELL = 0 || (JSON.parse(@response)["rates"]["XAU"]/ratio - overhead).to_i
     @XAU_TWD_BUY = @XAU_TWD_SELL - agio
 
     currency1 = 'USD'
@@ -45,14 +52,14 @@ module CurrentPrice
     @uri1 = URI(@url1)
     @response1 = Net::HTTP.get(@uri1)
     puts "@response1: " + @response1
-    @XAU_USD_SELL = (ratio1 / JSON.parse(@response1)["rates"]["XAU"]).to_f.round(1)
+    # if @response1.include?("error")
+    #   @XAU_USD_SELL = 0
+    #   @XAU_USD_BUY = 0
+    # else
+    #   @XAU_USD_SELL = (ratio1 / JSON.parse(@response1)["rates"]["XAU"]).to_f.round(1)
+    #   @XAU_USD_BUY = @XAU_USD_SELL - agio
+    # end
+    @XAU_USD_SELL = 0 || (ratio1 / JSON.parse(@response1)["rates"]["XAU"]).to_f.round(1)
     @XAU_USD_BUY = @XAU_USD_SELL - 0.5
   end
 end
-# # // "latest" endpoint - request the most recent exchange rate data
-
-#   https://metals-api.com/api/latest
-
-#       ? access_key = YOUR_ACCESS_KEY
-#       & base = USD
-#       & symbols = XAU,XAG
