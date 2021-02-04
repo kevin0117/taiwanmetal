@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   around_action :switch_locale
 
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+
 
   # 設定語系
   def set_locale
@@ -44,6 +46,14 @@ class ApplicationController < ActionController::Base
 
   def find_quantity(product)
     current_cart.items.find{|item| item.product_id == product.id}.quantity
+  end
+
+  private
+
+  def record_not_found
+    render file: "#{Rails.root}/public/404.html",
+    layout: false,
+    status: 404
   end
 
   protected
