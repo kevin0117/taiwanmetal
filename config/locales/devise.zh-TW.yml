@@ -1,6 +1,6 @@
 zh-TW:
   activerecord:
-    models: 
+    models:
       sale: "銷售"
       commodity: "委託單"
       vendor: "廠商"
@@ -235,6 +235,7 @@ zh-TW:
       send_instructions: "您將在幾分鐘後收到一封電子郵件，內有驗證帳號的步驟說明。"
       send_paranoid_instructions: "如果我們有您的信箱，您將會收到一封驗證您的帳號的電子郵件。"
     failure:
+      not_approved: "您的帳號尚未經過系統管理員審核通過"
       already_authenticated: "您已經登入。"
       inactive: "您的帳號尚未被啟用。"
       invalid: "信箱或密碼是無效的。"
@@ -265,6 +266,7 @@ zh-TW:
       updated: "您的密碼已被修改，您現在已經登入。"
       updated_not_active: "您的密碼已被修改。"
     registrations:
+      signed_up_but_not_approved: "您已經註冊成功，然而因為您的帳號還需系統管理員審核，暫時無法登入，抱歉！"
       destroyed: "再會！您的帳號已被取消。有緣再會。"
       signed_up: "註冊成功，歡迎！"
       signed_up_but_inactive: "您已註冊成功。然而因為您的帳號尚未啓動，暫時無法登入，抱歉！"
@@ -290,4 +292,3 @@ zh-TW:
       not_locked: "並未被鎖定。"
       not_saved:
         other: "有 %{count} 個錯誤導致 %{resource} 不能被儲存："
-  
