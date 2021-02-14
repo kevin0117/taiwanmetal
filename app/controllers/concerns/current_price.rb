@@ -9,6 +9,7 @@ module CurrentPrice
     access_key = ENV['ACCESS_KEY']
     overhead = ENV['OVERHEAD'].to_i
     agio = ENV['AGIO'].to_i
+    us_agio = ENV['US_AGIO'].to_i
     ratio = 8.2943
     endpoint = 'latest'
     currency = 'TWD'
@@ -58,7 +59,7 @@ module CurrentPrice
       @XAU_USD_BUY = 0
     else
       @XAU_USD_SELL = (ratio1 / JSON.parse(@response1)["rates"]["XAU"]).to_f.round(1)
-      @XAU_USD_BUY = @XAU_USD_SELL - agio
+      @XAU_USD_BUY = @XAU_USD_SELL - us_agio
     end
     # @XAU_USD_SELL = 0 || (ratio1 / JSON.parse(@response1)["rates"]["XAU"]).to_f.round(1)
     # @XAU_USD_BUY = @XAU_USD_SELL - 0.5

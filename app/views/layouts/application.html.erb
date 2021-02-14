@@ -12,7 +12,11 @@
   <body>
     <%= render 'shared/frontend/navbar' %>
     <%= render 'shared/frontend/flash' if notice %>
-    
+
+    <% flash.each do |name, msg| %>
+        <%= content_tag(:div, msg, class: "alert alert-secondary") %>
+    <% end %>
+
     <div class="container-fluid">
     <%# <div class="container"> %>
       <%= yield %>
