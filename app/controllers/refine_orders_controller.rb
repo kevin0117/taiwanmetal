@@ -4,6 +4,7 @@ class RefineOrdersController < ApplicationController
   before_action :find_refine_order, only: %i[edit update show destroy report]
   before_action :find_scrap, only: %i[remove add decrease]
   before_action :set_refine_order, only: %i[decrease add remove]
+  load_and_authorize_resource
 
   def index
     @q = current_user.refine_orders.ransack(params[:q])

@@ -5,6 +5,7 @@ class SalesController < ApplicationController
   before_action :set_sale, only: %i[decrease add remove]
   before_action :set_all_products_in_order, only: %i[new create edit]
   before_action :set_ransack_obj
+  load_and_authorize_resource
 
   def index
     @q = current_user.sales.ransack(params[:q])
@@ -15,30 +16,30 @@ class SalesController < ApplicationController
     @sale = Sale.new
     @products = @q.result(distinct: true)
   end
- 
+
   def create
     @products = @q.result(distinct: true)
     @sale = Sale.new(sale_params)
     @sale.user_id = current_user.id
-    
+
     if @sale.save
       @product = Product.find(params[:sale][:product_id])
-      
-      # Grabbing products that were sold in the current_cart  
+
+      # Grabbing products that were sold in the current_cart
       # Updating its quantity & on_sell's status
-      current_cart.selected_products.map{ |product| 
+      current_cart.selected_products.map{ |product|
         if product.quantity <= 0
           product.update(on_sell: false)
         end
       }
 
       # Creating manifest with info from current cart
-      current_cart.items.map{ |item| 
+      current_cart.items.map{ |item|
         Manifest.create(product_id: item.product_id,
                         sale_id: @sale.id,
                         quantity: item.quantity)
       }
-      session[:cart0117] = nil 
+      session[:cart0117] = nil
       redirect_to sales_path, notice: "銷貨新增成功"
     else
       render :new
@@ -51,12 +52,12 @@ class SalesController < ApplicationController
     if @sale.update(sale_params)
       redirect_to sales_path, notice: "銷貨編輯成功"
     else
-      render :edit 
+      render :edit
     end
   end
 
   def destroy
-    @sale.manifests.map{ |manifest| 
+    @sale.manifests.map{ |manifest|
       @sale.products.map{ |product|
         if manifest.product_id == product.id
           product.quantity += manifest.quantity
@@ -64,7 +65,7 @@ class SalesController < ApplicationController
           product.save
         end
       }
-    }  
+    }
     if @sale.destroy
       redirect_to sales_path, notice: "銷貨刪除成功"
     end
@@ -76,13 +77,13 @@ class SalesController < ApplicationController
     @product.quantity += target_manifest.quantity
     @product.save
     @sale.products.delete(@product)
-    
+
     redirect_to :controller => 'sales', :action => 'edit', :id => params[:sale_id]
   end
 
   def add
-    found_product = @sale.products.find{ |product| 
-                      product.id == @product.id 
+    found_product = @sale.products.find{ |product|
+                      product.id == @product.id
                     }
 
     if found_product && @product.quantity > 0
