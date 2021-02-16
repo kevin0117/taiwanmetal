@@ -1,6 +1,7 @@
 class CustomersController < ApplicationController
   before_action :authenticate_user!
   before_action :find_customer, only: %i[edit update show destroy]
+  load_and_authorize_resource
 
   def index
     @customers = current_user.customers

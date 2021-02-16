@@ -1,6 +1,7 @@
 class PriceBoardsController < ApplicationController
   before_action :authenticate_user!
   before_action :find_price_board, only: %i[edit update destroy]  
+  load_and_authorize_resource
 
   def index
     @priceBoards = current_user.price_boards.order(price_date: :desc)
