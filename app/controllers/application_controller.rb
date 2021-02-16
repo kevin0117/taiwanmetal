@@ -6,6 +6,12 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
+  rescue_from CanCan::AccessDenied do |exception|
+    render file: "#{Rails.root}/public/404.html",
+    layout: false,
+    status: 404
+    # redirect_to root_path, notice: I18n.t('devise.failure.unauthorized')
+  end
 
   # 設定語系
   def set_locale
