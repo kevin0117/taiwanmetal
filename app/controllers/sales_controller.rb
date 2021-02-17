@@ -19,7 +19,7 @@ class SalesController < ApplicationController
 
   def create
     @products = @q.result(distinct: true)
-    @sale = Sale.new(sale_params)
+    @sale = Sale.new(create_params)
     @sale.user_id = current_user.id
 
     if @sale.save
@@ -49,7 +49,7 @@ class SalesController < ApplicationController
   def update
     @products = @q.result(distinct: true)
 
-    if @sale.update(sale_params)
+    if @sale.update(update_params)
       redirect_to sales_path, notice: "銷貨編輯成功"
     else
       render :edit
@@ -94,7 +94,7 @@ class SalesController < ApplicationController
       found_product.update(on_sell: false) if found_product.quantity <= 0
       found_product.save
       target_manifest.save
-      
+
       flash[:notice] = "加入成功"
     elsif found_product && @product.quantity <= 0
       flash[:notice] = "超過庫存量"
@@ -106,17 +106,17 @@ class SalesController < ApplicationController
     elsif !found_product && @product.quantity <= 0
       flash[:notice] = "超過庫存量"
     end
-    
+
     redirect_to :controller => 'sales', :action => 'edit', :id => params[:sale_id]
   end
 
 
   def decrease
-    found_product = @sale.products.find{ |product| 
-      product.id == @product.id 
+    found_product = @sale.products.find{ |product|
+      product.id == @product.id
     }
     target_manifest = @sale.manifests.find_by(product_id: found_product.id)
-    
+
     if found_product && target_manifest.quantity > 0
       target_manifest.quantity -= 1
       @product.quantity += 1
@@ -127,9 +127,9 @@ class SalesController < ApplicationController
     else
       flash[:notice] = "移除失敗"
     end
-    
+
     redirect_to :controller => 'sales', :action => 'edit', :id => params[:sale_id] 
-    
+
   end
 
   def edit; end
@@ -153,11 +153,11 @@ class SalesController < ApplicationController
     @sale = Sale.find(params[:sale_id])
   end
 
-  def sale_params
+  def create_params
     params.require(:sale).permit(:sale_date,
                                  :gold_selling,
                                  :gold_buying,
-                                 :exchange_weight, 
+                                 :exchange_weight,
                                  :wastage_rate,
                                  :net_weight,
                                  :payment_method,
@@ -167,7 +167,22 @@ class SalesController < ApplicationController
                                  :product_id,
                                  :customer_id,
                                  :user_id)
-                                 
+  end
+
+  def update_params
+    params.require(:sale).permit(:sale_date,
+                                 :gold_selling,
+                                 :gold_buying,
+                                 :exchange_weight,
+                                 :wastage_rate,
+                                 :net_weight,
+                                 :payment_method,
+                                 :service_fee,
+                                 :weight,
+                                 :total_price,
+                                 :product_id,
+                                 :customer_id,
+                                 :user_id)
   end
 
   def set_ransack_obj

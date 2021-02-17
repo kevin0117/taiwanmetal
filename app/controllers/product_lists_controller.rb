@@ -12,7 +12,7 @@ class ProductListsController < ApplicationController
   end
 
   def create
-    @product_list = ProductList.new(product_list_params)
+    @product_list = ProductList.new(create_params)
     @product_list.user_id = current_user.id
     if @product_list.save
       redirect_to product_lists_path, notice: "新增成功"
@@ -22,7 +22,7 @@ class ProductListsController < ApplicationController
   end
 
   def update
-    if @product_list.update(product_list_params)
+    if @product_list.update(update_params)
       redirect_to product_lists_path, notice: "更新成功"
     else
       render :edit
@@ -43,7 +43,11 @@ class ProductListsController < ApplicationController
     @product_list = ProductList.find(params[:id])
   end
 
-  def product_list_params
+  def create_params
+    params.require(:product_list).permit(:name, :code, :description, :online)
+  end
+
+  def update_params
     params.require(:product_list).permit(:name, :code, :description, :online)
   end
 end

@@ -14,7 +14,7 @@ class ScrapsController < ApplicationController
   end
 
   def create
-    @scrap = Scrap.new(scrap_params)
+    @scrap = Scrap.new(create_params)
     @scrap.user_id = current_user.id
 
     if @scrap.save
@@ -25,13 +25,13 @@ class ScrapsController < ApplicationController
   end
 
   def update
-    if @scrap.update(scrap_params)
+    if @scrap.update(update_params)
       redirect_to scraps_path, notice: "更新成功"
     else
       render :edit
     end
   end
- 
+
   def destroy
     if @scrap.destroy
       redirect_to scraps_path, notice: "刪除成功"
@@ -65,8 +65,8 @@ class ScrapsController < ApplicationController
     quantity_in_cart = refining_cart.items.find(@scrap.id).first.quantity
     if refining_cart.destroy_scrap(@scrap)
       @scrap.quantity += quantity_in_cart
-      session[:cart9527] = refining_cart.serialize      
-      @scrap.save 
+      session[:cart9527] = refining_cart.serialize
+      @scrap.save
       flash[:notice] = "刪除品項成功"
     else
       flash[:notice] = "刪除品項失敗"
@@ -84,14 +84,29 @@ class ScrapsController < ApplicationController
     @scrap = Scrap.friendly.find(params[:id])
   end
 
-  def scrap_params
+  def create_params
     params.require(:scrap).permit(:collected_date,
                                   :title,
-                                  :gross_weight, 
-                                  :wastage_rate, 
-                                  :net_weight, 
+                                  :gross_weight,
+                                  :wastage_rate,
+                                  :net_weight,
                                   :gold_buying,
-                                  :total_price, 
+                                  :total_price,
+                                  :in_stock,
+                                  :code,
+                                  :customer_id,
+                                  :quantity,
+                                  :refine_charge)
+  end
+
+  def update_params
+    params.require(:scrap).permit(:collected_date,
+                                  :title,
+                                  :gross_weight,
+                                  :wastage_rate,
+                                  :net_weight,
+                                  :gold_buying,
+                                  :total_price,
                                   :in_stock,
                                   :code,
                                   :customer_id,

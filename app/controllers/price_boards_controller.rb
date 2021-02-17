@@ -1,6 +1,6 @@
 class PriceBoardsController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_price_board, only: %i[edit update destroy]  
+  before_action :find_price_board, only: %i[edit update destroy]
   load_and_authorize_resource
 
   def index
@@ -12,7 +12,7 @@ class PriceBoardsController < ApplicationController
   end
 
   def create
-    @price_board = PriceBoard.new(priceBoard_params)
+    @price_board = PriceBoard.new(create_params)
     @price_board.user_id = current_user.id
     if @price_board.save
       redirect_to price_boards_path, notice: "新增成功"
@@ -22,7 +22,7 @@ class PriceBoardsController < ApplicationController
   end
 
   def update
-    if @price_board.update(priceBoard_params)
+    if @price_board.update(update_params)
       redirect_to price_boards_path, notice: "更新成功"
     else
       render :edit
@@ -44,18 +44,29 @@ class PriceBoardsController < ApplicationController
     @price_board = PriceBoard.find(params[:id])
   end
 
-  def priceBoard_params
-    params.require(:price_board).permit(:price_date, 
+  def create_params
+    params.require(:price_board).permit(:price_date,
                                         :gold_selling,
-                                        :gold_buying, 
+                                        :gold_buying,
                                         :platinum_selling,
-                                        :platinum_buying, 
-                                        :gold_price_buying, 
+                                        :platinum_buying,
+                                        :gold_price_buying,
                                         :wholesale_gold_selling,
                                         :wholesale_gold_buying,
                                         :wholesale_platinum_selling,
-                                        :wholesale_platinum_buying,
-                                        :description,
-                                        :online)
+                                        :wholesale_platinum_buying)
+  end
+
+  def update_params
+    params.require(:price_board).permit(:price_date,
+                                        :gold_selling,
+                                        :gold_buying,
+                                        :platinum_selling,
+                                        :platinum_buying,
+                                        :gold_price_buying,
+                                        :wholesale_gold_selling,
+                                        :wholesale_gold_buying,
+                                        :wholesale_platinum_selling,
+                                        :wholesale_platinum_buying)
   end
 end

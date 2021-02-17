@@ -12,7 +12,7 @@ class CustomersController < ApplicationController
   end
 
   def create
-    @customer = Customer.new(customer_params)
+    @customer = Customer.new(create_params)
     @customer.user_id = current_user.id
     if @customer.save
       redirect_to customers_path, notice: "客戶新增成功"
@@ -22,10 +22,10 @@ class CustomersController < ApplicationController
   end
 
   def update
-    if @customer.update(customer_params)
+    if @customer.update(update_params)
       redirect_to customers_path, notice: "客戶編輯成功"
     else
-      render :edit 
+      render :edit
     end
   end
 
@@ -45,7 +45,11 @@ class CustomersController < ApplicationController
     @customer = Customer.find(params[:id])
   end
 
-  def customer_params
+  def create_params
+    params.require(:customer).permit(:name, :description, :online, :product_id, :user_id)
+  end
+
+  def update_params
     params.require(:customer).permit(:name, :description, :online, :product_id, :user_id)
   end
 end

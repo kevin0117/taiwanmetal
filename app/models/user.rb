@@ -47,8 +47,7 @@ class User < ApplicationRecord
   end
 
   def inactive_message
-    approved? ? super : I18n.t("devise.registrations.signed_up_but_not_approved")
-    # approved? ? super : :not_approved
+    approved? ? super : :not_approved
   end
 
 end

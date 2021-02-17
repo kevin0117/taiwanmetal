@@ -19,9 +19,9 @@ class RefineOrdersController < ApplicationController
   def edit
     @scraps = @q.result(distinct: true)
   end
- 
+
   def update
-    if @refine_order.update(refine_order_params)
+    if @refine_order.update(update_params)
       redirect_to refine_orders_path, notice: "更新成功"
     else
       flash[:notice] = "更新失敗"
@@ -31,9 +31,9 @@ class RefineOrdersController < ApplicationController
 
   def create
     @scrap = @q.result(distinct: true)
-    @refine_order = RefineOrder.new(refine_order_params)
+    @refine_order = RefineOrder.new(create_params)
     @refine_order.user_id = current_user.id
-    # byebug
+
     if @refine_order.save
 
       if @refine_order.status == 'scheduling'
@@ -48,12 +48,12 @@ class RefineOrdersController < ApplicationController
         end
       }
 
-      refining_cart.items.map{ |item| 
+      refining_cart.items.map{ |item|
       RefineList.create(scrap_id: item.scrap_id,
                         refine_order_id: @refine_order.id,
                         quantity: item.quantity)
                     }
-      session[:cart9527] = nil 
+      session[:cart9527] = nil
       redirect_to refine_orders_path, notice: "提煉單建立成功"
     else
       render :new
@@ -67,24 +67,24 @@ class RefineOrdersController < ApplicationController
 
     @scrap.save
     @refine_order.scraps.delete(@scrap)
-    
+
     redirect_to :controller => 'refine_orders', :action => 'edit', :id => params[:refine_order_id]
   end
 
   def add
-    found_scrap = @refine_order.scraps.find{ |scrap| 
-                      scrap.id == @scrap.id 
+    found_scrap = @refine_order.scraps.find{ |scrap|
+                      scrap.id == @scrap.id
                     }
-    if found_scrap && @scrap.quantity > 0 
+    if found_scrap && @scrap.quantity > 0
       target_refine_order = @refine_order.refine_lists.find_by(scrap_id: found_scrap.id)
       target_refine_order.quantity += 1
-      
+
       found_scrap.quantity -= 1
       found_scrap.update(in_stock: false) if found_scrap.quantity <= 0
-      
+
       found_scrap.save
       target_refine_order.save
-      
+
       flash[:notice] = "加入成功"
     elsif found_scrap && @scrap.quantity <= 0
       flash[:notice] = "超過庫存量"
@@ -92,22 +92,22 @@ class RefineOrdersController < ApplicationController
       @refine_order.scraps << @scrap
       @scrap.quantity -= 1
       @scrap.update(in_stock: false) if @scrap.quantity <= 0
-      
+
       @scrap.save
       flash[:notice] = "加入成功"
     elsif !found_scrap && @scrap.quantity <= 0
       flash[:notice] = "超過庫存量"
     end
-    
+
     redirect_to :controller => 'refine_orders', :action => 'edit', :id => params[:refine_order_id]
   end
 
   def decrease
-    found_scrap = @refine_order.scraps.find{ |scrap| 
-      scrap.id == @scrap.id 
+    found_scrap = @refine_order.scraps.find{ |scrap|
+      scrap.id == @scrap.id
     }
     target_refine_list = @refine_order.refine_lists.find_by(scrap_id: found_scrap.id)
-    
+
     if found_scrap && target_refine_order.quantity > 0
       target_refine_list.quantity -= 1
       @scrap.quantity += 1
@@ -118,13 +118,13 @@ class RefineOrdersController < ApplicationController
     else
       flash[:notice] = "移除失敗"
     end
-    
+
     redirect_to :controller => 'refine_orders', :action => 'edit', :id => params[:refine_order_id] 
-    
+
   end
 
   def destroy
-    @refine_order.refine_lists.map{ |refine_list| 
+    @refine_order.refine_lists.map{ |refine_list|
       @refine_order.scraps.map{ |scrap|
         if refine_list.scrap_id == scrap.id
           scrap.quantity += refine_list.quantity
@@ -132,30 +132,42 @@ class RefineOrdersController < ApplicationController
           scrap.save
         end
       }
-    }  
+    }
     if @refine_order.destroy
       redirect_to refine_orders_path, notice: "刪除成功"
     end
   end
 
   def report
-    
+
   end
 
   private
 
-  def refine_order_params
-    params.require(:refine_order).permit(:request_date, 
-                                         :status, 
-                                         :refine_fee, 
-                                         :result_weight, 
+  def create_params
+    params.require(:refine_order).permit(:request_date,
+                                         :status,
+                                         :refine_fee,
+                                         :result_weight,
                                          :result_purity,
                                          :note,
                                          :recipient,
                                          :scrap_id,
                                          :total_gross_weight,
                                          :total_net_weight)
-                                         
+  end
+
+  def update_params
+    params.require(:refine_order).permit(:request_date,
+                                         :status,
+                                         :refine_fee,
+                                         :result_weight,
+                                         :result_purity,
+                                         :note,
+                                         :recipient,
+                                         :scrap_id,
+                                         :total_gross_weight,
+                                         :total_net_weight)
   end
 
   def find_refine_order
