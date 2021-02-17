@@ -12,7 +12,7 @@ class VendorsController < ApplicationController
   end
 
   def create
-    @vendor = Vendor.new(vendor_params)
+    @vendor = Vendor.new(create_params)
     @vendor.user_id = current_user.id
 
     if @vendor.save
@@ -23,7 +23,7 @@ class VendorsController < ApplicationController
   end
 
   def update
-    if @vendor.update(vendor_params)
+    if @vendor.update(update_params)
       redirect_to vendors_path, notice: "更新成功"
     else
       render :edit
@@ -44,7 +44,11 @@ class VendorsController < ApplicationController
     @vendor = Vendor.find(params[:id])
   end
 
-  def vendor_params
+  def create_params
+    params.require(:vendor).permit(:name, :description, :online)
+  end
+
+  def update_params
     params.require(:vendor).permit(:name, :description, :online)
   end
 end
