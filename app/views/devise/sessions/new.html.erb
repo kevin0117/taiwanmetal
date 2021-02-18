@@ -26,9 +26,7 @@
     }
   }
 </style>
-<% flash.each do |name, msg| %>
-  <%= content_tag(:div, msg ,class: "alert alert-danger") %>
-<% end %>
+
 <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <section class='container bg-light mt-4 shadow p-3 mb-5 bg-white rounded'>
     <div class='row'>

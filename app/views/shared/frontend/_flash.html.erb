@@ -6,6 +6,18 @@
   }
 </style>
 
-<div class="alert alert-secondary" role="alert">
-  <i class="far fa-comment"></i> <%= notice %>
-</div>
+<%# <div class="alert alert-secondary" role="alert"> %>
+  <%# <i class="far fa-comment"></i> %>
+  <%#= notice %>
+<%# </div> %>
+
+<%# flash.each do |name, msg| %>
+  <%#= content_tag(:div, msg ,class: "alert alert-danger") %>
+<%# end %>
+
+<%# reference: https://www.rubyguides.com/2019/11/rails-flash-messages/ %>
+<% flash.each do |type, msg| %>
+  <div class="alert alert-secondary">
+    <i class="far fa-comment"></i> <%= msg %>
+  </div>
+<% end %>
