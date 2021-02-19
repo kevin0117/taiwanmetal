@@ -48,8 +48,16 @@ class Cart
     items.reduce(0) { |sum, item| sum + item.weight }
   end
 
+  def total_cost
+    items.reduce(0) { |sum, item| sum + item.cost }
+  end
+
   def total_service_fee
     items.reduce(0) { |sum, item| sum + item.service_fee }
+  end
+
+  def total_service_profit
+    total_service_fee - total_cost
   end
 
   def serialize
