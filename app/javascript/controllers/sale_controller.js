@@ -7,7 +7,7 @@ export default class extends Controller {
                      "exchange_weight", "wastage_rate",
                      "net_weight", "gold_buying", "total_price",
                      "scrap_weight", "collected_date",
-                     "customer_id", "user_id" ]
+                     "customer_id", "user_id", "discount", "sale_price" ]
 
   get_price(event) {
     event.preventDefault();
@@ -85,15 +85,15 @@ export default class extends Controller {
 
 
     Rails.ajax({
-      url: '/api/v1/transfer', 
+      url: '/api/v1/transfer',
       data: data,
-      type: 'POST', 
-      dataType: 'json', 
+      type: 'POST',
+      dataType: 'json',
       success: (response) => {
         switch (response.status) {
           case 'ok':
             alert('完成入庫!');
-            
+
             break;
 
           case 'fail':
@@ -105,6 +105,14 @@ export default class extends Controller {
         console.log(err);
       }
     });
+  }
+
+  cal_sale_price(event) {
+    let total_price = this.total_priceTarget.value
+    let discount = this.discountTarget.value
+
+    let sale_price = total_price - discount
+    this.sale_priceTarget.value = sale_price
   }
 
   calculate(event) {
@@ -124,9 +132,9 @@ export default class extends Controller {
     this.net_weightTarget.value = pure_weight
 
     if (total_weight >= 0) {
-      let result_price = (service_fee + total_weight * gold_selling) 
+      let result_price = (service_fee + total_weight * gold_selling)
       this.total_priceTarget.value = result_price.toFixed(0)
-    
+
     } else {
       let result_price = (Math.abs(total_weight) * gold_buying - service_fee) * -1
       this.total_priceTarget.value = result_price.toFixed(0)

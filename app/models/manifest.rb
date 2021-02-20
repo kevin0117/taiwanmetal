@@ -10,4 +10,11 @@ class Manifest < ApplicationRecord
     product.service_fee * quantity
   end
 
+  def cost
+    product.cost * quantity
+  end
+
+  def service_profit
+    service_fee - cost
+  end
 end
