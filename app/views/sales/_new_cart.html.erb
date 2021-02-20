@@ -130,11 +130,11 @@
           <th>名稱</th>
           <th>商品ID</th>
           <th>重量</th>
+          <th>工錢成本</th>
           <th>工錢</th>
           <th>庫存量</th>
           <th>銷售狀態</th>
           <th></th>
-          <%# <th></th> %>
         </tr>
       </thead>
       <tbody>
@@ -143,6 +143,7 @@
           <td><%= link_to product.title, product_path(product) %></td>
           <td><%= form.text_field :product_id, value: product.id, readonly:"readonly" %></td>
           <td><%= product.weight %></td>
+          <td><%= product.cost %></td>
           <td><%= product.service_fee %></td>
           <td><%= find_quantity(product) %></td>
           <td><%= product.on_sell %></td>
@@ -158,14 +159,24 @@
       <% if current_cart.selected_products.present? %>
         <h6>
         <label for="weight">合計重量</label>
-        <input type="text", class="form-control", value="<%= current_cart.total_weight %>",  readonly="readonly", data-target= "sale.weight" >
+        <%= form.number_field :weight, value: "#{current_cart.total_weight}", readonly: "readonly", data: { target:"sale.weight"}, class:"form-control" %>
         <label for="service_fee">合計工錢</label>
-        <input type="text", class="form-control", value="<%= current_cart.total_service_fee %>",  readonly="readonly", data-target= "sale.service_fee" >
+        <%= form.number_field :service_fee, value: "#{current_cart.total_service_fee}", readonly: "readonly", data: { target:"sale.service_fee"}, class:"form-control" %>
+        <label for="service_fee">工錢利潤</label>
+        <%= form.text_field :service_profit, value: "#{current_cart.total_service_profit}", readonly: "readonly", class:"form-control" %>
         </h6>
       <% end %>
     <div>
       <%= link_to "計算金額", "#", data: { action: "click->sale#calculate" }, class:"btn btn-info btn-sm mb-2" %> 
-      <%= form.text_field :total_price, data: { target: "sale.total_price" }, class:"form-control"   %>
+      <%= form.number_field :total_price, data: { target: "sale.total_price" }, readonly: "readonly", class:"form-control"   %>
+    </div>
+    <div>
+      <label for="discount">銷售折讓</label>
+      <%= form.number_field :discount, data: { target: "sale.discount", action: "blur->sale#cal_sale_price" } ,class:"form-control form-input" %>
+    </div>
+    <div>
+      <label for="discount">銷售金額</label>
+      <%= form.number_field :sale_price, data: { target: "sale.sale_price" }, readonly: "readonly", class:"form-control"   %>
     </div>
     <div>
       <%= form.input :payment_method, as: :select, collection: [['cash', '現金'], ['credit_card', '信用卡'], ['line_pay', 'LinePay']], label_method: :second, value_method: :first, label: "付款方式",  class:"form-control"%>

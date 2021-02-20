@@ -1,14 +1,14 @@
 <style>
-table tr td,
-table tr th {
+  table tr td,
+  table tr th {
     /* border: 1px solid #1d1e22; */
     padding: 5px;
-}
-table {
+  }
+  table {
     border-collapse: collapse;
-}
-
-@media (max-width: 992px){
+  }
+  
+  @media (max-width: 992px){
   table.responsive-table {
       width: 100%;
       border-collapse: collapse;
@@ -89,7 +89,7 @@ table {
   .close{
     font-size: 4rem;
   }
-}
+  }
 </style>
 
 <h1>提煉列表</h1>
@@ -110,7 +110,7 @@ table {
       <th></th>
     </tr>
   </thead>
-  
+
   <tbody>
     <% @refineOrders.each do |refineOrder| %>
     <tr>

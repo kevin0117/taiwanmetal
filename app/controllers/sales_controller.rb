@@ -4,12 +4,13 @@ class SalesController < ApplicationController
   before_action :find_product, only: %i[remove add decrease]
   before_action :set_sale, only: %i[decrease add remove]
   before_action :set_all_products_in_order, only: %i[new create edit]
-  before_action :set_ransack_obj
+  before_action :set_sale_ransack_obj
   load_and_authorize_resource
 
   def index
     @q = current_user.sales.ransack(params[:q])
-    @sales = @q.result.page params[:page]
+    @sales = @q.result(distinct: true).order(id: :desc).page params[:page]
+    # @sales = @q.result.page params[:page]
   end
 
   def new
@@ -155,6 +156,9 @@ class SalesController < ApplicationController
 
   def create_params
     params.require(:sale).permit(:sale_date,
+                                 :service_profit,
+                                 :sale_price,
+                                 :discount,
                                  :gold_selling,
                                  :gold_buying,
                                  :exchange_weight,
@@ -171,6 +175,9 @@ class SalesController < ApplicationController
 
   def update_params
     params.require(:sale).permit(:sale_date,
+                                 :service_profit,
+                                 :sale_price,
+                                 :discount,
                                  :gold_selling,
                                  :gold_buying,
                                  :exchange_weight,
@@ -185,7 +192,7 @@ class SalesController < ApplicationController
                                  :user_id)
   end
 
-  def set_ransack_obj
+  def set_sale_ransack_obj
     @q = (user_signed_in?) ? current_user.products.ransack(params[:q]) : Product.ransack(params[:q])
   end
 end
