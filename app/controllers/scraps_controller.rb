@@ -43,10 +43,11 @@ class ScrapsController < ApplicationController
 
   def add_to_cart
     cart_scrap = refining_cart.items.find{|item| item.scrap_id == @scrap.id}
-    if @scrap.quantity != 0
+    if @scrap.quantity > 0
       if !cart_scrap || @scrap.quantity > 0
         refining_cart.add_scrap(@scrap)
         @scrap.quantity -= 1
+        @scrap.in_stock = false if @scrap.quantity == 0
         @scrap.save
         session[:cart9527] = refining_cart.serialize
         flash[:notice] = "加入提煉單"
@@ -58,6 +59,10 @@ class ScrapsController < ApplicationController
       else
         redirect_to :controller => 'refine_orders', :action => 'edit', :id => params[:scrap_id]
       end
+    else
+      @scrap.in_stock = false if @scrap.quantity == 0
+      redirect_to :controller => 'refine_orders', :action => 'new'
+      flash[:notice] = "超過庫存數量"
     end
   end
 
@@ -66,6 +71,7 @@ class ScrapsController < ApplicationController
     if refining_cart.destroy_scrap(@scrap)
       @scrap.quantity += quantity_in_cart
       session[:cart9527] = refining_cart.serialize
+      @scrap.in_stock = true if @scrap.quantity > 0
       @scrap.save
       flash[:notice] = "刪除品項成功"
     else

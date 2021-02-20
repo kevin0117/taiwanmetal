@@ -67,10 +67,11 @@ class ProductsController < ApplicationController
 
   def add_to_cart
     cart_product = current_cart.items.find{|item| item.product_id == @product.id}
-    if @product.quantity != 0
+    if @product.quantity > 0
       if !cart_product || @product.quantity > 0
         current_cart.add_product(@product)
         @product.quantity -= 1
+        @product.on_sell = false if @product.quantity == 0
         @product.save
         session[:cart0117] = current_cart.serialize
         flash[:notice] = "加入出貨單"
@@ -82,6 +83,10 @@ class ProductsController < ApplicationController
       else
         redirect_to :controller => 'sales', :action => 'edit', :id => params[:sale_id]
       end
+    else
+      @product.on_sell = false if @product.quantity == 0
+      redirect_to :controller => 'sales', :action => 'new'
+      flash[:notice] = "超過庫存數量"
     end
   end
 
@@ -90,6 +95,7 @@ class ProductsController < ApplicationController
     if current_cart.destroy_product(@product)
       @product.quantity += quantity_in_cart
       session[:cart0117] = current_cart.serialize
+      @product.on_sell = true if @product.quantity > 0
       @product.save
       flash[:notice] = "刪除品項成功"
     else
@@ -105,6 +111,7 @@ class ProductsController < ApplicationController
   def decrease_to_cart
     if current_cart.remove_product(@product)
       @product.quantity += 1
+      @product.on_sell = true if @product.quantity > 0
       @product.save
       flash[:notice] = "減少品項成功"
     else
