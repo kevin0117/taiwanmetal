@@ -4,7 +4,6 @@ class Product < ApplicationRecord
   has_rich_text :description
   paginates_per 10
 
-  belongs_to :price_board
   belongs_to :product_list
   belongs_to :vendor
   belongs_to :user
