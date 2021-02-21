@@ -73,64 +73,65 @@ class SalesController < ApplicationController
   end
 
   def remove
-    # byebug
     target_manifest = @sale.manifests.find_by(product_id: @product.id)
     @product.quantity += target_manifest.quantity
-    @product.save
-    @sale.products.delete(@product)
+    target_manifest.quantity -= target_manifest.quantity
+    @product.update(on_sell: false) if @product.quantity == 0
+    @sale.products.delete(@product) if target_manifest.quantity == 0
 
+    @product.save
+    target_manifest.save
+    flash[:notice] = "移除成功"
     redirect_to :controller => 'sales', :action => 'edit', :id => params[:sale_id]
   end
 
   def add
-    found_product = @sale.products.find{ |product|
-                      product.id == @product.id
-                    }
+    # 找出編輯銷售單上有沒有使用者點選的商品
+    found_product = @sale.products.find{ |product| product.id == @product.id}
 
-    if found_product && @product.quantity > 0
-      target_manifest = @sale.manifests.find_by(product_id: found_product.id)
-      target_manifest.quantity += 1
+    # 如果有找到點選的商品
+    if found_product
+      # 找出銷售單上的商品明細
+      target_manifest_product = @sale.manifests.find_by(product_id: found_product.id)
+      target_manifest_product.quantity += 1
+      @product.quantity -= 1
 
-      found_product.quantity -= 1
-      found_product.update(on_sell: false) if found_product.quantity <= 0
-      found_product.save
-      target_manifest.save
-
-      flash[:notice] = "加入成功"
-    elsif found_product && @product.quantity <= 0
-      flash[:notice] = "超過庫存量"
-    elsif !found_product && @product.quantity > 0
+      # 更新點選商品的狀態為“下架”，如果庫存數量變成 0
+      @product.on_sell = false if @product.quantity == 0
+      @product.save
+      target_manifest_product.save
+      flash[:notice] = "加入成功(已存在銷售產品單上)"
+    else  # 如果沒有找到點選的商品
       @sale.products << @product
       @product.quantity -= 1
+
+      # 更新點選商品的狀態為“下架”，如果庫存數量變成 0
+      @product.on_sell = false if @product.quantity == 0
       @product.save
-      flash[:notice] = "加入成功"
-    elsif !found_product && @product.quantity <= 0
-      flash[:notice] = "超過庫存量"
+      flash[:notice] = "加入成功(還未存在銷售產品單上)"
     end
 
-    redirect_to :controller => 'sales', :action => 'edit', :id => params[:sale_id]
+    redirect_to controller: :sales, action: :edit, id: params[:sale_id]
   end
 
-
   def decrease
-    found_product = @sale.products.find{ |product|
-      product.id == @product.id
-    }
+    found_product = @sale.products.find{ |product| product.id == @product.id}
+
     target_manifest = @sale.manifests.find_by(product_id: found_product.id)
 
     if found_product && target_manifest.quantity > 0
       target_manifest.quantity -= 1
       @product.quantity += 1
       @product.update(on_sell: true) if @product.quantity > 0
+      @sale.products.delete(@product) if target_manifest.quantity == 0
       @product.save
       target_manifest.save
-      flash[:notice] = "移除成功"
+      flash[:notice] = "減少成功"
     else
-      flash[:notice] = "移除失敗"
+      flash[:notice] = "減少失敗"
     end
 
-    redirect_to :controller => 'sales', :action => 'edit', :id => params[:sale_id] 
-
+    redirect_to :controller => 'sales', :action => 'edit', :id => params[:sale_id]
   end
 
   def edit; end

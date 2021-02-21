@@ -1,7 +1,6 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!
   before_action :find_product, only: %i[edit update show destroy add_to_cart delete_to_cart decrease_to_cart]
-  before_action :find_price_board_id, only: %i[edit update add_to_cart delete_to_cart decrease_to_cart]
   before_action :set_ransack_obj
   load_and_authorize_resource
 
@@ -18,16 +17,6 @@ class ProductsController < ApplicationController
     @product = Product.new(create_params)
     @product.title = ProductList.find(params[:product][:product_list_id]).name
     @product.user_id = current_user.id
-
-    today_price_board = PriceBoard.find_by(price_date: Date.today)
-
-    @product.price_board_id = if today_price_board
-                                today_price_board.id
-                              elsif PriceBoard.last.present?
-                                PriceBoard.last.id
-                              else
-                                redirect_to new_price_board_path, notice: "請先設定今日價格"
-                              end
 
     if @product.save
       # create barcode image by using the product's code and its id
@@ -68,24 +57,18 @@ class ProductsController < ApplicationController
   def add_to_cart
     cart_product = current_cart.items.find{|item| item.product_id == @product.id}
     if @product.quantity > 0
-      if !cart_product || @product.quantity > 0
-        current_cart.add_product(@product)
-        @product.quantity -= 1
-        @product.on_sell = false if @product.quantity == 0
-        @product.save
-        session[:cart0117] = current_cart.serialize
-        flash[:notice] = "加入出貨單"
-      else
-        flash[:notice] = "超過庫存數量"
-      end
-      if params[:sale_id] == nil
-        redirect_to :controller => 'sales', :action => 'new'
-      else
-        redirect_to :controller => 'sales', :action => 'edit', :id => params[:sale_id]
-      end
+      current_cart.add_product(@product)
+      @product.quantity -= 1
+      @product.on_sell = false if @product.quantity == 0
+      @product.save
+      session[:cart0117] = current_cart.serialize
+      # redirect_to :controller => 'sales', :action => 'new'
+      redirect_to controller: :sales, action: :new
+      flash[:notice] = "加入出貨單"
     else
       @product.on_sell = false if @product.quantity == 0
-      redirect_to :controller => 'sales', :action => 'new'
+      # redirect_to :controller => 'sales', :action => 'new'
+      redirect_to controller: :sales, action: :new
       flash[:notice] = "超過庫存數量"
     end
   end
@@ -94,18 +77,17 @@ class ProductsController < ApplicationController
     quantity_in_cart = current_cart.items.find(@product.id).first.quantity
     if current_cart.destroy_product(@product)
       @product.quantity += quantity_in_cart
-      session[:cart0117] = current_cart.serialize
       @product.on_sell = true if @product.quantity > 0
       @product.save
+      # redirect_to :controller => 'sales', :action => 'new'
+      redirect_to controller: :sales, action: :new
       flash[:notice] = "刪除品項成功"
     else
+      # redirect_to :controller => 'sales', :action => 'new'
+      redirect_to controller: :sales, action: :new
       flash[:notice] = "刪除品項失敗"
     end
-    if params[:sale_id] == nil
-      redirect_to :controller => 'sales', :action => 'new'
-    else
-      redirect_to :controller => 'sales', :action => 'edit', :id => params[:sale_id]
-    end
+    session[:cart0117] = current_cart.serialize
   end
 
   def decrease_to_cart
@@ -113,17 +95,15 @@ class ProductsController < ApplicationController
       @product.quantity += 1
       @product.on_sell = true if @product.quantity > 0
       @product.save
+      # redirect_to :controller => 'sales', :action => 'new'
+      redirect_to controller: :sales, action: :new
       flash[:notice] = "減少品項成功"
     else
+      # redirect_to :controller => 'sales', :action => 'new'
+      redirect_to controller: :sales, action: :new
       flash[:notice] = "不能為負數"
     end
-
     session[:cart0117] = current_cart.serialize
-    if params[:sale_id] == nil
-      redirect_to :controller => 'sales', :action => 'new'
-    else
-      redirect_to :controller => 'sales', :action => 'edit', :id => params[:sale_id]
-    end
   end
 
   def edit; end
@@ -133,18 +113,6 @@ class ProductsController < ApplicationController
 
   def find_product
     @product = Product.friendly.find(params[:id])
-  end
-
-  def find_price_board_id
-    today_price_board = PriceBoard.find_by(price_date: Date.today)
-
-    @product.price_board_id = if today_price_board
-                          today_price_board.id
-                        elsif PriceBoard.last.present?
-                          PriceBoard.last.id
-                        else
-                          redirect_to new_price_board_path, notice: "請先設定今日價格"
-                        end
   end
 
   def create_params
