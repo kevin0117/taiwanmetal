@@ -138,25 +138,25 @@
         </tr>
       </thead>
       <tbody>
-        <% current_cart.selected_products.each do |product| %>
+        <% current_cart.items.each do |item| %>
         <tr>
-          <td><%= link_to product.title, product_path(product) %></td>
-          <td><%= form.text_field :product_id, value: product.id, readonly:"readonly" %></td>
-          <td><%= product.weight %></td>
-          <td><%= product.cost %></td>
-          <td><%= product.service_fee %></td>
-          <td><%= find_quantity(product) %></td>
-          <td><%= product.on_sell %></td>
+          <td><%= link_to item.product.title, product_path(item.product) %></td>
+          <td><%= item.product.id %></td>
+          <td><%= item.product.weight %></td>
+          <td><%= item.product.cost %></td>
+          <td><%= item.product.service_fee %></td>
+          <td><%= find_quantity(item.product)%></td>
+          <td><%= item.product.on_sell %></td>
           <td>
-              <%= link_to "減少", decrease_to_cart_product_path(product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-danger button-sale-table" %>
-              <%= link_to "移除", delete_to_cart_product_path(product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-danger button-sale-table" %>
+              <%= link_to "減少", decrease_to_cart_product_path(item.product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-danger button-sale-table" %>
+              <%= link_to "移除", delete_to_cart_product_path(item.product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-danger button-sale-table" %>
           </td>
         </tr>
         <% end %>
       </tbody>
     </table>
     </div>
-      <% if current_cart.selected_products.present? %>
+      <% if current_cart.items.present? %>
         <h6>
         <label for="weight">合計重量</label>
         <%= form.number_field :weight, value: "#{current_cart.total_weight}", readonly: "readonly", data: { target:"sale.weight"}, class:"form-control" %>
