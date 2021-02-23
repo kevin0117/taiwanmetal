@@ -11,7 +11,7 @@ FactoryBot.define do
     quantity { Faker::Number.between(from: 0, to: 100) }
 
     vendor
-    price_board
+    # price_board
     product_list
     user
   end

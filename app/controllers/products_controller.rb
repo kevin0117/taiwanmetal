@@ -45,7 +45,6 @@ class ProductsController < ApplicationController
 
   def destroy
     if @product.destroy
-      # byebug
       @product.barcode.purge if @product.barcode.attached?
       # @product.description.purge if !@product.description.blank?
       @product.description.destroy! if !@product.description.blank?
@@ -93,7 +92,7 @@ class ProductsController < ApplicationController
   def decrease_to_cart
     if current_cart.remove_product(@product)
       @product.quantity += 1
-      @product.on_sell = true if @product.quantity > 0
+      @product.update(on_sell: true) if @product.quantity > 0
       @product.save
       # redirect_to :controller => 'sales', :action => 'new'
       redirect_to controller: :sales, action: :new

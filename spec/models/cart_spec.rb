@@ -48,32 +48,10 @@ RSpec.describe Cart, type: :model, cart: true do
       expect(cart.items.second.product).to eq product2
     end
 
-    it "商品可以放到出貨單裡，可以一次全部拿出來" do
-      3.times { cart.add_product(product1)}
-      5.times { cart.add_product(product2)}
-
-      expect(cart.selected_products).to be_include(product1)
-      expect(cart.selected_products).to be_include(product2)
-    end
-
-    it "可以計算出貨單裡的總消費金額" do
-      pb = FactoryBot.create(:price_board, gold_selling: 5000.0)
-      p1 = FactoryBot.create(:product, price_board: pb, weight: 1.0, service_fee: 800.0)
-      p2 = FactoryBot.create(:product, price_board: pb, weight: 2.0, service_fee: 200.0)
-      
-      3.times { cart.add_product(p1) }  # $17400
-      2.times { cart.add_product(p2) }  # $20400
-
-      expect(cart.items.first.total_price).to eq 17400
-      expect(cart.items.last.total_price).to eq 20400
-      expect(cart.total_price).to eq 37800
-    end
-
     it "可以計算出貨單裡的重量總和" do
-      pb = FactoryBot.create(:price_board, gold_selling: 5000.0)
-      p1 = FactoryBot.create(:product, price_board: pb, weight: 1.0, service_fee: 800.0)
-      p2 = FactoryBot.create(:product, price_board: pb, weight: 2.0, service_fee: 200.0)
-      
+      p1 = FactoryBot.create(:product, weight: 1.0, service_fee: 800.0)
+      p2 = FactoryBot.create(:product, weight: 2.0, service_fee: 200.0)
+
       3.times { cart.add_product(p1) }  # $17400
       2.times { cart.add_product(p2) }  # $20400
 
@@ -83,10 +61,9 @@ RSpec.describe Cart, type: :model, cart: true do
     end
 
     it "可以計算出貨單裡的工資總和" do
-      pb = FactoryBot.create(:price_board, gold_selling: 5000.0)
-      p1 = FactoryBot.create(:product, price_board: pb, weight: 1.0, service_fee: 800.0)
-      p2 = FactoryBot.create(:product, price_board: pb, weight: 2.0, service_fee: 200.0)
-      
+      p1 = FactoryBot.create(:product, weight: 1.0, service_fee: 800.0)
+      p2 = FactoryBot.create(:product, weight: 2.0, service_fee: 200.0)
+
       3.times { cart.add_product(p1) }  # $17400
       2.times { cart.add_product(p2) }  # $20400
 
@@ -98,15 +75,15 @@ RSpec.describe Cart, type: :model, cart: true do
 
   describe "出貨單進階功能" do
     it "可以將出貨單內容轉換成 Hash，存到 Session 裡" do
-      3.times { cart.add_product(product1) } 
-      5.times { cart.add_product(product2) } 
-    
+      3.times { cart.add_product(product1) }
+      5.times { cart.add_product(product2) }
+
       expect(cart.serialize).to eq cart_hash
     end
 
     it "可以把 Session 的內容（Hash 格式），還原成出貨單的內容" do
       cart = Cart.restore_hash(cart_hash)
-      
+
       expect(cart.items.first.product).to eq product1
       expect(cart.items.first.quantity).to eq 3
       expect(cart.items.second.product).to eq product2

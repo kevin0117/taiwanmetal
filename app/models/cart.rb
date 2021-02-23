@@ -2,17 +2,12 @@ class Cart
   attr_reader :items
 
   def initialize(items = [])
-    @items = items  
-  end
-
-  # Grabbing all products in the cart
-  def selected_products
-    @items.map { |item| Product.find(item.product_id) }  
+    @items = items
   end
 
   def add_product(product)
     current_item = items.find{|item| item.product_id == product.id}
-    
+
     if current_item
       current_item.increment
     else
@@ -22,7 +17,7 @@ class Cart
 
   def remove_product(product)
     current_item = items.find{|item| item.product_id == product.id}
-    
+
     if current_item.quantity > 0
       current_item.decrement
     end
@@ -40,8 +35,8 @@ class Cart
     @items.empty?
   end
 
-  def total_price
-    @items.reduce(0) {|sum, item| sum + item.total_price }
+  def total_price(gold_selling)
+    @items.reduce(0) {|sum, item| sum + item.price(gold_selling) }
   end
 
   def total_weight

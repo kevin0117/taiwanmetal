@@ -26,14 +26,6 @@ class SalesController < ApplicationController
     if @sale.save
       @product = Product.find(params[:sale][:product_id])
 
-      # Grabbing products that were sold in the current_cart
-      # Updating its quantity & on_sell's status
-      current_cart.selected_products.map{ |product|
-        if product.quantity <= 0
-          product.update(on_sell: false)
-        end
-      }
-
       # Creating manifest with info from current cart
       current_cart.items.map{ |item|
         Manifest.create(product_id: item.product_id,
