@@ -35,11 +35,11 @@ class ApplicationController < ActionController::Base
     I18n.available_locales.map(&:to_s).include?(parsed_locale) ? parsed_locale : nil
   end
 
-  def generate_barcode(text, id)
-    barcode = Barby::Code39.new(text, true)
+  def generate_barcode(number, id)
+    barcode = Barby::EAN13.new(number)
     outputter = Barby::PngOutputter.new(barcode)
-    File.open("#{Rails.root}/public/barcode-#{id}.png", 'wb'){|f| f.write outputter.to_png }
-    # @product.barcode.attach(io: File.open('#{Rails.root}/public/barcode-#{id}.png'), filename: 'barcode-#{id}.png')
+
+    File.open("#{Rails.root}/app/assets/images/barcode-#{id}.png", 'wb'){|f| f.write outputter.to_png}
   end
 
   def current_cart
@@ -69,3 +69,15 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: [:name])
   end
 end
+
+  # def generate_barcode(text, id)
+  #   barcode = Barby::Code39.new(text, true)
+  #   outputter = Barby::PngOutputter.new(barcode)
+  #   File.open("#{Rails.root}/public/barcode-#{id}.png", 'wb'){|f| f.write outputter.to_png }
+  # end
+
+  # def generate_barcode(text, id)
+  #   barcode = Barby::Code93.new(text)
+  #   outputter = Barby::PngOutputter.new(barcode)
+  #   File.open("#{Rails.root}/app/assets/images/barcode-#{id}.png", 'wb'){|f| f.write outputter.to_png }
+  # end

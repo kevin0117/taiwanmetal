@@ -5,8 +5,16 @@ class ProductsController < ApplicationController
   load_and_authorize_resource
 
   def index
+    params.permit![:format]
     @q = current_user.products.ransack(params[:q])
     @products = @q.result(distinct: true).order(id: :desc).includes(:vendor, :product_list).order(:id).page(params[:page])
+
+    respond_to do |format|
+      format.xlsx {
+        response.headers['Content-Disposition'] = "attachment; filename = products.xlsx"
+      }
+      format.html { render :index }
+    end
   end
 
   def new
@@ -17,13 +25,13 @@ class ProductsController < ApplicationController
     @product = Product.new(create_params)
     @product.title = ProductList.find(params[:product][:product_list_id]).name
     @product.user_id = current_user.id
+    rand_id = rand().to_s.scan(/[0-9]/).join[0...12]
 
     if @product.save
-      # create barcode image by using the product's code and its id
-      generate_barcode(@product.code.to_s, @product.id)
+      generate_barcode(rand_id, @product.id)
 
-      # attach the barcode image from the public folder and store in S3 AWS
-      @product.barcode.attach(io: File.open("#{Rails.root}/public/barcode-#{@product.id}.png"),
+      # attach the barcode image from the images folder and store in S3 AWS
+      @product.barcode.attach(io: File.open("#{Rails.root}/app/assets/images/barcode-#{@product.id}.png"),
                               filename: "barcode-#{@product.id}.png",
                               content_type: 'image/png')
 

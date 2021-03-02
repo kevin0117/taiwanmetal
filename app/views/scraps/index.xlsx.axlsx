@@ -1,0 +1,9 @@
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: "Scraps") do |sheet|
+  sheet.add_row ["ID", "Name"]
+
+  @scraps.each do |scrap|
+    sheet.add_row [scrap.id, scrap.title]
+  end
+end

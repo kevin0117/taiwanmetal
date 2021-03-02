@@ -5,8 +5,16 @@ class ScrapsController < ApplicationController
   load_and_authorize_resource
 
   def index
+    params.permit![:format]
     @q = current_user.scraps.ransack(params[:q])
     @scraps = @q.result(distinct: true).order(id: :desc).page params[:page]
+
+    respond_to do |format|
+      format.xlsx {
+        response.headers['Content-Disposition'] = "attachment; filename = scraps.xlsx"
+      }
+      format.html { render :index }
+    end
   end
 
   def new
