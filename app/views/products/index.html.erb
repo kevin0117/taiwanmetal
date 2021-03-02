@@ -94,10 +94,29 @@ table {
 <h1>商品列表</h1>
 
 <%= link_to "新增商品", new_product_path, class:'btn btn-outline-secondary mb-3' %>
+<%= link_to "下載 Excel 檔案", products_path(params.merge(format: 'xlsx')) %>
+
+<%= search_form_for @q, class: 'form-inline mb-3' do |f| %>
+  <div class="row">
+    <div class='col-lg-5 col-sm-6'>
+      <%= f.date_field :created_at_gteq,
+        class: "form-control input-sm search_field", data: { toggle: "tooltip", placement: "top"},  title: "起始日期"
+      %>
+    </div>
+    <div class='col-lg-5 col-sm-6'>
+      <%= f.date_field :created_at_lteq,
+        class: "form-control input-sm search_field", data: { toggle: "tooltip", placement: "top"},  title: "結束日期"
+      %>
+    </div>
+
+    <div class='col-lg-2 col-sm-2'><%= f.submit "搜尋", class:"btn btn-outline-dark ml-3"%></div>
+  </div>
+<% end %>
+
 <div class='table-responsive'>
   <%= paginate @products %>
-  
-  <table class="table table-hover responsive-table table-light">
+
+  <table class="table table-hover responsive-table table-light mt-3">
     <thead class='thead-dark'>
       <tr>
         <th>ID</th>
@@ -112,14 +131,14 @@ table {
         <th></th>
       </tr>
     </thead>
-    
+
     <tbody>
       <% @products.each do |product| %>
       <tr>
       <td><%= product.id %></td>
       <td><%= product.user.name %></td>
       <td><%= product.code %></td>
-      <td><%= link_to product.title, product_path(product) %></td> 
+      <td><%= link_to product.title, product_path(product) %></td>
       <td><%= product.weight %></td>
       <td><%= product.service_fee %></td>
       <td><%= product.vendor.name %></td>
@@ -129,8 +148,8 @@ table {
         <%= link_to "編輯", edit_product_path(product), class:"btn btn-outline-success" %>
         <%= link_to "刪除", product_path(product), method: :delete, data: {confirm: "確認取消嗎？", commit: '是的', title: '你確定嗎?', cancel: '取消'}, class:"btn btn-outline-danger" %>
       </td>
-      </tr>    
-      <% end %>  
+      </tr>
+      <% end %>
     </tbody>
   </table>
 </div>

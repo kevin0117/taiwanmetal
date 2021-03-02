@@ -2,6 +2,8 @@ require_relative 'boot'
 require 'barby'
 require 'barby/barcode'
 require 'barby/barcode/code_39'
+require 'barby/barcode/code_93'
+require 'barby/barcode/ean_13'
 require 'barby/outputter/png_outputter'
 require 'rails/all'
 
