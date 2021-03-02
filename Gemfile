@@ -83,3 +83,6 @@ gem 'devise'
 gem "figaro", "~> 1.2"
 gem 'cancancan', '~> 3.2', '>= 3.2.1'
 gem "rqrcode", "~> 1.2"
+gem 'caxlsx', '~> 3.0', '>= 3.0.4'
+gem 'caxlsx_rails', '~> 0.6.2'
+gem 'rubyzip', '~> 2.3'
