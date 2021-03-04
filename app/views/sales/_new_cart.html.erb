@@ -141,7 +141,7 @@
         <% current_cart.items.each do |item| %>
         <tr>
           <td><%= link_to item.product.title, product_path(item.product) %></td>
-          <td><%= item.product.id %></td>
+          <td><%= form.text_field :product_id, value: item.product.id, readonly:"readonly" %></td>
           <td><%= item.product.weight %></td>
           <td><%= item.product.cost %></td>
           <td><%= item.product.service_fee %></td>

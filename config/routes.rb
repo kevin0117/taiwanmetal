@@ -9,8 +9,12 @@ Rails.application.routes.draw do
       post 'get_price', to: 'utils#get_price'
     end
   end
+  # devise_for :users, controllers: { sessions: "users/sessions" }
 
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'users/omniauth_callbacks',
+    sessions: "users/sessions" }
+
   get 'bootstrap/index'
   # root 'pages#home'
   root 'pages#index'

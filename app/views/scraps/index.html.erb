@@ -118,7 +118,7 @@
 <%# # data: { toggle:"tooltip", placement:"top", title: "Tooltip on top"} %>
 
 <%#= link_to "下載 Excel 檔案", scraps_path(format: :xlsx) %>
-<%= link_to "下載 Excel 檔案", scraps_path(params.merge(format: 'xlsx')) %>
+<%= link_to "輸出Excel", scraps_path(params.merge(format: 'xlsx')), class:"btn btn-outline-secondary mb-3" %>
 
 <%#= link_to "Excel", user_contacts_path(params.merge(format: 'xls')) %>
 
