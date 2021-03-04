@@ -5,7 +5,7 @@ table tr th {
     padding: 5px;
 }
 table {
-    border-collapse: collapse;
+  border-collapse: collapse;
 }
 
 @media (max-width: 992px){
@@ -88,28 +88,37 @@ table {
   .close{
     font-size: 4rem;
   }
+  .search_field{
+    margin-bottom: 10px;
+  }
+  #q_created_at_lteq{
+    width: 100%;
+  }
+  #q_created_at_gteq{
+    width: 100%;
+  }
 }
 </style>
 
 <h1>商品列表</h1>
 
 <%= link_to "新增商品", new_product_path, class:'btn btn-outline-secondary mb-3' %>
-<%= link_to "下載 Excel 檔案", products_path(params.merge(format: 'xlsx')) %>
+<%= link_to "輸出Excel", products_path(params.merge(format: 'xlsx')), class:'btn btn-outline-secondary mb-3' %>
 
 <%= search_form_for @q, class: 'form-inline mb-3' do |f| %>
   <div class="row">
-    <div class='col-lg-5 col-sm-6'>
+    <div class='col-lg-4 col-sm-5'>
       <%= f.date_field :created_at_gteq,
         class: "form-control input-sm search_field", data: { toggle: "tooltip", placement: "top"},  title: "起始日期"
       %>
     </div>
-    <div class='col-lg-5 col-sm-6'>
+    <div class='col-lg-4 col-sm-5'>
       <%= f.date_field :created_at_lteq,
         class: "form-control input-sm search_field", data: { toggle: "tooltip", placement: "top"},  title: "結束日期"
       %>
     </div>
 
-    <div class='col-lg-2 col-sm-2'><%= f.submit "搜尋", class:"btn btn-outline-dark ml-3"%></div>
+    <div class='col-lg-4 col-sm-2'><%= f.submit "搜尋", class:"btn btn-outline-dark ml-3"%></div>
   </div>
 <% end %>
 

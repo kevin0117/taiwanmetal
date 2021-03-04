@@ -1,12 +1,12 @@
 wb = xlsx_package.workbook
 
 wb.add_worksheet(name: "Products") do |sheet|
-  sheet.add_row ["代號", "名稱", "重量", "廠商代號", "工錢", "成本", "商品條碼"]
+  sheet.add_row ["代號", "ID", "名稱", "重量", "廠商代號", "工錢", "商品條碼"]
 
   @products.each_with_index do |product, index|
     img = File.expand_path(Rails.root+"app/assets/images/barcode-#{product.id}.png")
 
-    sheet.add_row [product.code, product.title, product.weight, product.vendor.id, product.service_fee, product.cost, product.id]
+    sheet.add_row [product.code, product.id, product.title, product.weight, product.vendor.id, product.service_fee, product.id]
 
     sheet.add_image(:image_src => img, :noSelect => false, :noMove => true) do |image|
       image.width=100
