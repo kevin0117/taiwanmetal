@@ -65,7 +65,7 @@ class ProductsController < ApplicationController
     cart_product = current_cart.items.find{|item| item.product_id == @product.id}
     if @product.quantity > 0
       current_cart.add_product(@product)
-      @product.quantity -= 1
+      @product.decrement(:quantity)
       @product.on_sell = false if @product.quantity == 0
       @product.save
       session[:cart0117] = current_cart.serialize
