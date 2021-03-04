@@ -1,0 +1,70 @@
+<style>
+  @media (max-width: 992px){
+    h2{
+      font-size: 5rem;
+    }
+
+    .button-login{
+      font-size: 2rem;
+    }
+
+    label{
+      font-size: 4rem;
+    }
+
+    .form-check-input{
+      width: 20px;
+      height: 20px;
+    }
+    .form-check-label{
+      margin-left: 2px;
+      font-size: 2rem;
+    }
+
+    .btn{
+      font-size: 3rem;
+    }
+  }
+</style>
+
+<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <section class='container bg-light mt-4 shadow p-3 mb-5 bg-white rounded'>
+    <div class='row'>
+      <div class='col-lg-6 col-sm-12'>
+        <img src="https://images.unsplash.com/photo-1594425952499-c4111e0baeb9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80" class="d-block w-100">
+      </div>
+      <div class='col-lg-6 col-sm-12'>
+        <h2>登入</h2>
+          <div class="form-inputs">
+            <%= f.input :email,
+                        required: false,
+                        autofocus: true,
+                        input_html: { autocomplete: "email" } %>
+            <%= f.input :password,
+                        required: false,
+                        input_html: { autocomplete: "current-password" } %>
+            <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+          </div>
+
+          <div class="form-actions">
+            <div class="row">
+              <div class="col-6">
+                <%= f.button :submit, "登入", class: 'btn btn-lg btn-primary', style:"width: 100%" %>
+              </div>
+              <div class="col-6">
+                <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+                  <%= link_to "註冊", new_registration_path(resource_name), class: 'btn btn-lg btn-outline-primary', style:"width: 100%" %><br />
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <br>
+        <%- if devise_mapping.omniauthable? %>
+          <%- resource_class.omniauth_providers.each do |provider| %>
+            <%= link_to "使用 GOOGLE 登入", omniauth_authorize_path(resource_name, provider), class: 'btn btn-lg btn-info', style:"width: 100%" %><br />
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </section>
+<% end %>
