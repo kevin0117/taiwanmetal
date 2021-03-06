@@ -80,40 +80,53 @@
   }
 </style>
 
-<div class='table-responsive'>
-  <table class="table table-hover responsive-table" data-controller='table'>
-    <thead class='thead-light'>
-      <tr>
-        <th></th>
-        <th>所有人</th>
-        <th>名稱</th>
-        <th>商品ID</th>
-        <th>重量</th>
-        <th>工錢</th>
-        <th>庫存量</th>
-        <th>銷售狀態</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @products.available.take(5).each do |product| %>
-      <tr>
-        <td><%= link_to "加入", add_to_cart_product_path(product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-info button-sale-table" %></td>
-        <td><%= product.user.name %></td>
-        <td><%= product.title %></td>
-        <td><%= product.id %></td>
-        <td><%= product.weight %>
-        <td><%= product.service_fee %></td>
-        <td><%= product.quantity %></td>
-        <td><%= product.on_sell %></td>
-      </tr>
+<div class="row">
+  <div class="col-lg-3 col-sm-12">
+    <form class="form-inline">
+      <%= search_form_for @q do |f| %>
+          <%= content_tag :div, 'data-controller': "scanner" do %>
+            <div class="card" style="width: 20rem;">
+              <%= f.label :code, "掃描QR代碼" %>
+              <%= content_tag :canvas, nil, width: 500, height: 340, 'data-scanner-target': "canvas" %>
+              <div class="card-body">
+                <%= f.submit class:"btn btn-outline-dark my-2 my-sm-0 mr-2" %>
+                <%= f.search_field :code_eq, class: "form-control", 'data-scanner-target': "output" %>
+              </div>
+            </div>
+          <% end %>
       <% end %>
-    </tbody>
-  </table>
-  <form class="form-inline">
-    <%= search_form_for @q do |f| %>
-      <%= f.submit class:"btn btn-outline-dark my-2 my-sm-0 mr-2" %>
-      <%= f.search_field :id_eq, class:"form-control mr-sm-2", type:"search", placeholder:"輸入商品ID"%>
-    <% end %>
-  </form>
+    </form>
+  </div>
+  <div class="col-lg-9 col-sm-12">
+    <div class='table-responsive'>
+      <table class="table table-hover responsive-table" data-controller='table'>
+        <thead class='thead-light'>
+          <tr>
+            <th></th>
+            <th>所有人</th>
+            <th>名稱</th>
+            <th>商品ID</th>
+            <th>重量</th>
+            <th>工錢</th>
+            <th>庫存量</th>
+            <th>銷售狀態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @products.available.take(5).each do |product| %>
+          <tr>
+            <td><%= link_to "加入", add_to_cart_product_path(product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-info button-sale-table" %></td>
+            <td><%= product.user.name %></td>
+            <td><%= product.title %></td>
+            <td><%= product.id %></td>
+            <td><%= product.weight %>
+            <td><%= product.service_fee %></td>
+            <td><%= product.quantity %></td>
+            <td><%= product.on_sell %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
