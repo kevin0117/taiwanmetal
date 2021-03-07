@@ -1,82 +1,119 @@
 <style>
   @media (max-width: 992px){
-  h1{
+    .card {
+      /* text-align: center; */
+      /* margin-left: 34px; */
+      /* background-color: black; */
+      /* padding: 13px; */
+    }
+    .search-field{
+      /* background-color: black; */
+      font-size: 43px;
+    }
+    .scanner {
+      text-align: center;
+    }
+    canvas{
+      /* background-color: black; */
+      width: 850px;
+      text-align: center;
+
+      /* text-align: right; */
+    }
+    .card-body{
+      /* background-color: black; */
+      width: 800px;
+            text-align: center;
+
+      /* font-size: 60px; */
+    }
+    h1{
       font-size: 6rem;
-  }
-  h4{
+    }
+    h4{
+        font-size: 3rem;
+    }
+    .button-sale-table{
+      font-size: 3.5rem;
+    }
+    .hide-table{
+      display: none;
+    }
+    table.responsive-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        display: block;
+        position: relative;
+        font-size: 4rem;
+        /* sort out borders */
+    }
+    table.responsive-table td:empty:before {
+        content: "\00a0";
+    }
+    table.responsive-table th,
+    table.responsive-table td {
+        margin: 0;
+        vertical-align: top;
+    }
+    table.responsive-table th {
+        text-align: left;
+    }
+    table.responsive-table thead {
+        display: block;
+        float: left;
+    }
+    table.responsive-table thead tr {
+        display: block;
+        padding: 0 10px 0 0;
+    }
+    table.responsive-table thead tr th::before {
+        content: "\00a0";
+    }
+    table.responsive-table tbody {
+        display: block;
+        width: auto;
+        position: relative;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    table.responsive-table tbody tr {
+        display: inline-block;
+        vertical-align: top;
+    }
+    table.responsive-table th {
+        display: block;
+        text-align: right;
+    }
+    table.responsive-table td {
+        display: block;
+        min-height: 1.25em;
+        text-align: left;
+    }
+    table.responsive-table tr {
+        border-bottom: none;
+        padding: 0 10px;
+    }
+    table.responsive-table thead {
+        border: 0;
+        /* border-right: 1px solid #1d1e22; */
+    }
+    label{
       font-size: 3rem;
+    }
+    .invalid-feedback{
+      font-size: 3rem;
+    }
   }
-  .button-sale-table{
-    font-size: 3.5rem;
-  }
-  .hide-table{
-    display: none;
-  }
-  table.responsive-table {
-      width: 100%;
-      border-collapse: collapse;
-      border-spacing: 0;
-      display: block;
-      position: relative;
-      font-size: 4rem;
-      /* sort out borders */
-  }
-  table.responsive-table td:empty:before {
-      content: "\00a0";
-  }
-  table.responsive-table th,
-  table.responsive-table td {
-      margin: 0;
-      vertical-align: top;
-  }
-  table.responsive-table th {
-      text-align: left;
-  }
-  table.responsive-table thead {
-      display: block;
-      float: left;
-  }
-  table.responsive-table thead tr {
-      display: block;
-      padding: 0 10px 0 0;
-  }
-  table.responsive-table thead tr th::before {
-      content: "\00a0";
-  }
-  table.responsive-table tbody {
-      display: block;
-      width: auto;
-      position: relative;
-      overflow-x: auto;
-      white-space: nowrap;
-  }
-  table.responsive-table tbody tr {
-      display: inline-block;
-      vertical-align: top;
-  }
-  table.responsive-table th {
-      display: block;
-      text-align: right;
-  }
-  table.responsive-table td {
-      display: block;
-      min-height: 1.25em;
-      text-align: left;
-  }
-  table.responsive-table tr {
-      border-bottom: none;
-      padding: 0 10px;
-  }
-  table.responsive-table thead {
-      border: 0;
-      /* border-right: 1px solid #1d1e22; */
-  }
-  label{
-    font-size: 3rem;
-  }
-  .invalid-feedback{
-    font-size: 3rem;
-  }
+  @media (min-width: 992px) {
+    canvas {
+      /* background-color: black; */
+      width: 320px;
+      /* text-align: right; */
+    }
+    .card-body {
+      /* background-color: black; */
+    }
   }
 </style>
 
@@ -85,12 +122,12 @@
     <form class="form-inline">
       <%= search_form_for @q do |f| %>
           <%= content_tag :div, 'data-controller': "scanner" do %>
-            <div class="card" style="width: 20rem;">
+            <div class="card mb-3 ml-sm-5 ml-lg-2">
               <%= f.label :code, "掃描QR代碼" %>
               <%= content_tag :canvas, nil, width: 500, height: 340, 'data-scanner-target': "canvas" %>
               <div class="card-body">
                 <%= f.submit class:"btn btn-outline-dark my-2 my-sm-0 mr-2" %>
-                <%= f.search_field :code_eq, class: "form-control", 'data-scanner-target': "output" %>
+                <%= f.search_field :code_eq, class: "form-control search-field", 'data-scanner-target': "output" %>
               </div>
             </div>
           <% end %>
