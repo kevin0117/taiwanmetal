@@ -1,31 +1,17 @@
 <style>
   @media (max-width: 992px){
-    .card {
-      /* text-align: center; */
-      /* margin-left: 34px; */
-      /* background-color: black; */
-      /* padding: 13px; */
-    }
     .search-field{
-      /* background-color: black; */
       font-size: 43px;
     }
     .scanner {
       text-align: center;
     }
     canvas{
-      /* background-color: black; */
       width: 850px;
       text-align: center;
-
-      /* text-align: right; */
     }
     .card-body{
-      /* background-color: black; */
       width: 800px;
-            text-align: center;
-
-      /* font-size: 60px; */
     }
     h1{
       font-size: 6rem;
@@ -107,12 +93,7 @@
   }
   @media (min-width: 992px) {
     canvas {
-      /* background-color: black; */
       width: 320px;
-      /* text-align: right; */
-    }
-    .card-body {
-      /* background-color: black; */
     }
   }
 </style>
@@ -125,7 +106,7 @@
             <div class="card mb-3 ml-sm-5 ml-lg-2">
               <%= f.label :code, "掃描QR代碼" %>
               <%= content_tag :canvas, nil, width: 500, height: 340, 'data-scanner-target': "canvas" %>
-              <div class="card-body">
+              <div class="card-body mx-auto">
                 <%= f.submit class:"btn btn-outline-dark my-2 my-sm-0 mr-2" %>
                 <%= f.search_field :code_eq, class: "form-control search-field", 'data-scanner-target': "output" %>
               </div>

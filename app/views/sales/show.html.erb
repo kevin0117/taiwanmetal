@@ -1,96 +1,36 @@
 <style>
   @media (max-width: 992px){
-  h1{
+    h1{
       font-size: 6rem;
-  }
-  h4{
+    }
+    li{
       font-size: 3rem;
-  }
-  .button-sale-table{
-    font-size: 3.5rem;
-  }
-  .hide-table{
-    display: none;
-  }
-  table.responsive-table {
-      width: 100%;
-      border-collapse: collapse;
-      border-spacing: 0;
-      display: block;
-      position: relative;
+    }
+    h5{
       font-size: 4rem;
-      /* sort out borders */
+    }
   }
-  table.responsive-table td:empty:before {
-      content: "\00a0";
-  }
-  table.responsive-table th,
-  table.responsive-table td {
-      margin: 0;
-      vertical-align: top;
-  }
-  table.responsive-table th {
-      text-align: left;
-  }
-  table.responsive-table thead {
-      display: block;
-      float: left;
-  }
-  table.responsive-table thead tr {
-      display: block;
-      padding: 0 10px 0 0;
-  }
-  table.responsive-table thead tr th::before {
-      content: "\00a0";
-  }
-  table.responsive-table tbody {
-      display: block;
-      width: auto;
-      position: relative;
-      overflow-x: auto;
-      white-space: nowrap;
-  }
-  table.responsive-table tbody tr {
-      display: inline-block;
-      vertical-align: top;
-  }
-  table.responsive-table th {
-      display: block;
-      text-align: right;
-  }
-  table.responsive-table td {
-      display: block;
-      min-height: 1.25em;
-      text-align: left;
-  }
-  table.responsive-table tr {
-      border-bottom: none;
-      padding: 0 10px;
-  }
-  table.responsive-table thead {
-      border: 0;
-      /* border-right: 1px solid #1d1e22; */
-  }
-  label{
-    font-size: 3rem;
-  }
-  .invalid-feedback{
-    font-size: 3rem;
-  }
+  @media (min-width: 992px) {
+    .card {
+      width: 500px;
+    }
   }
 </style>
-
 <h1>銷售明細</h1>
 
-<ul>
-  <li>銷售日期：<%= @sale.sale_date %></li>
-  <li>合計工錢：<%= @sale.service_fee %></li>
-  <li>合計重量：<%= @sale.weight %></li>
-  <li>銷售金額：<%= @sale.total_price %></li>
-  <li>工資利潤：<%= @sale.service_profit %></li>
-  <li>損耗利潤：<%#= @sale.total_price %></li>
-
-</ul>
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">銷售日期：<%= @sale.sale_date.to_formatted_s(:db) %></h5>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">ID：<%= @sale.id %></li>
+    <li class="list-group-item">合計工錢：<%= @sale.service_fee %></li>
+    <li class="list-group-item">合計重量：<%= @sale.weight %></li>
+    <li class="list-group-item">銷售金額：<%= @sale.total_price %></li>
+    <li class="list-group-item">工資利潤：<%= @sale.service_profit %></li>
+    <li class="list-group-item">損耗利潤：<%#= @sale.total_price %></li>
+  </ul>
+</div>
 
   <%# create_table "sales", force: :cascade do |t|
     t.datetime "sale_date", default: -> { "CURRENT_TIMESTAMP" }

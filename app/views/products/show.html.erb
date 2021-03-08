@@ -1,37 +1,42 @@
 <style>
   @media (max-width: 992px){
-  
     h1{
       font-size: 6rem;
     }
     li{
       font-size: 3rem;
     }
+    h5{
+      font-size: 4rem;
+    }
+  }
+  @media (min-width: 992px) {
+    .card {
+      /* background-color: black; */
+      width: 500px;
+      /* text-align: right; */
+    }
+    .card-body {
+      /* background-color: black; */
+    }
   }
 </style>
 
 <h1>商品資訊</h1>
 
-<ul>
-  <li>ＩＤ：<%= @product.id %></li>
-  <li>名稱：<%= @product.product_list.name %></li>
-  <li>重量：<%= @product.weight %></li>
-  <li>工錢：<%= @product.service_fee %></li>
-  <li>數量：<%= @product.quantity %></li>
-  <li>狀態：<%= @product.on_sell %></li>
-  <li>廠商：<%= @product.vendor.name %></li>
-  <li>成本：<%= @product.cost %></li>
-  <li>條碼：<%= image_tag url_for(@product.barcode), class: "img-responsive" if @product.barcode.attached? %></li>
-  <li>描述：<%= @product.description %></li>
-</ul>
-<p>
-  <%= product_url(@product.barcode) %>
-  <%# qrcode = RQRCode::QRCode.new(product_url(@product)) %>
-  <%#= qrcode.as_svg(
-    offset: 0,
-    color: '000000',
-    module_size: 3,
-    standalone: true
-  ).html_safe %>
-  <%= QrCode.call(product_url(@product)) %>
-</p>
+
+<div class="card">
+  <%= @product.description %>
+  <div class="card-body">
+    <h5 class="card-title">商品名稱：<%= @product.product_list.name %></h5>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">編碼：<%= @product.code %></li>
+    <li class="list-group-item">重量：<%= @product.weight %></li>
+    <li class="list-group-item">工錢：<%= @product.service_fee %></li>
+    <li class="list-group-item">廠商：<%= @product.vendor.name %></li>
+    <li class="list-group-item">數量：<%= @product.quantity %></li>
+    <li class="list-group-item">條碼：<%= image_tag url_for(@product.barcode), class: "img-responsive" if @product.barcode.attached? %></li>
+    <li class="list-group-item">ＱＲ：<%= QrCode.call(@product.code) %></li>
+  </ul>
+</div>
