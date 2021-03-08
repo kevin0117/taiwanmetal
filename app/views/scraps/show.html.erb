@@ -1,11 +1,33 @@
+<style>
+  @media (max-width: 992px){
+    h1{
+      font-size: 6rem;
+    }
+    li{
+      font-size: 3rem;
+    }
+    h5{
+      font-size: 4rem;
+    }
+  }
+  @media (min-width: 992px) {
+    .card {
+      width: 500px;
+    }
+  }
+</style>
 <h1>回收金紀錄</h1>
 
-<ul>
-    <li>名稱： <%= @scrap.title %></li>
-    <li>重量： <%= @scrap.gross_weight %></li>
-    <li>成色： <%= @scrap.wastage_rate %></li>
-    <li>實重： <%= @scrap.net_weight %></li>
-    <li>金價： <%= @scrap.gold_buying %></li>
-    <li>金額： <%= @scrap.total_price %></li>
- 
-</ul>
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">名稱： <%= @scrap.title %></h5>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">編碼： <%= @scrap.code %></li>
+    <li class="list-group-item">重量： <%= @scrap.gross_weight %></li>
+    <li class="list-group-item">成色： <%= @scrap.wastage_rate %></li>
+    <li class="list-group-item">實重： <%= @scrap.net_weight %></li>
+    <li class="list-group-item">金價： ＄<%= @scrap.gold_buying.to_i %></li>
+    <li class="list-group-item">金額： ＄<%= @scrap.total_price.to_i %></li>
+  </ul>
+</div>

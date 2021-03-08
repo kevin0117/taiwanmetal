@@ -14,7 +14,7 @@ class QrCode
     qrcode.as_svg(
       offset: 0,
       color: '000000',
-      module_size: 3,
+      module_size: 4,
       standalone: true
     ).html_safe
   end
