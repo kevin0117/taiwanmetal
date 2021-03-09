@@ -1,62 +1,71 @@
 <style>
-
-@media (max-width: 992px){
-  label{
-    font-size: 3rem;
+  @media (max-width: 992px){
+    label{
+      font-size: 3rem;
+    }
+    .invalid-feedback{
+      font-size: 3rem;
+    }
+    .description{
+      font-size: 3rem;
+    }
+    #product_on_sell{
+      height: 35px;
+      width: 35px;
+      margin-top: 18px;
+    }
+    .form-check-label{
+      margin-left: 25px;
+    }
   }
-  .invalid-feedback{
-    font-size: 3rem;
+  .new_form{
+    font-size: 1.3rem;
   }
-  .description{
-    font-size: 3rem;
-  }
-  #product_on_sell{
-    height: 35px;
-    width: 35px;
-    margin-top: 18px;
-  }
-  .form-check-label{
-    margin-left: 25px;
-  }
-}
-.new_form{
-  font-size: 1.3rem;
-}
 </style>
 
-<div class="form-group new_form">
+<div class="form-group new_form", data-controller="product">
   <%= simple_form_for(product) do |form| %>
     <div>
       <%= form.label :product_lists_id, "商品名稱" %>
       <%= form.collection_select :product_list_id, ProductList.available(current_user.id), :id, :name, {}, class:"form-control" %>
-    </div>  
-    <div>  
+    </div>
+    <div>
       <%= form.label :vendor_id, "廠商" %>
       <%= form.collection_select :vendor_id, Vendor.available(current_user.id), :id, :name, {}, class:"form-control" %>
-    </div> 
-    <div>  
+    </div>
+    <div>
       <%= form.label :weight, "重量" %>
-      <%= form.text_field :weight, class:"form-control" %>
-    </div> 
-    <div>  
+      <%#= form.text_field :weight, class:"form-control", data: { target: "product.weight" , action: "blur->product#cal_total_weight"} %>
+      <%= form.text_field :weight, class:"form-control", data: { "product-target": "weight", action: "blur->product#cal_total_weight" }  %>
+    </div>
+    <div>
       <%= form.label :cost, "工錢成本" %>
       <%= form.number_field :cost, class:"form-control" %>
-    </div> 
-    <div>  
+    </div>
+    <div>
       <%= form.label :service_fee, "工錢" %>
-      <%= form.number_field :service_fee, class:"form-control" %>
-    </div> 
-    <div>  
+      <%= form.number_field :service_fee, class:"form-control", data: { "product-target": "service_fee", action: "blur->product#cal_total_weight" }  %>
+    </div>
+    <div>
       <%= form.label :quantity, "數量" %>
-      <%= form.number_field :quantity, class:"form-control" %>
-    </div>     
-    <div class="form-group form-check">  
+      <%#= form.number_field :quantity, class:"form-control", data: { target: "product.quantity", action: "blur->product#cal_total_weight" }  %>
+      <%= form.number_field :quantity, class:"form-control", data: { "product-target": "quantity", action: "blur->product#cal_total_weight" }  %>
+    </div>
+    <div>
+      <%= form.label :total_weight, "合計重量" %>
+      <%= form.text_field :total_weight, class:"form-control", data: { "product-target": "total_weight" } %>
+    </div>
+    <div>
+      <%= form.label :total_service_fee, "合計工錢" %>
+      <%= form.number_field :total_service_fee, class:"form-control", data: { "product-target": "total_service_fee" } %>
+    </div>
+    <div class="form-group form-check">
       <%= form.input :on_sell, label: '是否上架', class:"form-control"  %>
-    </div> 
-    <div class='description'>  
+    </div>
+    <div class='description'>
       <%= form.label :description, "描述" %>
       <%= form.rich_text_area :description %>
-    </div> 
+    </div>
     <div>
       <%= form.submit class:"btn btn-primary mt-3" %>
       <%= link_to "回商品列表頁", products_path, class:'btn btn-info mt-3' %>
