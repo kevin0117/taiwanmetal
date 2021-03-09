@@ -36,7 +36,9 @@
     <li class="list-group-item">工錢：<%= @product.service_fee %></li>
     <li class="list-group-item">廠商：<%= @product.vendor.name %></li>
     <li class="list-group-item">數量：<%= @product.quantity %></li>
-    <li class="list-group-item">條碼：<%= image_tag url_for(@product.barcode), class: "img-responsive" if @product.barcode.attached? %></li>
+    <%# <li class="list-group-item">條碼： %>
+      <%#= image_tag url_for(@product.barcode), class: "img-responsive" if @product.barcode.attached? %>
+    <%# </li> %>
     <li class="list-group-item">ＱＲ：<%= QrCode.call(@product.code) %></li>
   </ul>
 </div>
