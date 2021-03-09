@@ -8,11 +8,9 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
+  <%= render 'shared/frontend/navbar' %>
+  <%= render 'shared/frontend/flash' if flash %>
   <body>
-    <%= render 'shared/frontend/navbar' %>
-    <%= render 'shared/frontend/flash' if flash %>
-
     <div class="container-fluid">
       <%= yield %>
     </div>
