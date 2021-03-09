@@ -152,16 +152,15 @@
     <thead class='thead-dark'>
       <tr>
         <th>ID</th>
+        <th>編碼</th>
         <th>客戶</th>
         <th>日期</th>
-        <th>所有人</th>
         <th>名稱</th>
         <th>重量</th>
         <th>成色</th>
         <th>實重</th>
         <th>金價</th>
         <th>金額</th>
-        <th>數量</th>
         <th>庫存</th>
         <th></th>
       </tr>
@@ -171,16 +170,15 @@
       <% @scraps.each do |scrap| %>
       <tr>
         <td><%= scrap.id %></td>
+        <td><%= scrap.code %></td>
         <td><%= scrap.customer.name %></td>
         <td><%= scrap.collected_date.to_formatted_s(:short) %></td>
-        <td><%= scrap.user.name %></td>
         <td><%= link_to scrap.title, scrap_path(scrap) %></td>
         <td><%= scrap.gross_weight %></td>
         <td><%= scrap.wastage_rate %></td>
         <td><%= scrap.net_weight %></td>
         <td><%= scrap.gold_buying %></td>
         <td><%= scrap.total_price %></td>
-        <td><%= scrap.quantity %></td>
         <td><%= scrap.in_stock %></td>
         <td>
           <%= link_to "編輯", edit_scrap_path(scrap), class:"btn btn-outline-success"  %>

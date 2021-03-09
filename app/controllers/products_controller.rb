@@ -25,6 +25,8 @@ class ProductsController < ApplicationController
     @product = Product.new(create_params)
     @product.title = ProductList.find(params[:product][:product_list_id]).name
     @product.user_id = current_user.id
+    @product.total_weight = @product.weight * @product.quantity
+    @product.total_service_fee = @product.weight * @product.quantity
     rand_id = rand().to_s.scan(/[0-9]/).join[0...12]
 
     if @product.save
@@ -43,6 +45,8 @@ class ProductsController < ApplicationController
 
   def update
     @product.title = ProductList.find(params[:product][:product_list_id]).name
+    @product.total_weight = @product.weight * @product.quantity
+    @product.total_service_fee = @product.weight * @product.quantity
 
     if @product.update(update_params)
       redirect_to products_path, notice: "更新成功"
@@ -125,6 +129,7 @@ class ProductsController < ApplicationController
   def create_params
     params.require(:product).permit(:title,
                                     :weight,
+                                    :total_weight,
                                     :cost,
                                     :service_fee,
                                     :barcode,
@@ -141,6 +146,7 @@ class ProductsController < ApplicationController
   def update_params
     params.require(:product).permit(:title,
                                     :weight,
+                                    :total_weight,
                                     :cost,
                                     :service_fee,
                                     :barcode,

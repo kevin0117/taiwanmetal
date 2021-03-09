@@ -97,6 +97,10 @@ table {
   #q_created_at_gteq{
     width: 100%;
   }
+  .product-table {
+    text-align: center;
+    font-size: 2.5rem;
+  }
 }
 </style>
 
@@ -162,3 +166,25 @@ table {
     </tbody>
   </table>
 </div>
+
+<% if current_user.products.exists? %>
+  <div class='table-responsive'>
+    <table class='table table-hover table-light product-table' >
+      <thead class='thead-dark'>
+        <tr>
+          <th>合計重量</th>
+          <th>合計工錢</th>
+          <th>合計數量</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td><%= @products.sum(:total_weight) %></td>
+          <td><%= @products.sum(:service_fee) %></td>
+          <td><%= @products.sum(:quantity) %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+<% end %>
