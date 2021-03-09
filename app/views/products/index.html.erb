@@ -107,7 +107,7 @@
 <h1>商品列表</h1>
 
 <%= link_to "新增商品", new_product_path, class:'btn btn-outline-secondary mb-3' %>
-<%#= link_to "輸出Excel", products_path(params.merge(format: 'xlsx')), class:'btn btn-outline-secondary mb-3' %>
+<%= link_to "輸出Excel", products_path(params.merge(format: 'xlsx')), class:'btn btn-outline-secondary mb-3' %>
 
 <%= search_form_for @q, class: 'form-inline mb-3' do |f| %>
   <div class="row">
