@@ -7,7 +7,7 @@ class ProductsController < ApplicationController
   def index
     params.permit![:format]
     @q = current_user.products.ransack(params[:q])
-    @products = @q.result(distinct: true).order(id: :desc).includes(:vendor, :product_list).order(:id).page(params[:page])
+    @products = @q.result(distinct: false).order(id: :desc).order(:id).page(params[:page])
 
     respond_to do |format|
       format.xlsx {
@@ -25,17 +25,15 @@ class ProductsController < ApplicationController
     @product = Product.new(create_params)
     @product.title = ProductList.find(params[:product][:product_list_id]).name
     @product.user_id = current_user.id
-    @product.total_weight = @product.weight * @product.quantity
-    @product.total_service_fee = @product.weight * @product.quantity
-    rand_id = rand().to_s.scan(/[0-9]/).join[0...12]
-
+    # byebug
     if @product.save
-      generate_barcode(rand_id, @product.id)
+      # generate_barcode(rand_id, @product.id)
 
       # attach the barcode image from the images folder and store in S3 AWS
-      @product.barcode.attach(io: File.open("#{Rails.root}/app/assets/images/barcode-#{@product.id}.png"),
-                              filename: "barcode-#{@product.id}.png",
-                              content_type: 'image/png')
+      # @product.barcode.attach(
+        # io: File.open("#{Rails.root}/app/assets/images/barcode-#{@product.id}.png"),
+        # filename: "barcode-#{@product.id}.png",
+        # content_type: 'image/png')
 
       redirect_to products_path, notice: "商品建立成功"
     else
@@ -45,9 +43,9 @@ class ProductsController < ApplicationController
 
   def update
     @product.title = ProductList.find(params[:product][:product_list_id]).name
-    @product.total_weight = @product.weight * @product.quantity
-    @product.total_service_fee = @product.weight * @product.quantity
-
+    # @product.total_weight = @product.weight * params[:product][:quantity].to_i
+    # @product.total_service_fee = @product.weight * params[:product][:quantity].to_i
+    # byebug
     if @product.update(update_params)
       redirect_to products_path, notice: "更新成功"
     else
@@ -132,6 +130,7 @@ class ProductsController < ApplicationController
                                     :total_weight,
                                     :cost,
                                     :service_fee,
+                                    :total_service_fee,
                                     :barcode,
                                     :on_sell,
                                     :code,
@@ -149,6 +148,7 @@ class ProductsController < ApplicationController
                                     :total_weight,
                                     :cost,
                                     :service_fee,
+                                    :total_service_fee,
                                     :barcode,
                                     :on_sell,
                                     :code,
