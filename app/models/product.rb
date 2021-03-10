@@ -2,7 +2,7 @@ class Product < ApplicationRecord
   include CodeGenerator
   has_one_attached :barcode
   has_rich_text :description
-  paginates_per 10
+  paginates_per 50
 
   belongs_to :product_list
   belongs_to :vendor
@@ -14,6 +14,6 @@ class Product < ApplicationRecord
 
   has_many :manifests
   has_many :sales, through: :manifests
-  
+
   scope :available, -> { where(on_sell: true) }
 end
