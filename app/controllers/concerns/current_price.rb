@@ -25,11 +25,16 @@ module CurrentPrice
            symbols
 
     @uri = URI(@url)
-    @response = Net::HTTP.get(@uri)
-    puts "@response: " + @response
+    begin
+      @response = Net::HTTP.get(@uri)
+      puts "@response: " + @response
+    rescue SocketError => error
+      puts error.inspect
+      puts "check your internet connection"
+    end
     # @response: {"success":false,"error":{"code":104,"type":"request_limit_reached","info":"The maximum allowed API amount of monthly API requests has been reached."}}
     # byebug
-    if @response.include?("error")
+    if  @response.nil? || @response.include?("error")
       @XAU_TWD_SELL = 0
       @XAU_TWD_BUY = 0
     else
@@ -52,9 +57,15 @@ module CurrentPrice
     symbols
 
     @uri1 = URI(@url1)
-    @response1 = Net::HTTP.get(@uri1)
-    puts "@response1: " + @response1
-    if @response1.include?("error")
+    begin
+      @response1 = Net::HTTP.get(@uri1)
+      puts "@response1: " + @response1
+    rescue SocketError => error
+      puts error.inspect
+      puts "check your internet connection"
+    end
+
+    if @response.nil? || @response1.include?("error")
       @XAU_USD_SELL = 0
       @XAU_USD_BUY = 0
     else
