@@ -7,7 +7,7 @@ class ProductsController < ApplicationController
   def index
     params.permit![:format]
     @q = current_user.products.ransack(params[:q])
-    @products = @q.result(distinct: false).order(id: :desc).order(:id).page(params[:page])
+    @products = @q.result(distinct: false).includes(:vendor).order(id: :desc).order(:id).page(params[:page])
 
     respond_to do |format|
       format.xlsx {

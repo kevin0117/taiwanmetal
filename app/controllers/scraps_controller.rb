@@ -7,7 +7,7 @@ class ScrapsController < ApplicationController
   def index
     params.permit![:format]
     @q = current_user.scraps.ransack(params[:q])
-    @scraps = @q.result(distinct: true).order(id: :desc).page params[:page]
+    @scraps = @q.result(distinct: true).includes(:customer).order(id: :desc).page params[:page]
 
     respond_to do |format|
       format.xlsx {
