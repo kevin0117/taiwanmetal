@@ -97,7 +97,7 @@
     <% current_user.products.available.take(5).each do |product| %>
     <tr>
       <td><%= link_to "加入", add_sale_path(product, sale_id: sale.id), method: :post, class:"btn btn-sm btn-info button-sale-edit-table" %></td>
-      <td><%= product.title %></td>
+      <td><%= link_to product.title, product_path(product) %></td>
       <td><%= product.id %></td>
       <td><%= product.weight %>
       <td><%= product.service_fee %></td>
