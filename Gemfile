@@ -86,3 +86,4 @@ gem "rqrcode", "~> 1.2"
 gem 'caxlsx', '~> 3.0', '>= 3.0.4'
 gem 'caxlsx_rails', '~> 0.6.2'
 gem 'rubyzip', '~> 2.3'
+gem 'cocoon', '~> 1.2', '>= 1.2.15'
