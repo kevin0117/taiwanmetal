@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_09_054950) do
+ActiveRecord::Schema.define(version: 2021_03_14_170241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,6 +110,15 @@ ActiveRecord::Schema.define(version: 2021_03_09_054950) do
     t.index ["user_id"], name: "index_price_boards_on_user_id"
   end
 
+  create_table "product_cabinets", force: :cascade do |t|
+    t.string "name"
+    t.string "code"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_product_cabinets_on_user_id"
+  end
+
   create_table "product_lists", force: :cascade do |t|
     t.string "name"
     t.string "code"
@@ -138,11 +147,24 @@ ActiveRecord::Schema.define(version: 2021_03_09_054950) do
     t.integer "quantity", default: 1
     t.decimal "total_weight", default: "0.0"
     t.integer "total_service_fee", default: 0
+    t.bigint "product_cabinet_id"
+    t.bigint "purchase_order_id"
     t.index ["code"], name: "index_products_on_code", unique: true
     t.index ["deleted_at"], name: "index_products_on_deleted_at"
+    t.index ["product_cabinet_id"], name: "index_products_on_product_cabinet_id"
     t.index ["product_list_id"], name: "index_products_on_product_list_id"
+    t.index ["purchase_order_id"], name: "index_products_on_purchase_order_id"
     t.index ["user_id"], name: "index_products_on_user_id"
     t.index ["vendor_id"], name: "index_products_on_vendor_id"
+  end
+
+  create_table "purchase_orders", force: :cascade do |t|
+    t.string "title"
+    t.string "code"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_purchase_orders_on_user_id"
   end
 
   create_table "refine_lists", force: :cascade do |t|
@@ -220,6 +242,17 @@ ActiveRecord::Schema.define(version: 2021_03_09_054950) do
     t.index ["user_id"], name: "index_scraps_on_user_id"
   end
 
+  create_table "skus", force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.string "spec"
+    t.integer "quantity"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["deleted_at"], name: "index_skus_on_deleted_at"
+    t.index ["product_id"], name: "index_skus_on_product_id"
+  end
+
   create_table "subscribes", force: :cascade do |t|
     t.string "email"
     t.datetime "created_at", precision: 6, null: false
@@ -264,10 +297,14 @@ ActiveRecord::Schema.define(version: 2021_03_09_054950) do
   add_foreign_key "manifests", "products"
   add_foreign_key "manifests", "sales"
   add_foreign_key "price_boards", "users"
+  add_foreign_key "product_cabinets", "users"
   add_foreign_key "product_lists", "users"
+  add_foreign_key "products", "product_cabinets"
   add_foreign_key "products", "product_lists"
+  add_foreign_key "products", "purchase_orders"
   add_foreign_key "products", "users"
   add_foreign_key "products", "vendors"
+  add_foreign_key "purchase_orders", "users"
   add_foreign_key "refine_lists", "refine_orders"
   add_foreign_key "refine_lists", "scraps"
   add_foreign_key "refine_orders", "scraps"
@@ -277,5 +314,6 @@ ActiveRecord::Schema.define(version: 2021_03_09_054950) do
   add_foreign_key "sales", "users"
   add_foreign_key "scraps", "customers"
   add_foreign_key "scraps", "users"
+  add_foreign_key "skus", "products"
   add_foreign_key "vendors", "users"
 end
