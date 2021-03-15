@@ -1,0 +1,64 @@
+<style>
+  @media (max-width: 992px){
+    label{
+      font-size: 3rem;
+    }
+    p{
+      font-size: 3rem;
+    }
+    h5{
+      font-size: 4rem;
+    }
+    .invalid-feedback{
+      font-size: 3rem;
+    }
+    .description{
+      font-size: 3rem;
+    }
+    .form-check-input{
+      height: 35px;
+      width: 35px;
+      margin-top: 18px;
+    }
+    .form-check-label{
+      margin-left: 25px;
+    }
+    .btn{
+      font-size: 2rem;
+    }
+  }
+  .new_form{
+    font-size: 1.3rem;
+  }
+</style>
+
+<%= simple_form_for(purchase_order) do |form| %>
+  <div>
+    <div class="row">
+      <div class="col-6">
+        <label for="title">日期</label>
+        <%= form.text_field :title, value: "#{Date.today()}", readonly: "readonly", class:"form-control" %>
+      </div>
+      <div class="col-6"><%= form.input :code, label: "櫃號" %></div>
+    </div>
+  </div>
+
+  <div data-controller="nested-form">
+    <template data-nested-form-target="template">
+      <%= form.simple_fields_for :products, Product.new, child_index: "NEW_RECORD" do |product| %>
+        <%= render 'product_fields', form: product %>
+      <% end %>
+    </template>
+
+    <%= form.simple_fields_for :products do |product_form| %>
+      <%= render 'product_fields', form: product_form %>
+    <% end %>
+
+    <div data-nested-form-target="link">
+      <%= link_to "新增商品", '新增商品', class: 'btn btn-sm btn-info', data: {action: 'nested-form#add_form'} %>
+    </div>
+  </div>
+<br>
+
+  <%= form.submit class:"btn btn-primary mt-3" %>
+<% end %>

@@ -1,0 +1,50 @@
+<style>
+  @media (max-width: 992px){
+    h1{
+      font-size: 6rem;
+    }
+    h5{
+      font-size: 4rem;
+    }
+    p{
+      font-size: 3rem;
+    }
+    table{
+      font-size: 3rem;
+    }
+    .btn{
+      font-size: 3.5rem;
+    }
+    .close{
+      font-size: 4rem;
+    }
+    .pagination{
+      font-size: 4rem;
+    }  }
+</style>
+
+<h1>進貨單列表</h1>
+  <%= link_to "新增進貨單", new_purchase_order_path, class:'btn btn-outline-secondary mb-3' %>
+
+  <table class="table table-hover responsive-table table-light mt-3">
+    <thead class='thead-dark'>
+    <tr>
+      <th>進貨日期</th>
+      <th>入庫櫃號</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% @purchaseOrders.each do |purchaseOrder| %>
+    <tr>
+      <td><%= purchaseOrder.title %></td>
+      <td><%= purchaseOrder.code %></td>
+      <td>
+        <%= link_to "編輯", edit_purchase_order_path(purchaseOrder), class: "btn btn-outline-success" %>
+        <%= link_to "刪除", purchase_order_path(purchaseOrder), data: {confirm: "確認取消嗎？ (將會連同入庫單內產品一併刪除)", commit: '是的', title: '你確定嗎?', cancel: '取消'}, method: :delete, class: "btn btn-outline-danger" %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

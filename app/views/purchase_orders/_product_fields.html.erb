@@ -1,0 +1,52 @@
+<div data-controller="nested-product" class='nested-fields' data-new-record="<%= form.object.new_record? %>">
+  <div class="form-group">
+  <div class="row">
+    <div class="col-lg-2 col-md-4">
+      <%= form.label :product_lists_id, "商品名稱" %>
+      <%= form.collection_select :product_list_id, ProductList.available(current_user.id), :id, :name, {}, class:"form-control" %>
+    </div>
+    <div class="col-lg-2 col-md-4">
+      <%= form.label :vendor_id, "廠商" %>
+      <%= form.collection_select :vendor_id, Vendor.available(current_user.id), :id, :name, {}, class:"form-control" %>
+    </div>
+    <div class="col-lg-2 col-md-4">
+      <%= form.label :weight, "重量" %>
+      <%= form.text_field :weight, class:"form-control", data: { "nested-product-target": "weight", action: "blur->nested-product#cal_total_weight" }  %>
+    </div>
+    <div class="col-lg-2 col-md-4">
+      <%= form.label :cost, "工錢成本" %>
+      <%= form.number_field :cost, class:"form-control" %>
+    </div>
+    <div class="col-lg-2 col-md-4">
+      <%= form.label :service_fee, "工錢" %>
+      <%= form.number_field :service_fee, class:"form-control", data: { "nested-product-target": "service_fee", action: "blur->nested-product#cal_total_weight" }  %>
+    </div>
+    <div class="col-lg-2 col-md-4">
+      <%= form.label :quantity, "數量" %>
+      <%= form.number_field :quantity, class:"form-control", data: { "nested-product-target": "quantity", action: "blur->nested-product#cal_total_weight" }  %>
+    </div>
+  </div>
+  <div class="row">
+      <div class="col-6">
+        <%#= form.label :total_weight, "合計重量" %>
+        <%= form.hidden_field :total_weight, class:"form-control", data: { "nested-product-target": "total_weight" } %>
+      </div>
+      <div class="col-6">
+        <%#= form.label :total_service_fee, "合計工錢" %>
+        <%= form.hidden_field :total_service_fee, class:"form-control", data: { "nested-product-target": "total_service_fee" } %>
+      </div>
+      <div class="form-group form-check col-12">
+        <%= form.input :on_sell, label: '是否上架', class:"form-control"  %>
+      </div>
+  </div>
+      <div class='description'>
+        <%= form.label :description, "描述" %>
+        <%= form.rich_text_area :description %>
+      </div>
+      <div>
+        <%= link_to "刪除", "#", data: {action: "nested-form#remove_association"}, data: { confirm: "確認刪除嗎？" }, class: "btn btn-sm btn-danger mt-2" %>
+        <hr>
+      </div>
+  </div>
+  <%= form.hidden_field :_destroy %>
+</div>
