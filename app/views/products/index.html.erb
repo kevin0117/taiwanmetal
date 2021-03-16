@@ -108,23 +108,7 @@
 
 <%= link_to "新增商品", new_product_path, class:'btn btn-outline-secondary mb-3' %>
 <%= link_to "輸出Excel", products_path(params.merge(format: 'xlsx')), class:'btn btn-outline-secondary mb-3' %>
-
-<%= search_form_for @q, class: 'form-inline mb-3' do |f| %>
-  <div class="row">
-    <div class='col-lg-4 col-sm-5'>
-      <%= f.date_field :created_at_gteq,
-        class: "form-control input-sm search_field", data: { toggle: "tooltip", placement: "top"},  title: "起始日期"
-      %>
-    </div>
-    <div class='col-lg-4 col-sm-5'>
-      <%= f.date_field :created_at_lteq,
-        class: "form-control input-sm search_field", data: { toggle: "tooltip", placement: "top"},  title: "結束日期"
-      %>
-    </div>
-
-    <div class='col-lg-4 col-sm-2'><%= f.submit "搜尋", class:"btn btn-outline-dark ml-3"%></div>
-  </div>
-<% end %>
+<%= link_to "掃描 QR", "#", data: {confirm: "#{render 'scanQR'}", commit: '是的', title: '請掃描QR代碼', cancel: '取消'}, class:'btn btn-outline-secondary mb-3' %>
 
 <div class='table-responsive'>
   <%= paginate @products %>
