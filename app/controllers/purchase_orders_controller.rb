@@ -1,27 +1,28 @@
 class PurchaseOrdersController < ApplicationController
   before_action :find_purchase_order, only: %i[update show edit destroy]
+  before_action :set_ransack_obj
 
   def index
-    @purchaseOrders = PurchaseOrder.all
-  end
+    @q = current_user.purchase_orders.ransack(params[:q])
+    @purchaseOrders = @q.result(distinct: false).order(id: :desc).order(:id).page(params[:page])  end
 
   def new
-    @purchase_order = PurchaseOrder.new
-    @purchase_order.products.build
+    @purchaseOrder = PurchaseOrder.new
+    @purchaseOrder.products.build
   end
 
   def create
-    @purchase_order = PurchaseOrder.new(purchase_order_params)
-    @purchase_order.user_id = current_user.id
+    @purchaseOrder = PurchaseOrder.new(purchase_order_params)
+    @purchaseOrder.user_id = current_user.id
 
-    @purchase_order.products.each_with_index do |product, index|
+    @purchaseOrder.products.each_with_index do |product, index|
       dynamic_tag = params["purchase_order"]["products_attributes"].keys[index]
       product_list_id = params["purchase_order"]["products_attributes"][dynamic_tag]["product_list_id"]
       product.user_id = current_user.id
       product.title = ProductList.find(product_list_id).name
     end
 
-    if @purchase_order.save
+    if @purchaseOrder.save
       redirect_to purchase_orders_path, notice: "建立成功"
     else
       render :new
@@ -29,7 +30,7 @@ class PurchaseOrdersController < ApplicationController
   end
 
   def update
-    if @purchase_order.update(purchase_order_params)
+    if @purchaseOrder.update(purchase_order_params)
       redirect_to purchase_orders_path, notice: "更新成功"
     else
       render :edit
@@ -37,19 +38,28 @@ class PurchaseOrdersController < ApplicationController
   end
 
   def destroy
-    if @purchase_order.destroy
+    if @purchaseOrder.destroy
       redirect_to purchase_orders_path, notice: "刪除成功"
     end
   end
 
-  def show; end
+  def show
+    params.permit![:format]
+
+    respond_to do |format|
+      format.xlsx {
+        response.headers['Content-Disposition'] = "attachment; filename = products.xlsx"
+      }
+      format.html { render :show }
+    end
+  end
 
   def edit; end
 
   private
 
   def find_purchase_order
-    @purchase_order = PurchaseOrder.find(params[:id])
+    @purchaseOrder = PurchaseOrder.find(params[:id])
   end
 
   def purchase_order_params
@@ -75,5 +85,9 @@ class PurchaseOrdersController < ApplicationController
           :product_cabinet_id,
           :description,
           :_destroy])
+  end
+
+  def set_ransack_obj
+    @q = (user_signed_in?) ? current_user.purchase_orders.ransack(params[:q]) : PurchaseOrder.ransack(params[:q])
   end
 end

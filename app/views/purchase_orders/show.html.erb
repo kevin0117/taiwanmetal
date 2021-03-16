@@ -1,0 +1,136 @@
+<style>
+  table tr td,
+  table tr th {
+      /* border: 1px solid #1d1e22; */
+      padding: 5px;
+  }
+  table {
+    border-collapse: collapse;
+  }
+
+  @media (max-width: 992px){
+    table.responsive-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        display: block;
+        position: relative;
+        /* sort out borders */
+    }
+    table.responsive-table td:empty:before {
+        content: "\00a0";
+    }
+    table.responsive-table th,
+    table.responsive-table td {
+        margin: 0;
+        vertical-align: top;
+    }
+    table.responsive-table th {
+        text-align: left;
+    }
+    table.responsive-table thead {
+        display: block;
+        float: left;
+    }
+    table.responsive-table thead tr {
+        display: block;
+        padding: 0 10px 0 0;
+    }
+    table.responsive-table thead tr th::before {
+        content: "\00a0";
+    }
+    table.responsive-table tbody {
+        display: block;
+        width: auto;
+        position: relative;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    table.responsive-table tbody tr {
+        display: inline-block;
+        vertical-align: top;
+    }
+    table.responsive-table th {
+        display: block;
+        text-align: right;
+    }
+    table.responsive-table td {
+        display: block;
+        min-height: 1.92em;
+        text-align: left;
+    }
+    table.responsive-table tr {
+        border-bottom: none;
+        padding: 0 10px;
+    }
+    table.responsive-table thead {
+        border: 0;
+        /* border-right: 1px solid #1d1e22; */
+    }
+    p{
+      font-size: 3rem;
+    }
+    h5{
+      font-size: 4rem;
+    }
+    h1{
+      font-size: 6rem;
+    }
+    .btn{
+      font-size: 3.5rem;
+    }
+    table{
+      font-size: 4rem;
+    }
+    .pagination{
+      font-size: 4rem;
+    }
+    .close{
+      font-size: 4rem;
+    }
+    .search_field{
+      margin-bottom: 10px;
+    }
+    #q_created_at_lteq{
+      width: 100%;
+    }
+    #q_created_at_gteq{
+      width: 100%;
+    }
+    .product-table {
+      text-align: center;
+      font-size: 2.5rem;
+    }
+  }
+</style>
+
+<h1>進貨單明細</h1>
+<%= link_to "輸出Excel", purchase_order_path(@purchaseOrder, params.merge(format: 'xlsx')), class:'btn btn-outline-secondary mb-1' %>
+
+<table class="table table-hover responsive-table table-light mt-3">
+  <thead class='thead-dark'>
+    <tr>
+      <th>ID</th>
+      <th>代號</th>
+      <th>名稱</th>
+      <th>重量</th>
+      <th>工錢</th>
+      <th>廠商</th>
+      <th>數量</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @purchaseOrder.products.each do |product| %>
+      <tr>
+      <td><%= product.id %></td>
+      <td><%= product.code %></td>
+      <td><%= link_to product.title, product_path(product) %></td>
+      <td><%= product.weight %></td>
+      <td><%= product.service_fee %></td>
+      <td><%= product.vendor.name %></td>
+      <td><%= product.quantity %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
