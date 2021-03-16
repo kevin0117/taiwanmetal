@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 
   # 產品名單
   resources :product_lists, except: [:show]
-  
+
   # 客戶
   resources :customers, except: [:show]
 
@@ -65,14 +65,18 @@ Rails.application.routes.draw do
       post 'decrease', to: 'refine_orders#decrease'
       post 'remove', to: 'refine_orders#remove'
       get 'report', to: 'refine_orders#report'
-    end  
+    end
   end
 
+  # 交易商品
   resources :commodities, except: [:show] do
     member do
       post 'deal', to: 'commodities#deal'
     end
   end
+
+  # 進貨單
+  resources :purchase_orders
 
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'

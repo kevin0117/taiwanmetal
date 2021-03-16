@@ -1,42 +1,38 @@
 <style>
-
-@media (max-width: 992px){
-  .navbar-brand{
-    font-size: 4rem;
+  @media (max-width: 992px){
+    .navbar-brand{
+      font-size: 4rem;
+    }
+    .navbar-toggler-icon{
+      height: 6rem;
+      width: 6rem;
+    }
+    .dropdown .btn{
+      font-size: 4rem;
+    }
+    .form-control{
+      height: calc(1.2em + 0.5rem + 3px);
+      font-size: 4.3rem;
+      margin-right: 2px;
+      /* width:75%; */
+    }
+    .dropdown-menu{
+      font-size: 3.5rem;
+    }
+    form .btn{
+      font-size: 3rem;
+    }
+    .nav-link{
+      font-size: 3.5rem;
+    }
+    #search{
+      width: 70%;
+    }
   }
-  .navbar-toggler-icon{
-    height: 6rem;
-    width: 6rem;
-  }
-  .dropdown .btn{
-    font-size: 4rem;
-  }
-  .form-control{
-    height: calc(1.2em + 0.5rem + 3px);
-    font-size: 4.3rem;
-    margin-right: 2px;
-    /* width:75%; */
-  }
-  .dropdown-menu{
-    font-size: 3.5rem;
-  }
-
-  form .btn{
-    font-size: 3rem;
-  }
-  .nav-link{
-    font-size: 3.5rem;
-  }
-
-  #search{
-    width: 70%;
-  }
-}
   .trading{
     text-align: center;
     margin-left: 1rem;
   }
-
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -70,11 +66,12 @@
             進貨入庫
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <%= link_to "黃金商品", new_product_path, class: "dropdown-item" %>
+            <%= link_to "黃金商品", new_purchase_order_path, class: "dropdown-item" %>
+            <%#= link_to "黃金商品", new_product_path, class: "dropdown-item" %>
             <%= link_to "舊金回收", new_scrap_path, class: "dropdown-item" %>
           </div>
-        </div> 
-      </li> 
+        </div>
+      </li>
       <li class="nav-item">
         <div class="dropdown">
           <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -84,21 +81,22 @@
             <%= link_to "商品銷售", new_sale_path, class: "dropdown-item" %>
             <%= link_to "舊金提煉", new_refine_order_path, class: "dropdown-item" %>
           </div>
-        </div> 
-      </li> 
+        </div>
+      </li>
       <li class="nav-item">
         <div class="dropdown">
           <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             庫存管理
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <%= link_to "進貨單列表", purchase_orders_path, class: "dropdown-item" %>
             <%= link_to "商品列表", products_path, class: "dropdown-item" %>
             <%= link_to "收金列表", scraps_path, class: "dropdown-item" %>
             <%= link_to "銷售列表", sales_path, class: "dropdown-item" %>
             <%= link_to "提煉列表", refine_orders_path, class: "dropdown-item" %>
           </div>
-        </div> 
-      </li> 
+        </div>
+      </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <%= current_user.name %>

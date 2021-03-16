@@ -1,0 +1,18 @@
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: "Products") do |sheet|
+  sheet.add_row ["ID", "代號", "名稱", "重量", "工錢", "數量", "廠商代號"]
+
+  @purchaseOrder.products.each_with_index do |product, index|
+    sheet.add_row [product.id, product.code, product.title, product.weight, product.service_fee, product.quantity, product.vendor.id]
+  end
+  total_weight = @purchaseOrder.products.sum(:total_weight)
+  total_service_fee = @purchaseOrder.products.sum(:service_fee)
+  total_quantity = @purchaseOrder.products.sum(:quantity)
+
+  sheet.add_row [" "]
+
+  sheet.add_row [" ", " ", " ", "合計重量", "合計工錢", "合計數量"]
+  sheet.add_row [" ", " ", " ",total_weight, total_service_fee, total_quantity]
+end
+
