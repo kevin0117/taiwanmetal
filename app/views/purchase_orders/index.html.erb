@@ -26,6 +26,23 @@
 <h1>進貨單列表</h1>
   <%= link_to "新增進貨單", new_purchase_order_path, class:'btn btn-outline-secondary mb-3' %>
 
+<%= search_form_for @q, class: 'form-inline mb-3' do |f| %>
+  <div class="row">
+    <div class='col-lg-4 col-sm-5'>
+      <%= f.date_field :created_at_gteq,
+        class: "form-control input-sm search_field", data: { toggle: "tooltip", placement: "top"},  title: "起始日期"
+      %>
+    </div>
+    <div class='col-lg-4 col-sm-5'>
+      <%= f.date_field :created_at_lteq,
+        class: "form-control input-sm search_field", data: { toggle: "tooltip", placement: "top"},  title: "結束日期"
+      %>
+    </div>
+
+    <div class='col-lg-4 col-sm-2'><%= f.submit "搜尋", class:"btn btn-outline-dark ml-3"%></div>
+  </div>
+<% end %>
+
   <table class="table table-hover responsive-table table-light mt-3">
     <thead class='thead-dark'>
     <tr>
@@ -38,7 +55,10 @@
   <tbody>
   <% @purchaseOrders.each do |purchaseOrder| %>
     <tr>
-      <td><%= purchaseOrder.title %></td>
+      <td>
+        <%#= link_to purchaseOrder.title, purchase_order_path(purchaseOrder) %>
+        <%= link_to purchaseOrder.created_at.strftime("%Y/%m/%d"), purchase_order_path(purchaseOrder) %>
+      </td>
       <td><%= purchaseOrder.code %></td>
       <td>
         <%= link_to "編輯", edit_purchase_order_path(purchaseOrder), class: "btn btn-outline-success" %>
