@@ -1,10 +1,11 @@
 require 'rails_helper'
 # 參考自 "為你自己學 Ruby on Rails"
 RSpec.describe Cart, type: :model, cart: true do
-
-  let(:product1) { FactoryBot.create(:product) }
-  let(:product2) { FactoryBot.create(:product) }
-  let(:product3) { FactoryBot.create(:product) }
+  let(:kevin) { FactoryBot.create(:user, first_name: 'Kevin', last_name: 'Wang', password: '123456') }
+  let(:po) { FactoryBot.create(:purchase_order, title: "DATE", user_id: kevin.id)}
+  let(:product1) { FactoryBot.create(:product, purchase_order_id: po.id) }
+  let(:product2) { FactoryBot.create(:product, purchase_order_id: po.id) }
+  let(:product3) { FactoryBot.create(:product, purchase_order_id: po.id) }
   let(:cart) { Cart.new }
 
   describe "出貨單功能" do

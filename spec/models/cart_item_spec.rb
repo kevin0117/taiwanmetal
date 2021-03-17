@@ -3,9 +3,11 @@ require 'rails_helper'
 # 參考自 "為你自己學 Ruby on Rails"
 RSpec.describe CartItem, type: :model, cart_item: true do
   describe "CartItem 基本功能" do
+    let(:kevin) { FactoryBot.create(:user, first_name: 'Kevin', last_name: 'Wang', password: '123456') }
     let(:pb) { FactoryBot.create(:price_board, gold_selling: 5000.0) }
-    let(:product1) { FactoryBot.create(:product, weight: 1.0, service_fee: 800.0) }
-    let(:product2) { FactoryBot.create(:product, weight: 2.0, service_fee: 200.0) }
+    let(:po) { FactoryBot.create(:purchase_order, title: "DATE", user_id: kevin.id)}
+    let(:product1) { FactoryBot.create(:product, weight: 1.0, service_fee: 800.0, purchase_order_id: po.id ) }
+    let(:product2) { FactoryBot.create(:product, weight: 2.0, service_fee: 200.0, purchase_order_id: po.id ) }
     let(:cart) { Cart.new }
 
     it "每個 CartItem 都可以計算它自己的重量（小計)" do
