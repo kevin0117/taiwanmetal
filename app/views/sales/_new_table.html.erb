@@ -19,69 +19,75 @@
     h4{
         font-size: 3rem;
     }
-    .button-sale-table{
-      font-size: 3.5rem;
+    .scan-btn {
+      font-size: 3rem;
+    }
+    .destop {
+      display: none;
+    }
+    .button-sale-new-table{
+      font-size: 3rem;
     }
     .hide-table{
       display: none;
     }
-    table.responsive-table {
-        width: 100%;
+    .thead-dark{
+        /* width: 100%;
         border-collapse: collapse;
         border-spacing: 0;
         display: block;
-        position: relative;
-        font-size: 4rem;
-        /* sort out borders */
+        position: relative; */
+        font-size: 3.5rem; */
+        /* sort out borders
     }
     table.responsive-table td:empty:before {
-        content: "\00a0";
+        /* content: "\00a0"; */
     }
     table.responsive-table th,
     table.responsive-table td {
-        margin: 0;
-        vertical-align: top;
+        /* margin: 0;
+        vertical-align: top; */
     }
     table.responsive-table th {
-        text-align: left;
+        /* text-align: left; */
     }
     table.responsive-table thead {
-        display: block;
-        float: left;
+        /* display: block;
+        float: left; */
     }
     table.responsive-table thead tr {
-        display: block;
-        padding: 0 10px 0 0;
+        /* display: block;
+        padding: 0 10px 0 0; */
     }
     table.responsive-table thead tr th::before {
-        content: "\00a0";
+        /* content: "\00a0"; */
     }
     table.responsive-table tbody {
-        display: block;
+        /* display: block;
         width: auto;
         position: relative;
         overflow-x: auto;
-        white-space: nowrap;
+        white-space: nowrap; */
     }
     table.responsive-table tbody tr {
-        display: inline-block;
-        vertical-align: top;
+        /* display: inline-block;
+        vertical-align: top; */
     }
     table.responsive-table th {
-        display: block;
-        text-align: right;
+        /* display: block;
+        text-align: right; */
     }
     table.responsive-table td {
-        display: block;
+        /* display: block;
         min-height: 1.25em;
-        text-align: left;
+        text-align: left; */
     }
     table.responsive-table tr {
-        border-bottom: none;
-        padding: 0 10px;
+        /* border-bottom: none;
+        padding: 0 10px; */
     }
     table.responsive-table thead {
-        border: 0;
+        /* border: 0; */
         /* border-right: 1px solid #1d1e22; */
     }
     label{
@@ -95,12 +101,16 @@
     canvas {
       width: 320px;
     }
+    .scan-btn {
+      display: none;
+    }
   }
 </style>
 
 <div class="row">
   <div class="col-lg-3 col-sm-12">
-    <form class="form-inline">
+  <%= link_to "掃描 QR", "#", data: {confirm: "#{render 'scanQR'}", commit: '是的', title: '請掃描QR代碼', cancel: '取消'}, class:'btn btn-outline-success mb-3 scan-btn' %>
+    <form class="form-inline destop">
       <%= search_form_for @q do |f| %>
           <%= content_tag :div, 'data-controller': "scanner" do %>
             <div class="card mb-3 ml-sm-5 ml-lg-2">
@@ -117,30 +127,29 @@
   </div>
   <div class="col-lg-9 col-sm-12">
     <div class='table-responsive'>
-      <table class="table table-hover responsive-table" data-controller='table'>
-        <thead class='thead-light'>
+      <%# <table class="table table-hover responsive-table" data-controller='table'> %>
+      <table class="sale-table table table-hover table-light table-bordered rounded mb-5" data-controller='table'>
+        <thead class='thead-dark'>
           <tr>
             <th></th>
-            <th>所有人</th>
             <th>名稱</th>
-            <th>商品ID</th>
+            <th class="hide-table">商品ID</th>
             <th>重量</th>
             <th>工錢</th>
-            <th>庫存量</th>
-            <th>銷售狀態</th>
+            <th class="hide-table1">數量</th>
+            <th class="hide-table">銷售狀態</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class='thead-dark'>
           <% @products.available.take(5).each do |product| %>
           <tr>
-            <td><%= link_to "加入", add_to_cart_product_path(product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-info button-sale-table" %></td>
-            <td><%= product.user.name %></td>
+            <td><%= link_to "加入", add_to_cart_product_path(product, sale_id: @sale.id), method: :put, class:"btn btn-info button-sale-new-table" %></td>
             <td><%= link_to product.title, product_path(product) %></td>
-            <td><%= product.id %></td>
+            <td class="hide-table"><%= product.id %></td>
             <td><%= product.weight %>
-            <td><%= product.service_fee %></td>
-            <td><%= product.quantity %></td>
-            <td><%= product.on_sell %></td>
+            <td>$<%= product.service_fee %></td>
+            <td class="hide-table1"><%= product.quantity %></td>
+            <td class="hide-table"><%= product.on_sell %></td>
           </tr>
           <% end %>
         </tbody>
