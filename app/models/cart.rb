@@ -40,7 +40,7 @@ class Cart
   end
 
   def total_weight
-    items.reduce(0) { |sum, item| sum + item.weight }
+    items.reduce(0) { |sum, item| sum + (item.weight * item.quantity) }
   end
 
   def total_cost

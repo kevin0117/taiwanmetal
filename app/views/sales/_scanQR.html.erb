@@ -1,0 +1,39 @@
+<style>
+  .modal-content{
+    width: 116%;
+  }
+  @media (max-width: 992px){
+    .modal-title{
+      font-size: 4rem;
+    }
+    .modal-content{
+      width: 194%;
+    }
+    .close{
+      font-size: 4rem;
+    }
+    .card{
+      width: 95%;
+    }
+    #q_code_eq.form-control.search-field{
+      width: 62%;
+    }
+    .btn{
+      font-size: 2.5rem;
+    }
+  }
+</style>
+
+<form class="form-inline ml-4 mt-4">
+  <%= search_form_for @q do |f| %>
+      <%= content_tag :div, 'data-controller': "scanner" do %>
+        <div class="card mx-auto">
+          <%= content_tag :canvas, nil, width: 500, height: 340, 'data-scanner-target': "canvas" %>
+          <div class="card-body mx-auto">
+            <%= f.submit class:"btn btn-outline-dark my-2 my-sm-0 mr-2" %>
+            <%= f.search_field :code_eq, class: "form-control search-field", 'data-scanner-target': "output" %>
+          </div>
+        </div>
+      <% end %>
+  <% end %>
+</form>
