@@ -98,113 +98,113 @@
     <div class='form-row'>
       <div class='form-group col-lg-3 col-sm-6'>
         <%= form.label :sale_date, "銷售日期" %>
-        <%= form.datetime_field :sale_date, data: { target: "sale.collected_date", action: "blur->sale#get_price" }, class:"form-control" %>
+        <%= form.datetime_field :sale_date, data: { "sale-target": "collected_date", action: "blur->sale#get_price" }, class:"form-control" %>
       </div>
       <div class='form-group col-lg-3 col-sm-6'>
         <%= form.label :customer_id, "客戶" %>
-        <%= form.collection_select :customer_id, Customer.available(current_user.id), :id, :name, {}, data: { target: "sale.customer_id" }, class:"form-control" %>
+        <%= form.collection_select :customer_id, Customer.available(current_user.id), :id, :name, {}, data: { "sale-target": "customer_id" }, class:"form-control" %>
       </div>
       <div class='form-group col-lg-3 col-sm-6'>
         <%= form.label :gold_selling, "金價(賣出)" %>
-        <%= form.number_field :gold_selling, data: { target: "sale.gold_selling"}, class:"form-control mb-1" %>
+        <%= form.number_field :gold_selling, data: { "sale-target": "gold_selling"}, class:"form-control mb-1" %>
       </div>
       <div class='form-group col-lg-3 col-sm-6'>
         <%= form.label :gold_buying, "金價(買入)" %>
-        <%= form.number_field :gold_buying, data: { target: "sale.gold_buying"}, class:"form-control mb-1" %>
+        <%= form.number_field :gold_buying, data: { "sale-target": "gold_buying"}, class:"form-control mb-1" %>
       </div>
     </div>
     <div class='form-row'>
       <div class='form-group col-lg-3 col-sm-6'>
         <%= form.label :exchange_weight, "換金重量" %>
-        <%= form.text_field :exchange_weight, placeholder: "輸入換金重量", data: { target: "sale.exchange_weight" }, class:"form-control" %>
+        <%= form.text_field :exchange_weight, placeholder: "輸入換金重量", data: { "sale-target": "exchange_weight" }, class:"form-control" %>
       </div>
       <div class='form-group col-lg-3 col-sm-6'>
         <%= form.label :wastage_rate, "換金成色" %>
-        <%= form.text_field :wastage_rate, data: { target: "sale.wastage_rate" }, class:"form-control" %>
+        <%= form.text_field :wastage_rate, data: { "sale-target": "wastage_rate" }, class:"form-control" %>
       </div>
       <div class='form-group col-lg-3 col-sm-6'>
         <%= form.label :net_weight, "換金實重" %>
         <%= link_to "計算", "#", data: { action: "click->sale#cal_weight" }, class:"btn btn-info" %>
-        <%= form.text_field :net_weight, data: { target: "sale.net_weight" }, class:"form-control" %>
+        <%= form.text_field :net_weight, data: { "sale-target": "net_weight" }, class:"form-control" %>
       </div>
       <div class='form-group col-lg-3 col-sm-6'>
         <%= form.label :scrap_weight, "買金重量" %>
         <%= link_to "入庫", "#", data: { action: "click->sale#to_scrap" }, class:"btn btn-info" %>
-        <input type="text", class="form-control", data-target= "sale.scrap_weight",  readonly="readonly" >
+        <input type="text", class="form-control", data-sale-target= "scrap_weight",  readonly="readonly" >
+        <input type="text", class="form-control", value="<%= current_user.id %>",  style="display:none", data-sale-target= "user_id" >
       </div>
     </div>
     <div class='table-responsive'>
-    <table class="table table-hover responsive-table">
-      <thead class='thead-dark'>
-        <tr>
-          <th>名稱</th>
-          <th class='hide'>商品ID</th>
-          <th>重量</th>
-          <th class='hide'>工錢成本</th>
-          <th>工錢</th>
-          <th class='hide2'>數量</th>
-          <th class='hide'>庫存量</th>
-          <th class='hide'>銷售狀態</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody class='thead-dark'>
-        <% current_cart.items.each do |item| %>
-        <tr>
-          <td><%= link_to item.product.title, product_path(item.product) %></td>
-          <td class='hide'><%= form.text_field :product_id, value: item.product.id, readonly:"readonly" %></td>
-          <td><%= item.weight %></td>
-          <td class='hide'>$<%= item.cost %></td>
-          <td><%= item.service_fee %></td>
-          <td class='hide2'><%= find_quantity(item.product)%></td>
-          <td class='hide'><%= item.product.on_sell %></td>
-          <td>
-            <%= link_to "—", decrease_to_cart_product_path(item.product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-warning button-sale-table" %>
-            <%= link_to "Ｘ", delete_to_cart_product_path(item.product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-danger button-sale-table" %>
-          </td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
+      <table class="table table-hover responsive-table">
+        <thead class='thead-dark'>
+          <tr>
+            <th>名稱</th>
+            <th class='hide'>商品ID</th>
+            <th>重量</th>
+            <th class='hide'>工錢成本</th>
+            <th>工錢</th>
+            <th class='hide2'>數量</th>
+            <th class='hide'>庫存量</th>
+            <th class='hide'>銷售狀態</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody class='thead-dark'>
+          <% current_cart.items.each do |item| %>
+          <tr>
+            <td><%= link_to item.product.title, product_path(item.product) %></td>
+            <td class='hide'><%= form.text_field :product_id, value: item.product.id, readonly:"readonly" %></td>
+            <td><%= item.weight %></td>
+            <td class='hide'>$<%= item.cost %></td>
+            <td><%= item.service_fee %></td>
+            <td class='hide2'><%= find_quantity(item.product)%></td>
+            <td class='hide'><%= item.product.on_sell %></td>
+            <td>
+              <%= link_to "—", decrease_to_cart_product_path(item.product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-warning button-sale-table" %>
+              <%= link_to "Ｘ", delete_to_cart_product_path(item.product, sale_id: @sale.id), method: :put, class:"btn btn-sm btn-danger button-sale-table" %>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
-      <% if current_cart.items.present? %>
-        <h6>
-        <div class="row">
-          <div class="col-lg-12 col-sm-6">
-            <label for="weight">合計重量</label>
-            <%= form.number_field :weight, value: "#{current_cart.total_weight}", readonly: "readonly", data: { target:"sale.weight"}, class:"form-control" %>
-          </div>
-          <div class="col-lg-12 col-sm-6">
-            <label for="service_fee">合計工錢</label>
-            <%= form.number_field :service_fee, value: "#{current_cart.total_service_fee}", readonly: "readonly", data: { target:"sale.service_fee"}, class:"form-control" %>
-          </div>
-          <div class="col-lg-12 col-sm-12">
-            <label for="service_fee">工錢利潤</label>
-            <%= form.text_field :service_profit, value: "#{current_cart.total_service_profit}", readonly: "readonly", class:"form-control" %>
-          </div>
+    <% if current_cart.items.present? %>
+      <h6>
+      <div class="row">
+        <div class="col-lg-12 col-sm-6">
+          <label for="weight">合計重量</label>
+          <%= form.number_field :weight, value: "#{current_cart.total_weight}", readonly: "readonly", data: { "sale-target": "weight" }, class:"form-control" %>
         </div>
-        <div class="row calculator mt-2">
-          <div class="col-lg-1 col-sm-4">
-            <%= link_to "金額計算", "#", data: { action: "click->sale#calculate" }, class:"btn btn-info" %>
-          </div>
-          <div class="col-lg-11 col-sm-8">
-            <%= form.number_field :total_price, data: { target: "sale.total_price" }, readonly: "readonly", class:"form-control" %>
-          </div>
+        <div class="col-lg-12 col-sm-6">
+          <label for="service_fee">合計工錢</label>
+          <%= form.number_field :service_fee, value: "#{current_cart.total_service_fee}", readonly: "readonly", data: { "sale-target": "service_fee" }, class:"form-control" %>
         </div>
+        <div class="col-lg-12 col-sm-12">
+          <label for="service_fee">工錢利潤</label>
+          <%= form.text_field :service_profit, value: "#{current_cart.total_service_profit}", readonly: "readonly", class:"form-control" %>
+        </div>
+      </div>
+      <div class="row calculator mt-2">
+        <div class="col-lg-1 col-sm-4">
+          <%= link_to "金額計算", "#", data: { action: "click->sale#calculate" }, class:"btn btn-info" %>
+        </div>
+        <div class="col-lg-11 col-sm-8">
+          <%= form.number_field :total_price, data: { "sale-target": "total_price" }, readonly: "readonly", class:"form-control" %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 col-sm-6">
+          <label for="discount">銷售折讓</label>
+          <%= form.number_field :discount, data: { "sale-target": "discount", action: "blur->sale#cal_sale_price" } ,class:"form-control form-input" %>
+        </div>
+        < class="col-lg-12 col-sm-6">
+          <label for="discount">銷售金額</label>
+          <%= form.number_field :sale_price, data: { "sale-target": "sale_price" }, readonly: "readonly", class:"form-control"   %>
+        </>
+      </div>
       </h6>
-      <% end %>
-    </div>
+    <% end %>
 
-    <div class="row">
-      <div class="col-lg-12 col-sm-6">
-        <label for="discount">銷售折讓</label>
-        <%= form.number_field :discount, data: { target: "sale.discount", action: "blur->sale#cal_sale_price" } ,class:"form-control form-input" %>
-      </div>
-      <div class="col-lg-12 col-sm-6">
-        <label for="discount">銷售金額</label>
-        <%= form.number_field :sale_price, data: { target: "sale.sale_price" }, readonly: "readonly", class:"form-control"   %>
-      </div>
-    </div>
     <div>
       <%= form.input :payment_method, as: :select, collection: [['cash', '現金'], ['credit_card', '信用卡'], ['line_pay', 'LinePay']], label_method: :second, value_method: :first, label: "付款方式",  class:"form-control"%>
     </div>
