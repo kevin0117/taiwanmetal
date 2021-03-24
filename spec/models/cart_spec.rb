@@ -53,12 +53,13 @@ RSpec.describe Cart, type: :model, cart: true do
       p1 = FactoryBot.create(:product, weight: 1.0, service_fee: 800.0)
       p2 = FactoryBot.create(:product, weight: 2.0, service_fee: 200.0)
 
-      3.times { cart.add_product(p1) }  # $17400
-      2.times { cart.add_product(p2) }  # $20400
+      # items.reduce(0) { |sum, item| sum + (item.weight * item.quantity) }
+      3.times { cart.add_product(p1) }  # $17400, 4
+      2.times { cart.add_product(p2) }  # $20400, 8
 
       expect(cart.items.first.weight).to eq 3.0
       expect(cart.items.last.weight).to eq 4.0
-      expect(cart.total_weight).to eq 7.0
+      expect(cart.total_weight).to eq 17.0    # 9 + 8
     end
 
     it "可以計算出貨單裡的工資總和" do
@@ -67,10 +68,11 @@ RSpec.describe Cart, type: :model, cart: true do
 
       3.times { cart.add_product(p1) }  # $17400
       2.times { cart.add_product(p2) }  # $20400
+      # byebug
 
       expect(cart.items.first.service_fee).to eq 2400
       expect(cart.items.last.service_fee).to eq 400
-      expect(cart.total_service_fee).to eq 2800
+      expect(cart.total_service_fee).to eq 8000     # ＄2400 * 3 + ＄400 * 2
     end
   end
 

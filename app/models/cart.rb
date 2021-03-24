@@ -41,14 +41,15 @@ class Cart
 
   def total_weight
     items.reduce(0) { |sum, item| sum + (item.weight * item.quantity) }
+    # items.reduce(0) { |sum, item| sum + item.weight }
   end
 
   def total_cost
-    items.reduce(0) { |sum, item| sum + item.cost }
+    items.reduce(0) { |sum, item| sum + (item.cost * item.quantity) }
   end
 
   def total_service_fee
-    items.reduce(0) { |sum, item| sum + item.service_fee }
+    items.reduce(0) { |sum, item| sum + (item.service_fee * item.quantity) }
   end
 
   def total_service_profit

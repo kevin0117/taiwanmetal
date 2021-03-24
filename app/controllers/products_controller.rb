@@ -67,7 +67,11 @@ class ProductsController < ApplicationController
     cart_product = current_cart.items.find{|item| item.product_id == @product.id}
     if @product.quantity > 0
       current_cart.add_product(@product)
-      @product.decrement(:quantity)
+      # @product.decrement(:quantity)
+      @product.quantity -= 1
+      @product.total_weight = @product.weight * @product.quantity
+      @product.total_service_fee = @product.service_fee * @product.quantity
+
       @product.on_sell = false if @product.quantity == 0
       @product.save
       session[:cart0117] = current_cart.serialize
@@ -83,10 +87,15 @@ class ProductsController < ApplicationController
   end
 
   def delete_to_cart
-    quantity_in_cart = current_cart.items.find(@product.id).first.quantity
+    # quantity_in_cart = current_cart.items.find(@product.id).first.quantity
+    quantity_in_cart = current_cart.items.find{|item| item.product_id == @product.id}.quantity
+
+    # byebug
     if current_cart.destroy_product(@product)
       @product.quantity += quantity_in_cart
       @product.on_sell = true if @product.quantity > 0
+      @product.total_weight = @product.weight * @product.quantity
+      @product.total_service_fee = @product.service_fee * @product.quantity
       @product.save
       # redirect_to :controller => 'sales', :action => 'new'
       redirect_to controller: :sales, action: :new
@@ -102,6 +111,8 @@ class ProductsController < ApplicationController
   def decrease_to_cart
     if current_cart.remove_product(@product)
       @product.quantity += 1
+      @product.total_weight = @product.weight * @product.quantity
+      @product.total_service_fee = @product.service_fee * @product.quantity
       @product.update(on_sell: true) if @product.quantity > 0
       @product.save
       # redirect_to :controller => 'sales', :action => 'new'

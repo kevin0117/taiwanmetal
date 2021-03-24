@@ -68,7 +68,11 @@ class SalesController < ApplicationController
     target_manifest = @sale.manifests.find_by(product_id: @product.id)
     @product.quantity += target_manifest.quantity
     target_manifest.quantity -= target_manifest.quantity
+    @product.total_weight = @product.weight * @product.quantity
+    @product.total_service_fee = @product.service_fee * @product.quantity
     @product.update(on_sell: false) if @product.quantity == 0
+    @product.update(on_sell: true) if @product.quantity > 0
+
     @sale.products.delete(@product) if target_manifest.quantity == 0
 
     @product.save
@@ -87,7 +91,8 @@ class SalesController < ApplicationController
       target_manifest_product = @sale.manifests.find_by(product_id: found_product.id)
       target_manifest_product.quantity += 1
       @product.quantity -= 1
-
+      @product.total_weight = @product.weight * @product.quantity
+      @product.total_service_fee = @product.service_fee * @product.quantity
       # 更新點選商品的狀態為“下架”，如果庫存數量變成 0
       @product.on_sell = false if @product.quantity == 0
       @product.save
@@ -99,6 +104,8 @@ class SalesController < ApplicationController
 
       # 更新點選商品的狀態為“下架”，如果庫存數量變成 0
       @product.on_sell = false if @product.quantity == 0
+      @product.total_weight = @product.weight * @product.quantity
+      @product.total_service_fee = @product.service_fee * @product.quantity
       @product.save
       flash[:notice] = "加入成功(還未存在銷售產品單上)"
     end
@@ -114,6 +121,8 @@ class SalesController < ApplicationController
     if found_product && target_manifest.quantity > 0
       target_manifest.quantity -= 1
       @product.quantity += 1
+      @product.total_weight = @product.weight * @product.quantity
+      @product.total_service_fee = @product.service_fee * @product.quantity
       @product.update(on_sell: true) if @product.quantity > 0
       @sale.products.delete(@product) if target_manifest.quantity == 0
       @product.save
