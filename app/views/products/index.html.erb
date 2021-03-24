@@ -155,7 +155,7 @@
       <td><%= product.code %></td>
       <td><%= link_to product.title, product_path(product) %></td>
       <td><%= product.weight %></td>
-      <td><%= product.service_fee %></td>
+      <td>$<%= product.service_fee %></td>
       <td><%= product.vendor.name %></td>
       <td><%= product.quantity %></td>
       <td><%= product.on_sell %></td>
@@ -183,7 +183,7 @@
       <tbody>
         <tr>
           <td><%= @products.sum(:total_weight) %></td>
-          <td><%= @products.sum(:service_fee) %></td>
+          <td>$<%= @products.sum(:total_service_fee) %></td>
           <td><%= @products.sum(:quantity) %></td>
         </tr>
       </tbody>
